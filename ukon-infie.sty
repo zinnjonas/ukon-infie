@@ -67,8 +67,8 @@
 \newcommand{\deadline}{}
 \newcommand{\name}{}
 \newcommand{\semester}{}
-\newcommand{\lecutre}{}
-\newcommand{\lecutreshort}{}
+\newcommand{\lecture}{}
+\newcommand{\lectureshort}{}
 
 \newcounter{exerciseNumber}
 \newcounter{numberTask}
@@ -405,12 +405,13 @@
 {
 	\ifthenelse{\equal{#1}{\empty}}
 	{\g@addto@macro{\lecture}{#2}
-	 \g@addto@macro{\lecutreshort{#2}}}
+	 \g@addto@macro{\lectureshort}{#2}}
 	{\g@addto@macro{\lecture}{#2}
-	 \g@addto@macro{\lecutreshort{#1}}}
+	 \g@addto@macro{\lectureshort}{#1}}
+	\typeout{test}
 }
 
-\newcommand{\sengHeader}
+\newcommand{\Header}
 {
 	\group{\name}{\lectureshort - \theexerciseNumber}
 	\header{\lecture}
@@ -418,7 +419,7 @@
 	\pointsTable
 }
 
-\newcommand{\Namen}[1]
+\newcommand{\Names}[1]
 {
 \g@addto@macro{\name}{#1}
 }
@@ -434,6 +435,6 @@
 	\g@addto@macro{\deadline}{#1}
 }
 {
-	\sengHeader
+	\Header
 	\content
 }
