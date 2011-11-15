@@ -1,0 +1,436 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The Ultimate Latex-Header for the best students								%
+%% Rev.:		b1.00															%
+%% Autoren:		Jonas Zinn														%
+%% Datum:		15.11.2011														%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e} %Proforma;D											%
+
+\def\german{0}
+
+\DeclareOption{de}{\edef\german{1}}
+
+\ProcessOptions
+
+\ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
+
+\usepackage{amsmath} % Verbesserter Mathesatz									%
+\usepackage{amsthm} % Normaler Mathesatz										%
+\usepackage{amsfonts} %capital-letter font										%
+\usepackage{amsthm,amssymb} % Zeichen-Satz										%
+\usepackage{bigfoot} % komplexe Fußnotenapparate(Fußnoten in Fußnoten und andere Späße)%
+\usepackage{colortbl}
+\usepackage{calc}
+%\usepackage{elipsis} % behandelt Leerraum um Auslassungspunkte					%
+\usepackage{etoolbox, mathtools}
+\usepackage[T1]{fontenc} % normaler erweitere Zeichnesatz						%
+\usepackage{framed}  % Ramenpaket für zum Einfügen von schönen Ramen			%
+\usepackage{graphicx}
+\usepackage{hhline}
+\usepackage{ifthen} % Packet für if then else									%
+\usepackage{listings} %for code-listings (inkl. Tab-Styling)					%
+\usepackage{lmodern}
+\usepackage{longtable, lscape} % Querformat und GroßTabellen					%
+\usepackage{marginnote} % Für bessere Randnotizen mit \marginnote statt \marginline%
+\usepackage{marvosym} % für stopsign etc...										%
+\usepackage{microtype} % div. Verbesserungen des Schriftsatzes (Grauwert, opt. Randausgleich, Zeilenumbruch)
+\usepackage{multirow}
+\usepackage[ngerman]{babel} % Neue Rechtschreibung								%
+\usepackage{pifont} %für die Dings zeichen										%
+\usepackage[sans]{dsfont} %für alternative Mengensymbole						%
+\usepackage{stmaryrd} %u.a. für \lightning										%
+\usepackage{tikz} % für Diagramme(Dia!) und Bilder (z.B. *.eps)					%
+\usepackage{units} % z.B. fuer \nicefrac{}{}
+\usepackage[utf8]{inputenc} % utf8 für den Editor								%
+\usepackage{wasysym} %u.a. für \lightning										%
+\usepackage{xcolor}
+\usepackage{tokenizer}
+\usepackage{twoopt}
+\usepackage{substr}
+\usepackage{forloop}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}		
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}
+\topmargin -2cm
+\textheight 25cm	
+\textwidth 16.0 cm
+\oddsidemargin -0.1cm
+
+\newcommand{\PointArray}{}
+\newcommand{\content}{}
+\newcommand{\deadline}{}
+\newcommand{\name}{}
+\newcommand{\semester}{}
+\newcommand{\lecutre}{}
+\newcommand{\lecutreshort}{}
+
+\newcounter{exerciseNumber}
+\newcounter{numberTask}
+\newcounter{totalNumber}
+\newlength{\numberPointsTotal}
+\setlength{\numberPointsTotal}{0 pt}
+\newlength{\numberAdditionalPoints}
+\setlength{\numberAdditionalPoints}{0 pt}
+\newcounter{ctPointTable}
+\newcounter{tempPointTable}
+\newcounter{moveToPointTable}
+\newcounter{linePointTable}
+
+\newcounter{VennDiagrammA}
+\newcounter{VennDiagrammB}
+\newcounter{VennDiagrammC}
+\newcounter{VennDiagrammD}
+
+\newcommandtwoopt{\Venn}[3][\empty][\empty]
+{
+
+\def\Source{A,B,U}
+\def\Kreisfarbe{red}
+
+\IfCharInString{,}{#1}
+{
+\def\Source{#1}
+}
+{
+\ifthenelse{\equal{#1}{}}{}
+{
+\def\Kreisfarbe{#1}
+}
+}
+
+\IfCharInString{,}{#2}
+{
+\def\Source{#2}
+}
+{
+\ifthenelse{\equal{#2}{}}{}
+{
+\def\Kreisfarbe{#2}
+}
+}
+
+\setcounter{VennDiagrammA}{#3/1000}
+\setcounter{VennDiagrammB}{#3/100 - \theVennDiagrammA*10}
+\setcounter{VennDiagrammC}{#3/10 - \theVennDiagrammA*100 - \theVennDiagrammB*10}
+\setcounter{VennDiagrammD}{#3 -\theVennDiagrammA*1000 - \theVennDiagrammB*100 - \theVennDiagrammC*10}
+
+\begin{tikzpicture}
+%predefinition of nodes for clippings
+\node (rectLL) at (0,0) {};
+\node (rectUR) at (5,3.75) {};
+\node (centerA) at (1.75,1.875) {};
+\node (centerB) at (3.25,1.875) {};
+
+%A \cap B
+\ifthenelse{\theVennDiagrammC = 1}
+{
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{
+}
+
+%A^c \cap B^C
+\ifthenelse{\theVennDiagrammA = 1}
+{
+\begin{scope}%[even odd rule]
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe,rounded corners=10] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{
+}
+
+%A\setminus B
+\ifthenelse{\theVennDiagrammB = 1}
+{
+\begin{scope}[even odd rule]
+\clip (centerA) circle (1.5) (centerB) circle (1.5);
+\clip (centerA) circle (1.5);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{
+}
+
+%B\setminus A
+\ifthenelse{\theVennDiagrammD = 1}
+{
+\begin{scope}[even odd rule]
+\clip (centerA) circle (1.5) (centerB) circle (1.5);
+\clip (centerB) circle (1.5);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{
+}
+
+%Venn-Diagramm, without fillings
+\node (rectLL) at (rectLL) {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerA) at (centerA) [label=left:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\node (centerB) at (centerB) [label=right:\TokenOne] {};
+\node (rectUR) at (rectUR) [label=below left:\TokenTwo] {};
+
+\draw[thick,rounded corners=10] (rectLL) rectangle (rectUR);
+\draw[thick] (centerA) circle (1.5);
+\draw[thick] (centerB) circle (1.5);
+
+\end{tikzpicture}
+}
+
+\newcommand{\pointsTable}
+{
+
+\setcounter{moveToPointTable}{0}
+\setcounter{linePointTable}{0}
+\def\tempArray{0}
+\newboolean{boolvar} %Deklaration
+\setboolean{boolvar}{true} %Zuweisung
+\newcounter{anzPunkteGesamt}
+\setcounter{anzPunkteGesamt}{0}
+\newcounter{tPunkteG}
+\setcounter{tPunkteG}{0}
+\newlength{\firstlen} 
+\setlength{\firstlen}{\theanzPunkteGesamt.\thetPunkteG pt}
+\ifdim\firstlen=\numberPointsTotal
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+\whiledo {\boolean{boolvar}}%
+{
+\stepcounter{tPunkteG}
+\ifthenelse{\thetPunkteG > 9}
+{ 
+	\setcounter{tPunkteG}{0}
+	\stepcounter{anzPunkteGesamt}
+}{}
+\setlength{\firstlen}{\theanzPunkteGesamt.\thetPunkteG pt}
+\ifdim\firstlen=\numberPointsTotal
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+}
+\newcounter{anzAdditionalTotal}
+\newcounter{aPunkteG}
+\setcounter{anzAdditionalTotal}{0}
+\setcounter{aPunkteG}{0}
+\setboolean{boolvar}{true}
+\setlength{\firstlen}{\theanzAdditionalTotal.\theaPunkteG pt}
+\ifdim\firstlen=\numberAdditionalPoints
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+\whiledo {\boolean{boolvar}}%
+{
+\stepcounter{aPunkteG}
+\ifthenelse{\theaPunkteG > 9}
+{ 
+	\setcounter{aPunkteG}{0}
+	\stepcounter{anzAdditionalTotal}
+}{}
+\setlength{\firstlen}{\theanzAdditionalTotal.\theaPunkteG pt}
+\ifdim\firstlen=\numberAdditionalPoints
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+}
+\let\tempArray\PointArray
+\begin{center}
+	\ifthenelse{ \thetPunkteG > 0}
+	{
+	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximal \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
+	}
+	{
+	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximal \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
+	}
+	\begin{tikzpicture} 
+		\tikzstyle{every node}=[font=\small]
+ 		\setcounter{tempPointTable}{1}
+                     \forloop{ctPointTable}{0}{\thectPointTable < \thetotalNumber}
+		{
+
+  			\node[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] at (\themoveToPointTable *2.2,-\thelinePointTable*1.8){\ifthenelse{\equal{\german}{1}}{Aufgabe}{Task} \thetempPointTable}; 
+			\node[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm] at( \themoveToPointTable *2.2,-\thelinePointTable*1.8 -0.9){};
+			
+			\GetTokens{TokenOne}{TokenTwo}{\tempArray}
+			\let\tempArray\TokenTwo
+
+			\draw (\themoveToPointTable *2.2-1.1,-\thelinePointTable*1.8-0.9-0.5) -- (\themoveToPointTable *2.2+1.1,-\thelinePointTable*1.8-0.9+0.5);
+			\node at(\themoveToPointTable *2.2+0.55,-\thelinePointTable*1.8-0.9-0.25) [] {\TokenOne};
+
+ 			\stepcounter{tempPointTable}
+ 			\stepcounter{moveToPointTable}
+ 			\ifthenelse{\themoveToPointTable = 8}{\setcounter{moveToPointTable}{0}\stepcounter{linePointTable}}{}
+		}
+		
+		\setcounter{ctPointTable}{\thetotalNumber}
+		
+		\whiledo {\thectPointTable > 0}%
+		{
+			\setcounter{ctPointTable}{\thectPointTable - 8}
+		}
+		
+		\ifthenelse{ \thectPointTable = 0}{\setcounter{ctPointTable}{0}}{\setcounter{ctPointTable}{1}}
+		\ifthenelse{\thetotalNumber = 3}
+		{
+		\node[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] at (\themoveToPointTable * 2.2+\thectPointTable*0.08,-\thelinePointTable*1.8){\ifthenelse{\equal{\german}{1}}{\textbf{Gesamt}}{\textbf{Total}}}; 
+		\node[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm] at ( \themoveToPointTable * 2.2+\thectPointTable*0.08,-\thelinePointTable*1.8-0.9) {};
+		\draw (\themoveToPointTable * 2.2+\thectPointTable*0.08-1.1,-\thelinePointTable*1.8-0.9-0.5) -- (\themoveToPointTable * 2.2+\thectPointTable*0.08+1.1,-\thelinePointTable*1.8-0.9+0.5);
+		\ifthenelse{ \thetPunkteG > 0}
+		{
+			\node at(\themoveToPointTable * 2.2+\thectPointTable*0.08+0.55,-\thelinePointTable*1.8-0.9-0.25) [] {\theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}}};
+		}
+		{
+			\node at(\themoveToPointTable * 2.2+\thectPointTable*0.08+0.55,-\thelinePointTable*1.8-0.9-0.25) [] {\theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}}};
+		}
+		}
+ 		{		
+		\node[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] at (\themoveToPointTable * 2.2+\thectPointTable*0.05,-\thelinePointTable*1.8){\ifthenelse{\equal{\german}{1}}{\textbf{Gesamt}}{\textbf{Total}}}; 
+		\node[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm] at ( \themoveToPointTable * 2.2+\thectPointTable*0.05,-\thelinePointTable*1.8-0.9) {};
+\draw (\themoveToPointTable * 2.2+\thectPointTable*0.05-1.1,-\thelinePointTable*1.8-0.9-0.5) -- (\themoveToPointTable * 2.2+\thectPointTable*0.05+1.1,-\thelinePointTable*1.8-0.9+0.5);
+		\ifthenelse{ \thetPunkteG > 0}
+		{
+			\node at(\themoveToPointTable * 2.2+\thectPointTable*0.05+0.55,-\thelinePointTable*1.8-0.9-0.25) [] {\theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}}};
+		}
+		{
+			\node at(\themoveToPointTable * 2.2+\thectPointTable*0.05+0.55,-\thelinePointTable*1.8-0.9-0.25) [] {\theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}}};
+		}
+		}
+	\end{tikzpicture}
+\end{center}
+}
+
+\newcommand{\points}[1]
+{
+	\mbox{\ } \hfill {\bf #1}
+}
+
+\newcommand{\TaskNumbering}[5]
+{
+	\bigskip
+	\ifthenelse{\equal{\german}{1}}
+	{\textbf{Aufgabe #1: #2}
+	\\
+	#5
+	
+	\hfill \ifthenelse{\equal{#4}{\empty}}
+	{\points{[\qquad] von #3 Punkten}}
+	{\points{[\qquad] von #3 + #4 Punkten}}\\\\
+	}
+	{\textbf{Task #1: #2}
+	\\
+	#5
+	
+	\hfill \ifthenelse{\equal{#4}{\empty}}
+	{\points{[\qquad] of #3 Points}}
+	{\points{[\qquad] of #3 + #4 Points}}\\\\
+	}
+}
+
+\newcommand{\taskNumbering}[4][\empty]
+{
+	\g@addto@macro{\content}
+	{
+		\stepcounter{numberTask}
+		\TaskNumbering{\thenumberTask}{#2}{#3}{#1}{#4}
+	}
+	\addtolength{\numberPointsTotal}{#3 pt}
+	\stepcounter{totalNumber}
+	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
+	\g@addto@macro{\PointArray}{#3+#1,}}
+}
+
+\newcommand{\Task}[5]
+{
+	\renewcommand{\theenumi}{\alph{enumi}} %erste Ebene wird alphabetisch gesetzt
+  	\renewcommand{\labelenumi}{(\theenumi)} %zu faul zum nachschauen, aber wohl wichtig
+  	\renewcommand{\theenumii}{\roman{enumii}} %zweite Ebene wird römisch gesetzt
+  	\renewcommand{\labelenumii}{\theenumii.} %zu faul zum nachschauen, aber wohl wichtig
+  	\TaskNumbering{#1}{#2}{#3}{#4}{\\#5}
+  	\renewcommand{\theenumi}{\arabic{enumi}} %erste Ebene zurücksetzen auf arabisch
+  	\renewcommand{\labelenumi}{\theenumi.} %zu faul zum nachschauen, aber wohl wichtig
+  	\renewcommand{\theenumii}{\alph{enumii}} %zweite Ebene zurücksetzen auf alpha
+  	\renewcommand{\labelenumii}{(\theenumii)} %zu faul zum nachschauen, aber wohl wichtig
+}
+
+\newcommand{\task}[4][\empty]
+{
+	\g@addto@macro{\content}
+	{
+		\stepcounter{numberTask}
+		\Task{\thenumberTask}{#2}{#3}{#1}{#4}
+	}
+	\addtolength{\numberPointsTotal}{#3 pt}
+	\stepcounter{totalNumber}
+	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
+	\g@addto@macro{\PointArray}{#3+#1,}}
+}
+
+\newcommand{\group}[2]
+{
+	\lfoot{#1}
+	\cfoot{\thepage\ of \pageref{LastPage}}
+	\rfoot{#2}
+}
+
+\newcommand{\Title}[1]
+{
+	\begin{center}
+	{
+		\Large\bf #1
+	}
+	\end{center}
+}
+
+\newcommand{\header}[1]
+{
+	{\footnotesize \parindent0em
+		{\sc Universität Konstanz}                \hfill #1 \\
+		{\sc Fachbereich Informatik \& Informationswissenschaft} \hfill \semester \\
+		\name \hfill \today\\
+		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
+	}
+}
+
+\newcommand{\Lecture}[2][\empty]
+{
+	\ifthenelse{\equal{#1}{\empty}}
+	{\g@addto@macro{\lecture}{#2}
+	 \g@addto@macro{\lecutreshort{#2}}}
+	{\g@addto@macro{\lecture}{#2}
+	 \g@addto@macro{\lecutreshort{#1}}}
+}
+
+\newcommand{\sengHeader}
+{
+	\group{\name}{\lectureshort - \theexerciseNumber}
+	\header{\lecture}
+	\ifthenelse{\equal{\deadline}{\empty}}{}{\ifthenelse{\equal{\german}{1}}{\hfill \textit{Abgabe: \deadline}\hfill}{\hfill \textit{Deadline: \deadline}\hfill}}
+	\pointsTable
+}
+
+\newcommand{\Namen}[1]
+{
+\g@addto@macro{\name}{#1}
+}
+
+\newcommand{\Semester}[1]
+{
+\g@addto@macro{\semester}{#1}
+}
+
+\newenvironment{ukon-infie}[2][\empty]
+{
+	\setcounter{exerciseNumber}{#2}
+	\g@addto@macro{\deadline}{#1}
+}
+{
+	\sengHeader
+	\content
+}
