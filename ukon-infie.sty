@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% The Ultimate Latex-Header for the best students								%
-%% Rev.:		b1.00															%
-%% Autoren:		Franz Abzieher, Manuel Hotz, Jonas Zinn							%
-%%                                                                              %
-%% Datum:		15.11.2011														%
-%%                                                                              %
-%% Styleguide:      4 Soft-Tabs                                                 %
+%% The Ultimate Latex-Header for the best students
+%% Rev.:		b1.00
+%% Autoren:		Franz Abzieher, Stephan Heidinger,Manuel Hotz, Jonas Zinn
+%%
+%% Datum:		15.11.2011
+%%
+%% Styleguide:      4 Soft-Tabs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e} %Proforma;D											%
+\NeedsTeXFormat{LaTeX2e} %Proforma;D
 
 \def\german{0}
 
@@ -18,35 +18,35 @@
 
 \ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
 
-\usepackage{amsmath} % Verbesserter Mathesatz									%
-\usepackage{amsthm} % Normaler Mathesatz										%
-\usepackage{amsfonts} %capital-letter font										%
-\usepackage{amsthm,amssymb} % Zeichen-Satz										%
-\usepackage{bigfoot} % komplexe Fußnotenapparate(Fußnoten in Fußnoten und andere Späße)%
+\usepackage{amsmath} % Verbesserter Mathesatz
+\usepackage{amsthm} % Normaler Mathesatz
+\usepackage{amsfonts} %capital-letter font
+\usepackage{amsthm,amssymb} % Zeichen-Satz
+\usepackage{bigfoot} % komplexe Fußnotenapparate(Fußnoten in Fußnoten und andere Späße)
 \usepackage{colortbl}
 \usepackage{calc}
-%\usepackage{elipsis} % behandelt Leerraum um Auslassungspunkte					%
+%\usepackage{elipsis} % behandelt Leerraum um Auslassungspunkte
 \usepackage{etoolbox, mathtools}
-\usepackage[T1]{fontenc} % normaler erweitere Zeichnesatz						%
-\usepackage{framed}  % Ramenpaket für zum Einfügen von schönen Ramen			%
+\usepackage[T1]{fontenc} % normaler erweitere Zeichnesatz
+\usepackage{framed}  % Ramenpaket für zum Einfügen von schönen Ramen
 \usepackage{graphicx}
 \usepackage{hhline}
-\usepackage{ifthen} % Packet für if then else									%
-\usepackage{listings} %for code-listings (inkl. Tab-Styling)					%
+\usepackage{ifthen} % Packet für if then else
+\usepackage{listings} %for code-listings (inkl. Tab-Styling)
 \usepackage{lmodern}
-\usepackage{longtable, lscape} % Querformat und GroßTabellen					%
-\usepackage{marginnote} % Für bessere Randnotizen mit \marginnote statt \marginline%
-\usepackage{marvosym} % für stopsign etc...										%
+\usepackage{longtable, lscape} % Querformat und GroßTabellen
+\usepackage{marginnote} % Für bessere Randnotizen mit \marginnote statt \marginline
+\usepackage{marvosym} % für stopsign etc...
 \usepackage{microtype} % div. Verbesserungen des Schriftsatzes (Grauwert, opt. Randausgleich, Zeilenumbruch)
 \usepackage{multirow}
-\usepackage[ngerman]{babel} % Neue Rechtschreibung								%
-\usepackage{pifont} %für die Dings zeichen										%
-\usepackage[sans]{dsfont} %für alternative Mengensymbole						%
-\usepackage{stmaryrd} %u.a. für \lightning										%
-\usepackage{tikz} % für Diagramme(Dia!) und Bilder (z.B. *.eps)					%
+\usepackage[ngerman]{babel} % Neue Rechtschreibung
+\usepackage{pifont} %für die Dings zeichen
+\usepackage[sans]{dsfont} %für alternative Mengensymbole
+\usepackage{stmaryrd} %u.a. für \lightning
+\usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
 \usepackage{units} % z.B. fuer \nicefrac{}{}
-\usepackage[utf8]{inputenc} % utf8 für den Editor								%
-\usepackage{wasysym} %u.a. für \lightning										%
+\usepackage[utf8]{inputenc} % utf8 für den Editor
+\usepackage{wasysym} %u.a. für \lightning
 \usepackage{xcolor}
 \usepackage{tokenizer}
 \usepackage{twoopt}
@@ -54,11 +54,11 @@
 \usepackage{forloop}
 
 \usepackage{fancyhdr}
-\pagestyle{fancy}		
+\pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead{}
 \topmargin -2cm
-\textheight 25cm	
+\textheight 25cm
 \textwidth 16.0 cm
 \oddsidemargin -0.1cm
 
@@ -453,31 +453,31 @@
 
 \lstset
 {
-	language=Java, % oder C++, Pascal, {[77]Fortran}, ...						%
-	numbers=left, % Position der Zeilennummerierung								%
-	firstnumber=auto, % Erste Zeilennummer										%
-	basicstyle=\ttfamily, % Textgröße des Standardtexts							%
-	keywordstyle=\ttfamily\color{dRot}, % Formattierung Schlüsselwörter			%
-	commentstyle=\ttfamily\color{dGruen}, % Formattierung Kommentar				%
-	stringstyle=\ttfamily\color{dBlau}, % Formattierung Strings					%
-	numberstyle=\tiny, % Textgröße der Zeilennummern							%
-	stepnumber=1, % Angezeigte Zeilennummern									%
-	numbersep=5pt, % Abstand zw. Zeilennummern und Code							%
-	aboveskip=15pt, % Abstand oberhalb des Codes								%
-	belowskip=11pt, % Abstand unterhalb des Codes								%
-	captionpos=b, % Position der Überschrift									%
-	xleftmargin=10pt, % Linke Einrückung										%
-	frame=single, % Rahmentyp													%
-	breaklines=true, % Umbruch langer Zeilen									%
-	showstringspaces=false, % Spezielles Zeichen für Leerzeichen				%
+	language=Java, % oder C++, Pascal, {[77]Fortran}, ...
+	numbers=left, % Position der Zeilennummerierung
+	firstnumber=auto, % Erste Zeilennummer
+	basicstyle=\ttfamily, % Textgröße des Standardtexts
+	keywordstyle=\ttfamily\color{dRot}, % Formattierung Schlüsselwörter
+	commentstyle=\ttfamily\color{dGruen}, % Formattierung Kommentar
+	stringstyle=\ttfamily\color{dBlau}, % Formattierung Strings
+	numberstyle=\tiny, % Textgröße der Zeilennummern
+	stepnumber=1, % Angezeigte Zeilennummern
+	numbersep=5pt, % Abstand zw. Zeilennummern und Code
+	aboveskip=15pt, % Abstand oberhalb des Codes
+	belowskip=11pt, % Abstand unterhalb des Codes
+	captionpos=b, % Position der Überschrift
+	xleftmargin=10pt, % Linke Einrückung
+	frame=single, % Rahmentyp
+	breaklines=true, % Umbruch langer Zeilen
+	showstringspaces=false, % Spezielles Zeichen für Leerzeichen
 	tabsize=2,
 	texcl=true
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	Befehl zum Einladen eines Files in Java										%
-%	%Para 1: File, das eingeladen werden soll									%
-%	z.B.:	\ladeJava{Uebung}													%
+%	Befehl zum Einladen eines Files in Java
+%	%Para 1: File, das eingeladen werden soll
+%	z.B.:	\ladeJava{Uebung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\loadJava}[1]
 {
@@ -485,10 +485,10 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	Befehl zum Einladen eines Files in C++										%
-%	%Para 1: File, das eingeladen werden soll									%
-%	z.B.:	\ladeCpp{~/Documents/workspace/MyProgram.cpp}						%
-%			\ladeCpp{~/Documents/workspace/MyHeader.c}							%
+%	Befehl zum Einladen eines Files in C++
+%	%Para 1: File, das eingeladen werden soll
+%	z.B.:	\ladeCpp{~/Documents/workspace/MyProgram.cpp}
+%			\ladeCpp{~/Documents/workspace/MyHeader.c}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\loadCpp}[1]
 {
@@ -496,11 +496,11 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	Befehl zum Einladen eines Files in einer beliebigen Sprache					%
-%	%Parameter 1: Sprache, in der das File geschrieben ist						%
-%	%Parameter 2: Datei, die eingelesen werden soll								%
-%	z.B.:	\ladeCode{Python}{~/Documents/workspace/MyProgram.py				%
-%	Anregungen, eingebunden werden können, siehe unten							%
+%	Befehl zum Einladen eines Files in einer beliebigen Sprache
+%	%Parameter 1: Sprache, in der das File geschrieben ist
+%	%Parameter 2: Datei, die eingelesen werden soll
+%	z.B.:	\ladeCode{Python}{~/Documents/workspace/MyProgram.py
+%	Anregungen, eingebunden werden können, siehe unten
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\loadSource}[2]
