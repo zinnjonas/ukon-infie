@@ -444,3 +444,66 @@
 \g@addto@macro{\content}{\newpage}
 }
 
+\xdefinecolor{dunkelGruen}{HTML}{007D00}
+\xdefinecolor{dunkelBlau}{HTML}{0000A0}
+\xdefinecolor{dunkelRot}{HTML}{A00000}
+\colorlet{dGruen}{dunkelGruen}
+\colorlet{dBlau}{dunkelBlau}
+\colorlet{dRot}{dunkelRot}
+
+\lstset
+{
+	language=Java, % oder C++, Pascal, {[77]Fortran}, ...						%
+	numbers=left, % Position der Zeilennummerierung								%
+	firstnumber=auto, % Erste Zeilennummer										%
+	basicstyle=\ttfamily, % Textgröße des Standardtexts							%
+	keywordstyle=\ttfamily\color{dRot}, % Formattierung Schlüsselwörter			%
+	commentstyle=\ttfamily\color{dGruen}, % Formattierung Kommentar				%
+	stringstyle=\ttfamily\color{dBlau}, % Formattierung Strings					%
+	numberstyle=\tiny, % Textgröße der Zeilennummern							%
+	stepnumber=1, % Angezeigte Zeilennummern									%
+	numbersep=5pt, % Abstand zw. Zeilennummern und Code							%
+	aboveskip=15pt, % Abstand oberhalb des Codes								%
+	belowskip=11pt, % Abstand unterhalb des Codes								%
+	captionpos=b, % Position der Überschrift									%
+	xleftmargin=10pt, % Linke Einrückung										%
+	frame=single, % Rahmentyp													%
+	breaklines=true, % Umbruch langer Zeilen									%
+	showstringspaces=false, % Spezielles Zeichen für Leerzeichen				%
+	tabsize=2,
+	texcl=true
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in Java										%
+%	%Para 1: File, das eingeladen werden soll									%
+%	z.B.:	\ladeJava{Uebung}													%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\loadJava}[1]
+{
+	\lstinputlisting[language=Java]{#1.java}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in C++										%
+%	%Para 1: File, das eingeladen werden soll									%
+%	z.B.:	\ladeCpp{~/Documents/workspace/MyProgram.cpp}						%
+%			\ladeCpp{~/Documents/workspace/MyHeader.c}							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\loadCpp}[1]
+{
+	\lstinputlisting[language=C++]{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in einer beliebigen Sprache					%
+%	%Parameter 1: Sprache, in der das File geschrieben ist						%
+%	%Parameter 2: Datei, die eingelesen werden soll								%
+%	z.B.:	\ladeCode{Python}{~/Documents/workspace/MyProgram.py				%
+%	Anregungen, eingebunden werden können, siehe unten							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\loadSource}[2]
+{
+	\lstinputlisting[language=#1]{#2}
+}
