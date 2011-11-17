@@ -375,6 +375,36 @@
 	\g@addto@macro{\PointArray}{#3+#1,}}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Neue subAufgabeK, das auch in der Lage ist ein [ ] von "gesamt" Punkten 		%
+% anzeigen kann																	%
+% Parameter #1: (Optional) Punkte												%
+% Parameter #2: Title der Aufgabe												%
+% Parameter #3: Inhalt der Aufgabe												%
+% z.B. : \subAufgabek[12]{Lösen sie: $x^{2}+3\cdot x + 2=0$}{$x_{1,2} = 		%
+%		  \frac{3}{2} \underset{-}{+}\sqrt{\frac{3}{2}^2 - 2}$}					%
+% z.B. : \subAufgabek{Lösen sie: $x^{2}+3\cdot x + 2=0$}{$x_{1,2} = 			%
+%		  \frac{3}{2} \underset{-}{+}\sqrt{\frac{3}{2}^2 - 2}$}					%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\question}[3][\empty]
+{
+	\ifthenelse{\equal{#1}{\empty}}
+	{
+	
+		\item{\textit{#2}}
+		\\
+		#3
+	}
+	{
+		\item{\textit{#2}}
+		\\
+		#3
+		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \ifthenelse{\equal{\german}{1}}
+				{\textit{von #1 Punkt\ifthenelse{#1>1}{en}{}}}
+				{\textit{of #1 Point\ifthenelse{#1>1}{s}{}}}}
+	}
+}
+
 \newcommand{\group}[2]
 {
 	\lfoot{#1}
