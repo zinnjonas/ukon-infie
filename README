@@ -1,0 +1,11 @@
+Die Befehle die wir bissher haben:
+
+\task
+\taskNumbering
+\additionalTask
+\additionalTaskNumbering
+\question
+\Venn(2/Venn3)
+\loadSource
+\loadJava
+\loadCpp
