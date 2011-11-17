@@ -1,4 +1,8 @@
-Die Befehle die wir bissher haben:
+# General Info
+
+This package is still in an early alpha stage. Use at your own risk.
+
+# List of Commands:
 
 \Names
 \Lecture
@@ -12,3 +16,8 @@ Die Befehle die wir bissher haben:
 \loadSource
 \loadJava
 \loadCpp
+
+
+# Licence
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Germany License.
