@@ -324,7 +324,7 @@
 	
 	\hfill \ifthenelse{\equal{#4}{\empty}}
 	{\points{[\qquad] von #3 Punkten}}
-	{\points{[\qquad] von #3 + #4 Punkten}}\\\\
+	{\ifthenelse{\equal{#3}{\empty}}{\points{[\qquad] von + #4 Punkten}}{\points{[\qquad] von #3 + #4 Punkten}}}\\\\
 	}
 	{\textbf{Task #1: #2}
 	\\
@@ -332,7 +332,7 @@
 	
 	\hfill \ifthenelse{\equal{#4}{\empty}}
 	{\points{[\qquad] of #3 Points}}
-	{\points{[\qquad] of #3 + #4 Points}}\\\\
+	{\ifthenelse{\equal{#3}{\empty}}{\points{[\qquad] of + #4 Points}}{\points{[\qquad] of #3 + #4 Points}}}\\\\
 	}
 }
 
@@ -375,16 +375,31 @@
 	\g@addto@macro{\PointArray}{#3+#1,}}
 }
 
+\newcommand{\additionalTask}[3]
+{
+	\g@addto@macro{\content}
+	{
+		\stepcounter{numberTask}
+		\Task{\thenumberTask}{#1}{\empty}{#2}{#3}
+	}
+	\stepcounter{totalNumber}
+	\addtolength{\numberAdditionalPoints}{#2 pt}
+	\g@addto@macro{\PointArray}{+#2,}
+}
+
+\newcommand{\additionalTaskNumbering}[3]
+{
+	\g@addto@macro{\content}
+	{
+		\stepcounter{numberTask}
+		\TaskNumbering{\thenumberTask}{#1}{\empty}{#2}{#3}
+	}
+	\stepcounter{totalNumber}
+	\addtolength{\numberAdditionalPoints}{#2 pt}
+	\g@addto@macro{\PointArray}{+#2,}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Neue subAufgabeK, das auch in der Lage ist ein [ ] von "gesamt" Punkten 		%
-% anzeigen kann																	%
-% Parameter #1: (Optional) Punkte												%
-% Parameter #2: Title der Aufgabe												%
-% Parameter #3: Inhalt der Aufgabe												%
-% z.B. : \subAufgabek[12]{Lösen sie: $x^{2}+3\cdot x + 2=0$}{$x_{1,2} = 		%
-%		  \frac{3}{2} \underset{-}{+}\sqrt{\frac{3}{2}^2 - 2}$}					%
-% z.B. : \subAufgabek{Lösen sie: $x^{2}+3\cdot x + 2=0$}{$x_{1,2} = 			%
-%		  \frac{3}{2} \underset{-}{+}\sqrt{\frac{3}{2}^2 - 2}$}					%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\question}[3][\empty]
 {
