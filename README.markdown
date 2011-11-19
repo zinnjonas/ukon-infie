@@ -19,14 +19,14 @@ feedback or send bug reports.
 
 \Names
 \Lecture
-\Semester (deprecated, use \Term instead) 
 \Term
 \task
 \taskNumbering
 \additionalTask
 \additionalTaskNumbering
 \question
-\Venn(2/Venn3)
+\Venn
+\bigVenn
 \loadSource
 \loadJava
 \loadCpp
