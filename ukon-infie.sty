@@ -86,6 +86,167 @@
 \newcounter{VennDiagrammB}
 \newcounter{VennDiagrammC}
 \newcounter{VennDiagrammD}
+\newcounter{VennDiagrammE}
+\newcounter{VennDiagrammF}
+\newcounter{VennDiagrammG}
+\newcounter{VennDiagrammH}
+
+\newcommandtwoopt{\bigVenn}[3][\empty][\empty]
+{
+\def\Source{A,B,C,U}
+\def\Kreisfarbe{red}
+
+\IfCharInString{,}{#1}
+{
+\def\Source{#1}
+}
+{
+\ifthenelse{\equal{#1}{}}{}
+{
+\def\Kreisfarbe{#1}
+}
+}
+
+\IfCharInString{,}{#2}
+{
+\def\Source{#2}
+}
+{
+\ifthenelse{\equal{#2}{}}{}
+{
+\def\Kreisfarbe{#2}
+}
+}
+
+\setcounter{VennDiagrammA}{#3/10000000}
+\setcounter{VennDiagrammB}{#3/1000000 -\theVennDiagrammA*10}
+\setcounter{VennDiagrammC}{#3/100000 -\theVennDiagrammA*100 - \theVennDiagrammB*10}
+\setcounter{VennDiagrammD}{#3/10000 -\theVennDiagrammA*1000 - \theVennDiagrammB*100 - \theVennDiagrammC*10}
+\setcounter{VennDiagrammE}{#3/1000 -\theVennDiagrammA*10000 - \theVennDiagrammB*1000 - \theVennDiagrammC*100 - \theVennDiagrammD*10}
+\setcounter{VennDiagrammF}{#3/100 -\theVennDiagrammA*100000 - \theVennDiagrammB*10000 - \theVennDiagrammC*1000 - \theVennDiagrammD*100 - \theVennDiagrammE*10}
+\setcounter{VennDiagrammG}{#3/10 -\theVennDiagrammA*1000000 - \theVennDiagrammB*100000 - \theVennDiagrammC*10000 - \theVennDiagrammD*1000 - \theVennDiagrammE*100 - \theVennDiagrammF*10}
+\setcounter{VennDiagrammH}{#3   -\theVennDiagrammA*10000000 - \theVennDiagrammB*1000000 - \theVennDiagrammC*100000 - \theVennDiagrammD*10000 - \theVennDiagrammE*1000 - \theVennDiagrammF*100 - \theVennDiagrammG*10}
+
+\begin{tikzpicture}
+%predefinition of nodes for clippings
+\node (rectLL) at (0,0) {};
+\node (rectUR) at (5,5) {};
+
+\node (centerA) at (1.75,1.875) {};
+\node (centerB) at (3.25,1.875) {};
+\node (centerC) at (2.5,3.25){};
+
+%A^c \cap B^C
+\ifthenelse{\theVennDiagrammA = 1}
+{
+\begin{scope}%[even odd rule]
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[\Kreisfarbe,rounded corners=10] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{}
+
+% A\setminus B \setminus C
+\ifthenelse{\theVennDiagrammB = 1}
+{
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{}
+
+% B \setminus A \setminus C
+\ifthenelse{\theVennDiagrammH = 1}
+{
+\begin{scope}
+\clip (centerB) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{}
+
+% C \setminus A \setminus B
+\ifthenelse{\theVennDiagrammF = 1}
+{
+\begin{scope}
+\clip (centerC) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}
+{}
+
+% A \cap B \setminus B
+\ifthenelse{\theVennDiagrammE = 1}
+{
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}{}
+
+% A \cap C \setminus B
+\ifthenelse{\theVennDiagrammC = 1}
+{
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerC) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}{}
+
+% B \cap C \setminus A
+\ifthenelse{\theVennDiagrammG = 1}
+{
+\begin{scope}
+\clip (centerB) circle (1.5);
+\clip (centerC) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}{}
+
+% A \cap B \cap C
+\ifthenelse{\theVennDiagrammD = 1}
+{
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5);
+\clip (centerC) circle (1.5);
+\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\end{scope}
+}{}
+
+%Venn-Diagramm: outlines
+\node (rectLL) at (rectLL) {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerA) at (centerA) [label=left:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerB) at (centerB) [label=right:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerC) at (centerC) [label=above:\TokenOne] {};
+\node (rectUR) at (rectUR) [label=below left:\TokenTwo] {};
+\draw[thick,rounded corners=10] (rectLL) rectangle (rectUR);
+\draw[thick] (centerA) circle (1.5);
+\draw[thick] (centerB) circle (1.5);
+\draw[thick] (centerC) circle (1.5);
+
+\end{tikzpicture}
+}
 
 \newcommandtwoopt{\Venn}[3][\empty][\empty]
 {
