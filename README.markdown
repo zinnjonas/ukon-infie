@@ -15,22 +15,21 @@ are integrated. So as always use at your own risk.
 Feel free to use the Issue feature of Github to request features or give us 
 feedback or send bug reports.
 
-# List of Commands:
+# List of Commands
 
-\Names
-\Lecture
-\Term
-\task
-\taskNumbering
-\additionalTask
-\additionalTaskNumbering
-\question
-\Venn
-\bigVenn
-\loadSource
-\loadJava
-\loadCpp
-
+* \Names
+* \Lecture
+* \Term
+* \task
+* \taskNumbering
+* \additionalTask
+* \additionalTaskNumbering
+* \question
+* \Venn
+* \bigVenn
+* \loadSource
+* \loadJava
+* \loadCpp
 
 # License
 
