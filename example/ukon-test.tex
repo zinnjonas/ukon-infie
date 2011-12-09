@@ -1,25 +1,25 @@
 \documentclass{scrartcl}
 \usepackage[de]{ukon-infie}
 
-\Names{Vorname Nachname, Vorname Nachname}
+\Names{Name 1, Name 2}
 \Lecture[Abk]{Fach - volle Länge}
 \Term{WS 2011/2012}
 
 \begin{document}
-    \begin{ukon-infie}[Abgabedatum]{\#}
+    \begin{ukon-infie}[Abgabedatum]{42}
 
-        \task{task}{10}{
+        \task{Venn Diagramme}{10}{
             \emph{Explain the differences, advantages and disadvantages between the following algorithms:}
             \begin{enumerate}
-            \question{question}{
-            answer
-            }
-            \end{enumerate}
+            %(a)
+            \question{Draw some Venn diagramms with 2 sets.}{
             \Venn[blue,green]{1200}
             \Venn[blue][A,B,C]{1100}
             \Venn[blue,green]{1120}
             \Venn[blue,red,green][A,B,U]{1231}
-            
+            }
+            %(b)
+            \question{Draw some Venn diagramms with 3 sets.}{
             \bigVenn[blue]{10000000}
             \bigVenn[blue]{11000000}
             \bigVenn[blue]{11100000}
@@ -28,23 +28,27 @@
             \bigVenn[blue,green]{11211100}
             \bigVenn[blue,green,red,yellow][A,R,G,U]{11312410}
             \bigVenn[blue,green,red,yellow]{11213141}
-            \newpage
+            }
+            \newpage %this newpage must be used inside exercises
+            \question{Do some examples with some source code.}{
             \loadCpp{hello_world.cpp}
             \loadJava{hello_world}
             \loadSource{python}{hello_world.py}
+            }
+            \end{enumerate}
         }
         
-        \newPage
+        \newPage %this newPage must be used between exercises
         
-	\additionalTask{additional Task}{5.5}{
-	\red{rote Schrift} \\
-	\blue{blaue Schrift} \\
-	\green{grüne Schrift} \\
-	\yellow{gelbe Schrift} \\
-	\darkRed{dunkelrote Schrift} \\
-	\darkBlue{dunkelblaue Schrift} \\
-	\darkGreen{dunkelgrüne Schrift} \\
-	\darkYellow{dunkelgelbe Schrift} \\
+	\additionalTask{Do some colorfull text and symbol stuff.}{5.5}{
+	\red{red text} \\
+	\blue{blue text} \\
+	\green{green Schrift} \\
+	\yellow{yelllow text} \\
+	\darkRed{dark red text} \\
+	\darkBlue{dark blue text} \\
+	\darkGreen{dark green text} \\
+	\darkYellow{dark yellow text} \\
 	\correct \\
 	\wrong
 	}
