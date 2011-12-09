@@ -30,6 +30,19 @@ feedback or send bug reports.
 * \loadSource
 * \loadJava
 * \loadCpp
+* \correct
+* \wrong
+
+## Colors
+
+* \red
+* \blue
+* \green
+* \yellow
+* \darkRed
+* \darkBlue
+* \darkGreen
+* \darkYellow
 
 # License
 
