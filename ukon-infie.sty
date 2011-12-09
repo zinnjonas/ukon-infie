@@ -91,32 +91,16 @@
 \newcounter{VennDiagrammG}
 \newcounter{VennDiagrammH}
 
+\newcounter{againATemp}
+
 \newcommandtwoopt{\bigVenn}[3][\empty][\empty]
 {
-\def\Source{A,B,C,U}
+\def\Source{A,B,U}
 \def\Kreisfarbe{red}
+\def\Color{}
 
-\IfCharInString{,}{#1}
-{
-\def\Source{#1}
-}
-{
-\ifthenelse{\equal{#1}{}}{}
-{
-\def\Kreisfarbe{#1}
-}
-}
-
-\IfCharInString{,}{#2}
-{
 \def\Source{#2}
-}
-{
-\ifthenelse{\equal{#2}{}}{}
-{
-\def\Kreisfarbe{#2}
-}
-}
+\def\Kreisfarbe{#1}
 
 \setcounter{VennDiagrammA}{#3/10000000}
 \setcounter{VennDiagrammB}{#3/1000000 -\theVennDiagrammA*10}
@@ -137,94 +121,182 @@
 \node (centerC) at (2.5,3.25){};
 
 %A^c \cap B^C
-\ifthenelse{\theVennDiagrammA = 1}
+\ifthenelse{\theVennDiagrammA > 0}
 {
 \begin{scope}%[even odd rule]
 \clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[\Kreisfarbe,rounded corners=10] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammA}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[\TokenOne,rounded corners=10] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {}
 
 % A\setminus B \setminus C
-\ifthenelse{\theVennDiagrammB = 1}
+\ifthenelse{\theVennDiagrammB > 0}
 {
 \begin{scope}
 \clip (centerA) circle (1.5);
 \clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammB}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {}
 
 % B \setminus A \setminus C
-\ifthenelse{\theVennDiagrammH = 1}
+\ifthenelse{\theVennDiagrammH > 0}
 {
 \begin{scope}
 \clip (centerB) circle (1.5);
 \clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammH}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {}
 
 % C \setminus A \setminus B
-\ifthenelse{\theVennDiagrammF = 1}
+\ifthenelse{\theVennDiagrammF > 0}
 {
 \begin{scope}
 \clip (centerC) circle (1.5);
 \clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammF}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {}
 
 % A \cap B \setminus B
-\ifthenelse{\theVennDiagrammE = 1}
+\ifthenelse{\theVennDiagrammE > 0}
 {
 \begin{scope}
 \clip (centerA) circle (1.5);
 \clip (centerB) circle (1.5) (rectLL);
 \clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammE}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
 
 % A \cap C \setminus B
-\ifthenelse{\theVennDiagrammC = 1}
+\ifthenelse{\theVennDiagrammC > 0}
 {
 \begin{scope}
 \clip (centerA) circle (1.5);
 \clip (centerC) circle (1.5);
 \clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammC}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
 
 % B \cap C \setminus A
-\ifthenelse{\theVennDiagrammG = 1}
+\ifthenelse{\theVennDiagrammG > 0}
 {
 \begin{scope}
 \clip (centerB) circle (1.5);
 \clip (centerC) circle (1.5);
 \clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammG}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
 
 % A \cap B \cap C
-\ifthenelse{\theVennDiagrammD = 1}
+\ifthenelse{\theVennDiagrammD > 0}
 {
 \begin{scope}
 \clip (centerA) circle (1.5);
 \clip (centerB) circle (1.5);
 \clip (centerC) circle (1.5);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammD}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
 
@@ -253,28 +325,10 @@
 
 \def\Source{A,B,U}
 \def\Kreisfarbe{red}
+\def\Color{}
 
-\IfCharInString{,}{#1}
-{
-\def\Source{#1}
-}
-{
-\ifthenelse{\equal{#1}{}}{}
-{
-\def\Kreisfarbe{#1}
-}
-}
-
-\IfCharInString{,}{#2}
-{
 \def\Source{#2}
-}
-{
-\ifthenelse{\equal{#2}{}}{}
-{
-\def\Kreisfarbe{#2}
-}
-}
+\def\Kreisfarbe{#1}
 
 \setcounter{VennDiagrammA}{#3/1000}
 \setcounter{VennDiagrammB}{#3/100 - \theVennDiagrammA*10}
@@ -289,48 +343,92 @@
 \node (centerB) at (3.25,1.875) {};
 
 %A \cap B
-\ifthenelse{\theVennDiagrammC = 1}
+\ifthenelse{\theVennDiagrammC > 0}
 {
 \begin{scope}
 \clip (centerA) circle (1.5);
 \clip (centerB) circle (1.5);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammC}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}{
+\let\Color\TokenTwo 
+\stepcounter{againATemp}}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {
 }
 
 %A^c \cap B^C
-\ifthenelse{\theVennDiagrammA = 1}
+\ifthenelse{\theVennDiagrammA > 0}
 {
 \begin{scope}%[even odd rule]
 \clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
 \clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
-\fill[color=\Kreisfarbe,rounded corners=10] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammA}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne,rounded corners=10] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {
 }
 
 %A\setminus B
-\ifthenelse{\theVennDiagrammB = 1}
+\ifthenelse{\theVennDiagrammB > 0}
 {
 \begin{scope}[even odd rule]
 \clip (centerA) circle (1.5) (centerB) circle (1.5);
 \clip (centerA) circle (1.5);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammB}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {
 }
 
 %B\setminus A
-\ifthenelse{\theVennDiagrammD = 1}
+\ifthenelse{\theVennDiagrammD > 0}
 {
 \begin{scope}[even odd rule]
 \clip (centerA) circle (1.5) (centerB) circle (1.5);
 \clip (centerB) circle (1.5);
-\fill[color=\Kreisfarbe] (rectLL) rectangle (rectUR);
+\setcounter{againATemp}{1}
+\let\Color\Kreisfarbe
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\let\Color\TokenTwo
+\whiledo{\theagainATemp < \theVennDiagrammD}
+{
+\GetTokens{TokenOne}{TokenTwo}{\Color}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo}
+\stepcounter{againATemp}
+}
+\fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
 {
