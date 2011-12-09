@@ -95,12 +95,11 @@
 
 \newcommandtwoopt{\bigVenn}[3][\empty][\empty]
 {
-\def\Source{A,B,U}
-\def\Kreisfarbe{red}
 \def\Color{}
-
-\def\Source{#2}
-\def\Kreisfarbe{#1}
+\ifthenelse{\equal{#1}{\empty}}{\def\Kreisfarbe{red}}
+{\def\Kreisfarbe{#1}}
+\ifthenelse{\equal{#2}{\empty}}{\def\Source{A,B,C,U}}
+{\def\Source{#2}}
 
 \setcounter{VennDiagrammA}{#3/10000000}
 \setcounter{VennDiagrammB}{#3/1000000 -\theVennDiagrammA*10}
@@ -138,6 +137,8 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\typeout{\TokenOne}
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[\TokenOne,rounded corners=10] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -161,6 +162,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -184,6 +186,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -207,6 +210,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -230,6 +234,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
@@ -252,6 +257,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
@@ -274,6 +280,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
@@ -296,6 +303,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }{}
@@ -327,8 +335,10 @@
 \def\Kreisfarbe{red}
 \def\Color{}
 
-\def\Source{#2}
-\def\Kreisfarbe{#1}
+\ifthenelse{\equal{#1}{\empty}}{}
+{\def\Kreisfarbe{#1}}
+\ifthenelse{\equal{#2}{\empty}}{}
+{\def\Source{#2}}
 
 \setcounter{VennDiagrammA}{#3/1000}
 \setcounter{VennDiagrammB}{#3/100 - \theVennDiagrammA*10}
@@ -355,10 +365,11 @@
 \whiledo{\theagainATemp < \theVennDiagrammC}
 {
 \GetTokens{TokenOne}{TokenTwo}{\Color}
-\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}{
-\let\Color\TokenTwo 
-\stepcounter{againATemp}}
+\ifthenelse{\equal{\TokenTwo}{\empty}}{\let\TokenOne\Color}
+{\let\Color\TokenTwo }
+\stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -382,6 +393,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne,rounded corners=10] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -405,6 +417,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
@@ -428,6 +441,7 @@
 {\let\Color\TokenTwo}
 \stepcounter{againATemp}
 }
+\ifthenelse{\equal{\TokenOne}{\empty}}{\let\TokenOne\Kreisfarbe}{}
 \fill[color=\TokenOne] (rectLL) rectangle (rectUR);
 \end{scope}
 }
