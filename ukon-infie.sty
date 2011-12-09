@@ -751,9 +751,13 @@
 \xdefinecolor{dunkelGruen}{HTML}{007D00}
 \xdefinecolor{dunkelBlau}{HTML}{0000A0}
 \xdefinecolor{dunkelRot}{HTML}{A00000}
-\colorlet{dGruen}{dunkelGruen}
-\colorlet{dBlau}{dunkelBlau}
-\colorlet{dRot}{dunkelRot}
+\xdefinecolor{dunkelGelb}{HTML}{FFAA00}
+\xdefinecolor{hellGelb}{HTML}{FFCC00}
+\colorlet{dGreen}{dunkelGruen}
+\colorlet{dBlue}{dunkelBlau}
+\colorlet{dRed}{dunkelRot}
+\colorlet{dYellow}{dunkelGelb}
+\colorlet{lYellow}{hellGelb}
 
 \lstset
 {
@@ -761,9 +765,9 @@
 	numbers=left, % Position der Zeilennummerierung
 	firstnumber=auto, % Erste Zeilennummer
 	basicstyle=\ttfamily, % Textgröße des Standardtexts
-	keywordstyle=\ttfamily\color{dRot}, % Formattierung Schlüsselwörter
-	commentstyle=\ttfamily\color{dGruen}, % Formattierung Kommentar
-	stringstyle=\ttfamily\color{dBlau}, % Formattierung Strings
+	keywordstyle=\ttfamily\color{dRed}, % Formattierung Schlüsselwörter
+	commentstyle=\ttfamily\color{dGreen}, % Formattierung Kommentar
+	stringstyle=\ttfamily\color{dBlue}, % Formattierung Strings
 	numberstyle=\tiny, % Textgröße der Zeilennummern
 	stepnumber=1, % Angezeigte Zeilennummern
 	numbersep=5pt, % Abstand zw. Zeilennummern und Code
@@ -811,3 +815,48 @@
 {
 	\lstinputlisting[language=#1]{#2}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehle für Farben
+%		z.B.: \tred{Beispieltext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\red}[1]
+{
+	\textcolor{red}{#1}
+}
+\newcommand{\blue}[1]
+{
+	\textcolor{blue}{#1}
+}
+\newcommand{\green}[1]
+{
+	\textcolor{green}{#1}
+}
+\newcommand{\darkRed}[1]
+{
+	\textcolor{dRed}{#1}
+}
+\newcommand{\darkBlue}[1]
+{
+	\textcolor{dBlue}{#1}
+}
+\newcommand{\darkGreen}[1]
+{
+	\textcolor{dGreen}{#1}
+}
+\newcommand{\darkYellow}[1]
+{
+	\textcolor{dYellow}{#1}
+}
+\newcommand{\yellow}[1]
+{
+	\textcolor{lYellow}{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehle zum Erzeugen eines grünen Hakens, roten Xes, bzw eines gelben Blitzes für Text und einen für Mathemodus
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\correct}{\green{\text{\ding{52}}}} %for use in text and math
+\newcommand{\wrong}{\red{\text{\ding{56}}}} %for use in text
+\newcommand{\tflash}{$\yellow{\lightning}$} %for use in text
+\newcommand{\mflash}{\yellow{\lightning}} %for use in math
