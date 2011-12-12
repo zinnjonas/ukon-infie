@@ -46,8 +46,9 @@ feedback or send bug reports.
 
 # License
 
-This work is licensed under a Creative Commons 
+This work is licensed under the Creative Commons 
 Attribution-NonCommercial-ShareAlike 3.0 Germany License.
+The licence can be found at https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
 
 # Other
 
