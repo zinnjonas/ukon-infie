@@ -700,7 +700,7 @@
 \newcommand{\group}[2]
 {
 	\lfoot{#1}
-	\cfoot{\thepage\ of \pageref{LastPage}}
+	\cfoot{\thepage\ \ifthenelse{\equal{\german}{1}}{von}{of} \pageref{LastPage}}
 	\rfoot{#2}
 }
 
