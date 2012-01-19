@@ -56,6 +56,37 @@
 \usepackage{forloop}
 \usepackage{lastpage}
 \usepackage{stmaryrd} %u.a. für \lightning
+\usepackage{algorithm,algorithmic} % Packete für Algorithmus umgebungen. 
+% z.B. kann jemand der mag in die Beispiele kopieren
+%\begin{algorithm}
+%	\caption{Senke}
+%	\begin{algorithmic}
+%	\STATE \textbf{Eingabe} : Graph $G = (V,E)$, Knoten $v \in V$
+%	\STATE \textbf{Daten} : Knotenwarteschlange Q, BesuchteknotenListe L.
+%	\STATE \textbf{Ausgabe}: isSenke (anfänglich \textbf{false})
+%	\STATE BFS[v] $\leftarrow$ 0
+%	\STATE L fügeAn $v$; enqueue Q $\leftarrow$ s
+%	\WHILE{Q nicht leer}
+%		\STATE dequeue $v \leftarrow Q$
+%		\FOR{unmarkierte Kante $\{v,w\} \in E$}
+%			\STATE makiere \{v,w\}
+%			\IF{w  nicht markiert}
+%				\STATE BFS[w] $\leftarrow$ BFS[v]+1
+%				\STATE markiere w; enqueue Q $\leftarrow$ w
+%				\STATE L fügeAn $w$
+%				\STATE \textbf{parent[w]} $\leftarrow$ v
+%			\ENDIF
+%		\ENDFOR
+%	\ENDWHILE
+%	\FORALL{ $i \in V$}
+%		\IF{$i \not \in L$}
+%			\RETURN False
+%		\ENDIF
+%	\ENDFOR
+%	\RETURN True;
+%	\end{algorithmic}
+%\end{algorithm}
+%
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
