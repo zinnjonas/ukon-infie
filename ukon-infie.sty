@@ -16,6 +16,7 @@
 \def\german{0}
 
 \DeclareOption{de}{\edef\german{1}}
+\DeclareOption{en}{\edef\german{0}}
 
 \ProcessOptions
 
@@ -42,7 +43,7 @@
 \usepackage{marvosym} % für stopsign etc...
 \usepackage{microtype} % div. Verbesserungen des Schriftsatzes (Grauwert, opt. Randausgleich, Zeilenumbruch)
 \usepackage{multirow}
-\usepackage[ngerman]{babel} % Neue Rechtschreibung
+\usepackage[ngerman,english]{babel} % Neue Rechtschreibung
 \usepackage{pifont} %für die Dings zeichen
 \usepackage[sans]{dsfont} %für alternative Mengensymbole
 \usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
@@ -57,6 +58,9 @@
 \usepackage{lastpage}
 \usepackage{stmaryrd} %u.a. für \lightning
 \usepackage{algorithm,algorithmic} % Packete für Algorithmus umgebungen. 
+
+\usepackage{enumerate}
+
 % z.B. kann jemand der mag in die Beispiele kopieren
 %\begin{algorithm}
 %	\caption{Senke}
@@ -622,34 +626,47 @@
 	\mbox{\ } \hfill {\bf #1}
 }
 
-\newcommand{\TaskNumbering}[5]
+\newcommand{\TaskNumbering}[6][\empty]
 {
-	\bigskip
+	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip}
 	\ifthenelse{\equal{\german}{1}}
-	{\textbf{Aufgabe #1: #2}
+	{\textbf{Aufgabe #2: #3}
 	\\
-	#5
+	#6
 
-	\hfill \ifthenelse{\equal{#4}{\empty}}
-	{\points{[\qquad] von #3 Punkten}}
-	{\ifthenelse{\equal{#3}{\empty}}{\points{[\qquad] von + #4 Punkten}}{\points{[\qquad] von #3 + #4 Punkten}}}\\\\
+	\hfill \ifthenelse{\equal{#5}{\empty}}
+	{\points{[\qquad] von #4 Punkten}}
+	{\ifthenelse{\equal{#4}{\empty}}{\points{[\qquad] von + #5 Punkten}}{\points{[\qquad] von #4 + #5 Punkten}}}\\\\
 	}
-	{\textbf{Exercise #1: #2}
-	\\
-	#5
+	{\textbf{Exercise #2: #3}%
+%	\\
+	#6
 
-	\hfill \ifthenelse{\equal{#4}{\empty}}
-	{\points{[\qquad] of #3 Points}}
-	{\ifthenelse{\equal{#3}{\empty}}{\points{[\qquad] of + #4 Points}}{\points{[\qquad] of #3 + #4 Points}}}\\\\
+	\hfill \ifthenelse{\equal{#5}{\empty}}
+	{\points{[\qquad] of #4 Points}}
+	{\ifthenelse{\equal{#4}{\empty}}{\points{[\qquad] of + #5 Points}}{\points{[\qquad] of #4 + #5 Points}}}\\\\
 	}
 }
+
+%\newcommand{\test}
+%{
+%\g@addto@macro{\content}
+%	{
+%		\stepcounter{numberTask}
+%		
+%	}
+%	\addtolength{\numberPointsTotal}{#3 pt}
+%	\stepcounter{totalNumber}
+%	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
+%	\g@addto@macro{\PointArray}{#3+#1,}}
+%}
 
 \newcommand{\exerciseNumbering}[4][\empty]
 {
 	\g@addto@macro{\content}
 	{
 		\stepcounter{numberTask}
-		\TaskNumbering{\thenumberTask}{#2}{#3}{#1}{#4}
+		\TaskNumbering[1]{\thenumberTask}{#2}{#3}{#1}{#4}
 	}
 	\addtolength{\numberPointsTotal}{#3 pt}
 	\stepcounter{totalNumber}
@@ -784,6 +801,9 @@
 
 \newenvironment{ukon-infie}[2][\empty]
 {
+	
+	\ifthenelse{\equal{\german}{1}}{\selectlanguage{ngerman}}{}
+	
 	\setcounter{exerciseNumber}{#2}
 	\g@addto@macro{\deadline}{#1}
 }
