@@ -20,7 +20,7 @@
 
 \ProcessOptions
 
-\ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
+\ProvidesPackage{test}[2011/10/16 2.1 test Package]
 
 \usepackage{amsmath} % Verbesserter Mathesatz
 \usepackage{amsthm} % Normaler Mathesatz
@@ -61,37 +61,6 @@
 
 \usepackage{enumerate}
 
-% z.B. kann jemand der mag in die Beispiele kopieren
-%\begin{algorithm}
-%	\caption{Senke}
-%	\begin{algorithmic}
-%	\STATE \textbf{Eingabe} : Graph $G = (V,E)$, Knoten $v \in V$
-%	\STATE \textbf{Daten} : Knotenwarteschlange Q, BesuchteknotenListe L.
-%	\STATE \textbf{Ausgabe}: isSenke (anfänglich \textbf{false})
-%	\STATE BFS[v] $\leftarrow$ 0
-%	\STATE L fügeAn $v$; enqueue Q $\leftarrow$ s
-%	\WHILE{Q nicht leer}
-%		\STATE dequeue $v \leftarrow Q$
-%		\FOR{unmarkierte Kante $\{v,w\} \in E$}
-%			\STATE makiere \{v,w\}
-%			\IF{w  nicht markiert}
-%				\STATE BFS[w] $\leftarrow$ BFS[v]+1
-%				\STATE markiere w; enqueue Q $\leftarrow$ w
-%				\STATE L fügeAn $w$
-%				\STATE \textbf{parent[w]} $\leftarrow$ v
-%			\ENDIF
-%		\ENDFOR
-%	\ENDWHILE
-%	\FORALL{ $i \in V$}
-%		\IF{$i \not \in L$}
-%			\RETURN False
-%		\ENDIF
-%	\ENDFOR
-%	\RETURN True;
-%	\end{algorithmic}
-%\end{algorithm}
-%
-
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
@@ -102,12 +71,13 @@
 \oddsidemargin -0.1cm
 
 \newcommand{\PointArray}{}
-\newcommand{\content}{}
-\newcommand{\deadline}{}
-\newcommand{\name}{}
-\newcommand{\semester}{}
-\newcommand{\lecture}{}
-\newcommand{\lectureshort}{}
+\def\content{}
+\def\deadline{}
+\def\name{}
+\def\semester{}
+\def\lecture{}
+\def\lectureshort{}
+\def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
 
 \newcounter{exerciseNumber}
 \newcounter{numberTask}
@@ -503,19 +473,22 @@
 \end{tikzpicture}
 }
 
+\newcounter{anzPunkteGesamt}
+\newboolean{boolvar} %Deklaration
+\newcounter{tPunkteG}
+\newlength{\firstlen}
+\newcounter{anzAdditionalTotal}
+\newcounter{aPunkteG}
+
 \newcommand{\pointsTable}
 {
 
 \setcounter{moveToPointTable}{0}
 \setcounter{linePointTable}{0}
 \def\tempArray{0}
-\newboolean{boolvar} %Deklaration
 \setboolean{boolvar}{true} %Zuweisung
-\newcounter{anzPunkteGesamt}
 \setcounter{anzPunkteGesamt}{0}
-\newcounter{tPunkteG}
 \setcounter{tPunkteG}{0}
-\newlength{\firstlen}
 \setlength{\firstlen}{\theanzPunkteGesamt.\thetPunkteG pt}
 \ifdim\firstlen=\numberPointsTotal
 	\setboolean{boolvar}{false} %Zuweisung
@@ -533,8 +506,6 @@
 	\setboolean{boolvar}{false} %Zuweisung
 \fi
 }
-\newcounter{anzAdditionalTotal}
-\newcounter{aPunkteG}
 \setcounter{anzAdditionalTotal}{0}
 \setcounter{aPunkteG}{0}
 \setboolean{boolvar}{true}
@@ -621,16 +592,205 @@
 \end{center}
 }
 
-\newcommand{\points}[1]
+
+\def\White(#1){\xWhite#1,xxx,}
+\def\endpiece{xxx}
+
+\def\xWhite#1,{\def\temp{#1}%
+\ifx\temp\endpiece
+\else \WhitePieceOrPawn#1XY%
+	\expandafter\xWhite
+\fi%
+}
+
+\def\WhitePieceOrPawn#1#2#3#4Y{
+	\if#3X \WhitePiece{P}#1,#2%
+	\else \WhitePiece{#1}#2,#3%
+\fi}
+
+\def\WhitePiece#1#2,#3{
+\if#1P\expandafter Bauer %
+\else #1 %
+\fi%
+auf (#2,#3)%
+}
+
+\newread\topraux
+\newwrite\topwaux
+
+\def\topfilecheck#1%
+{%
+       \openin\topraux=#1\relax
+       \ifeof\topraux
+            \closein\topraux
+       \else
+            \input{#1}
+       \fi
+ }
+\def\topwrite#1
 {
-	\mbox{\ } \hfill {\bf #1}
+       \openout\topwaux=#1\relax
+}
+
+\newcommand{\auxlist}{\jobname.top}
+
+\def\OpenRead{%
+\topfilecheck\auxlist%
+}
+
+\def\OpenWrite{
+\topwrite\auxlist%
+}
+
+\def\currentTextTemplatePoints{}
+
+\def\WriteFiles#1,#2{%
+\setboolean{boolvar}{true} %Zuweisung
+\setcounter{anzPunkteGesamt}{0}
+\setcounter{tPunkteG}{0}
+\setlength{\firstlen}{\theanzPunkteGesamt.\thetPunkteG pt}
+\ifdim\firstlen=\numberPointsTotal
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+\whiledo {\boolean{boolvar}}%
+{
+\stepcounter{tPunkteG}
+\ifthenelse{\thetPunkteG > 9}
+{
+	\setcounter{tPunkteG}{0}
+	\stepcounter{anzPunkteGesamt}
+}{}
+\setlength{\firstlen}{\theanzPunkteGesamt.\thetPunkteG pt}
+\ifdim\firstlen=\numberPointsTotal
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+}
+\setcounter{anzAdditionalTotal}{0}
+\setcounter{aPunkteG}{0}
+\setboolean{boolvar}{true}
+\setlength{\firstlen}{\theanzAdditionalTotal.\theaPunkteG pt}
+\ifdim\firstlen=\numberAdditionalPoints
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+\whiledo {\boolean{boolvar}}%
+{
+\stepcounter{aPunkteG}
+\ifthenelse{\theaPunkteG > 9}
+{
+	\setcounter{aPunkteG}{0}
+	\stepcounter{anzAdditionalTotal}
+}{}
+\setlength{\firstlen}{\theanzAdditionalTotal.\theaPunkteG pt}
+\ifdim\firstlen=\numberAdditionalPoints
+	\setboolean{boolvar}{false} %Zuweisung
+\fi
+}
+
+\message{Mh es ist nun \theanzPunkteGesamt.\thetPunkteG}%
+\write\topwaux{%
+\noexpand\setlength{\noexpand\numberPointsTotal}{\theanzPunkteGesamt.\thetPunkteG pt}
+}
+\write\topwaux{%
+\csname setcounter{numberTask}{\thetotalNumber}\endcsname
+}
+\write\topwaux{%
+\csname setcounter{totalNumber}{\thetotalNumber}\endcsname
+}
+\edef\currentTextTemplatePoints{\the\numberAdditionalPoints}
+\write\topwaux{%
+\noexpand\setlength{\csname numberAdditionalPoints\endcsname}{\theanzAdditionalTotal.\theaPunkteG pt}
+}
+\write\topwaux{%
+\noexpand\renewcommand{\noexpand\PointArray}{\PointArray}
+} }
+
+\def\CloseAuxFiles{%
+\closein\topraux%
+\closeout\topwaux%
+}
+
+\newcommand{\Lecture}[2][\empty]
+{
+	\ifthenelse{\equal{#1}{\empty}}
+	{\edef\lecture{#2}
+	 \edef\lectureshort{#2}}
+	{\edef\lecture{#2}
+	 \edef\lectureshort{#1}}
+}
+
+\newcommand{\group}[2]
+{
+	\lfoot{#1}
+	\cfoot{\thepage\ \ifthenelse{\equal{\german}{1}}{von}{of} \pageref{LastPage}}
+	\rfoot{#2}
+}
+
+\newcommand{\Title}[1]
+{
+	\begin{center}
+	{
+		\Large\bf #1
+	}
+	\end{center}
+}
+
+\newcommand{\header}
+{
+	{\footnotesize \parindent0em
+		{\sc Universität Konstanz}                \hfill \lecture\par
+		{\sc \fachbereich} \hfill \semester \par
+		\name \hfill \today\par
+		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
+	}
+}
+
+\newcommand{\Header}
+{
+	\group{\name}{\lectureshort\ –\ \theexerciseNumber}
+	\header
+	\ifthenelse{\equal{\deadline}{\empty}}{}{\begin{center}\ifthenelse{\equal{\german}{1}}{\textit{Abgabe: \deadline}}{\textit{Deadline: \deadline}}\end{center}}
+	\pointsTable
+}
+
+\newenvironment{ukon-infie}[2][\empty]
+{
+	\OpenRead
+	\ifthenelse{\equal{\german}{1}}{\selectlanguage{ngerman}}{}
+	\edef\deadline{#1}
+	\setcounter{exerciseNumber}{#2}
+	\Header
+	\setlength{\numberPointsTotal}{0.0 pt}
+	\setcounter{numberTask}{0}
+	\setcounter{totalNumber}{0}
+	\setlength {\numberAdditionalPoints }{0.0pt} 
+	\renewcommand {\PointArray }{} 
+}
+{
+	\OpenWrite
+	\WriteFiles\thetotalNumber,{\the\numberPointsTotal}
+	\CloseAuxFiles
+}
+
+\newcommand{\Names}[1]
+{
+\edef\name{#1}
+}
+
+\newcommand{\Term}[1]
+{
+\edef\semester{#1}
+}
+
+\newcommand{\Fachbereich}[1]
+{
+\edef\fachberich{#1}
 }
 
 \newcommand{\TaskNumbering}[6][\empty]
 {
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip}
 	\ifthenelse{\equal{\german}{1}}
-	{\textbf{Aufgabe #2: #3}
+	{\noindent\textbf{Aufgabe #2: #3}
 	\\
 	#6
 
@@ -638,7 +798,7 @@
 	{\points{[\qquad] von #4 Punkten}}
 	{\ifthenelse{\equal{#4}{\empty}}{\points{[\qquad] von + #5 Punkten}}{\points{[\qquad] von #4 + #5 Punkten}}}\\\\
 	}
-	{\textbf{Exercise #2: #3}%
+	{\noindent\textbf{Exercise #2: #3}%
 	\\
 	#6
 
@@ -648,26 +808,18 @@
 	}
 }
 
-%\newcommand{\test}
-%{
-%\g@addto@macro{\content}
-%	{
-%		\stepcounter{numberTask}
-%		
-%	}
-%	\addtolength{\numberPointsTotal}{#3 pt}
-%	\stepcounter{totalNumber}
-%	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
-%	\g@addto@macro{\PointArray}{#3+#1,}}
-%}
+\newcommand{\points}[1]
+{
+	\mbox{\ } \hfill {\bf #1}
+}
 
 \newcommand{\exerciseNumbering}[4][\empty]
 {
-	\g@addto@macro{\content}
-	{
+%	\g@addto@macro{\content}
+%	{
 		\stepcounter{numberTask}
-		\TaskNumbering[1]{\thenumberTask}{#2}{#3}{#1}{#4}
-	}
+		\TaskNumbering{\thenumberTask}{#2}{#3}{#1}{#4}
+%	}
 	\addtolength{\numberPointsTotal}{#3 pt}
 	\stepcounter{totalNumber}
 	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
@@ -676,11 +828,11 @@
 
 \newcommand{\Task}[5]
 {
-	\renewcommand{\theenumi}{\alph{enumi}} %erste Ebene wird alphabetisch gesetzt
+	\renewcommand{\theenumi}{\alph{enumi}} %erste Ebene wird alphabetisch gesetzts
   	\renewcommand{\labelenumi}{(\theenumi)} %zu faul zum nachschauen, aber wohl wichtig
   	\renewcommand{\theenumii}{\roman{enumii}} %zweite Ebene wird römisch gesetzt
   	\renewcommand{\labelenumii}{\theenumii.} %zu faul zum nachschauen, aber wohl wichtig
-  	\TaskNumbering{#1}{#2}{#3}{#4}{\\#5}
+  	\TaskNumbering{#1}{#2}{#3}{#4}{#5}
   	\renewcommand{\theenumi}{\arabic{enumi}} %erste Ebene zurücksetzen auf arabisch
   	\renewcommand{\labelenumi}{\theenumi.} %zu faul zum nachschauen, aber wohl wichtig
   	\renewcommand{\theenumii}{\alph{enumii}} %zweite Ebene zurücksetzen auf alpha
@@ -689,11 +841,11 @@
 
 \newcommand{\exercise}[4][\empty]
 {
-	\g@addto@macro{\content}
-	{
+%	\g@addto@macro{\content}
+%	{
 		\stepcounter{numberTask}
 		\Task{\thenumberTask}{#2}{#3}{#1}{#4}
-	}
+%	}
 	\addtolength{\numberPointsTotal}{#3 pt}
 	\stepcounter{totalNumber}
 	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
@@ -702,11 +854,11 @@
 
 \newcommand{\additionalExercise}[3]
 {
-	\g@addto@macro{\content}
-	{
+%	\g@addto@macro{\content}
+%	{
 		\stepcounter{numberTask}
 		\Task{\thenumberTask}{#1}{\empty}{#2}{#3}
-	}
+%	}
 	\stepcounter{totalNumber}
 	\addtolength{\numberAdditionalPoints}{#2 pt}
 	\g@addto@macro{\PointArray}{+#2,}
@@ -714,11 +866,11 @@
 
 \newcommand{\additionalExerciseNumbering}[3]
 {
-	\g@addto@macro{\content}
-	{
+%	\g@addto@macro{\content}
+%	{
 		\stepcounter{numberTask}
 		\TaskNumbering{\thenumberTask}{#1}{\empty}{#2}{#3}
-	}
+%	}
 	\stepcounter{totalNumber}
 	\addtolength{\numberAdditionalPoints}{#2 pt}
 	\g@addto@macro{\PointArray}{+#2,}
@@ -745,77 +897,6 @@
 	}
 }
 
-\newcommand{\group}[2]
-{
-	\lfoot{#1}
-	\cfoot{\thepage\ \ifthenelse{\equal{\german}{1}}{von}{of} \pageref{LastPage}}
-	\rfoot{#2}
-}
-
-\newcommand{\Title}[1]
-{
-	\begin{center}
-	{
-		\Large\bf #1
-	}
-	\end{center}
-}
-
-\newcommand{\header}[1]
-{
-	{\footnotesize \parindent0em
-		{\sc Universität Konstanz}                \hfill #1 \\
-		{\sc Fachbereich Informatik \& Informationswissenschaft} \hfill \semester \\
-		\name \hfill \today\\
-		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
-	}
-}
-
-\newcommand{\Lecture}[2][\empty]
-{
-	\ifthenelse{\equal{#1}{\empty}}
-	{\g@addto@macro{\lecture}{#2}
-	 \g@addto@macro{\lectureshort}{#2}}
-	{\g@addto@macro{\lecture}{#2}
-	 \g@addto@macro{\lectureshort}{#1}}
-	\typeout{test}
-}
-
-\newcommand{\Header}
-{
-	\group{\name}{\lectureshort\ –\ \theexerciseNumber}
-	\header{\lecture}
-	\ifthenelse{\equal{\deadline}{\empty}}{}{\ifthenelse{\equal{\german}{1}}{\hfill \textit{Abgabe: \deadline}\hfill}{\hfill \textit{Deadline: \deadline}\hfill}}
-	\pointsTable
-}
-
-\newcommand{\Names}[1]
-{
-\g@addto@macro{\name}{#1}
-}
-
-\newcommand{\Term}[1]
-{
-\g@addto@macro{\semester}{#1}
-}
-
-\newenvironment{ukon-infie}[2][\empty]
-{
-	
-	\ifthenelse{\equal{\german}{1}}{\selectlanguage{ngerman}}{}
-	
-	\setcounter{exerciseNumber}{#2}
-	\g@addto@macro{\deadline}{#1}
-}
-{
-	\Header
-	\content
-}
-
-\newcommand{\newPage}
-{
-\g@addto@macro{\content}{\newpage}
-}
 
 \xdefinecolor{dunkelGruen}{HTML}{007D00}
 \xdefinecolor{dunkelBlau}{HTML}{0000A0}
@@ -929,3 +1010,5 @@
 \newcommand{\wrong}{\red{\text{\ding{56}}}} %for use in text
 \newcommand{\tflash}{$\yellow{\lightning}$} %for use in text
 \newcommand{\mflash}{\yellow{\lightning}} %for use in math
+
+
