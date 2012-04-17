@@ -752,6 +752,11 @@ auf (#2,#3)%
 	\pointsTable
 }
 
+\newcommand{\newPage}
+{
+\newpage
+}
+
 \newenvironment{ukon-infie}[2][\empty]
 {
 	\OpenRead
@@ -815,11 +820,8 @@ auf (#2,#3)%
 
 \newcommand{\exerciseNumbering}[4][\empty]
 {
-%	\g@addto@macro{\content}
-%	{
-		\stepcounter{numberTask}
-		\TaskNumbering{\thenumberTask}{#2}{#3}{#1}{#4}
-%	}
+	\stepcounter{numberTask}
+	\TaskNumbering{\thenumberTask}{#2}{#3}{#1}{#4}
 	\addtolength{\numberPointsTotal}{#3 pt}
 	\stepcounter{totalNumber}
 	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
@@ -841,11 +843,8 @@ auf (#2,#3)%
 
 \newcommand{\exercise}[4][\empty]
 {
-%	\g@addto@macro{\content}
-%	{
-		\stepcounter{numberTask}
-		\Task{\thenumberTask}{#2}{#3}{#1}{#4}
-%	}
+	\stepcounter{numberTask}
+	\Task{\thenumberTask}{#2}{#3}{#1}{#4}
 	\addtolength{\numberPointsTotal}{#3 pt}
 	\stepcounter{totalNumber}
 	\ifthenelse{\equal{#1}{\empty}}{\g@addto@macro{\PointArray}{#3,}}{\addtolength{\numberAdditionalPoints}{#1 pt}
@@ -854,11 +853,8 @@ auf (#2,#3)%
 
 \newcommand{\additionalExercise}[3]
 {
-%	\g@addto@macro{\content}
-%	{
-		\stepcounter{numberTask}
-		\Task{\thenumberTask}{#1}{\empty}{#2}{#3}
-%	}
+	\stepcounter{numberTask}
+	\Task{\thenumberTask}{#1}{\empty}{#2}{#3}
 	\stepcounter{totalNumber}
 	\addtolength{\numberAdditionalPoints}{#2 pt}
 	\g@addto@macro{\PointArray}{+#2,}
@@ -866,11 +862,8 @@ auf (#2,#3)%
 
 \newcommand{\additionalExerciseNumbering}[3]
 {
-%	\g@addto@macro{\content}
-%	{
-		\stepcounter{numberTask}
-		\TaskNumbering{\thenumberTask}{#1}{\empty}{#2}{#3}
-%	}
+	\stepcounter{numberTask}
+	\TaskNumbering{\thenumberTask}{#1}{\empty}{#2}{#3}
 	\stepcounter{totalNumber}
 	\addtolength{\numberAdditionalPoints}{#2 pt}
 	\g@addto@macro{\PointArray}{+#2,}
