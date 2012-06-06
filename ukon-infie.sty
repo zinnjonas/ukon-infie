@@ -530,10 +530,10 @@
 \begin{center}
 	\ifthenelse{ \thetPunkteG > 0}
 	{
-	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximal \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
+	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximum \theanzPunkteGesamt.\thetPunkteG\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
 	}
 	{
-	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximal \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
+	\ifthenelse{\equal{\german}{1}}{\textbf{Punkte: (maximal \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Punkte)}}{\textbf{Points: (maximum \theanzPunkteGesamt\ifthenelse{\equal{\theanzAdditionalTotal+\theaPunkteG}{0+0}}{}{+\ifthenelse{\equal{\theaPunkteG}{0}}{\theanzAdditionalTotal}{\theanzAdditionalTotal.\theaPunkteG}} \ Points)}}\\
 	}
 	\begin{tikzpicture}
 		\tikzstyle{every node}=[font=\small]
