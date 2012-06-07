@@ -1,0 +1,828 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The Ultimate Latex-Header for the best students
+%% Rev.:	3.0.0
+%% Autoren:	Franz Abzieher, Stephan Heidinger,Manuel Hotz, Jonas Zinn
+%%
+%% Datum:	7.06.2012
+%%
+%% Styleguide:  4 Soft-Tabs
+%% Licence:	This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Germany License.
+%%		The licence can be found at.
+%%		https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e} %Proforma;D
+
+\def\german{0}
+\def\topExercise{0}
+\def\allwaysTopExercise{0}
+\def\topTableOfPoints{1}
+\def\gobalBubble{0}
+\def\globalBreak{0}
+
+\DeclareOption{de}{\edef\german{1}}
+\DeclareOption{en}{\edef\german{0}}
+\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOption{bottomTable}{\edef\topTableOfPoints{0}}
+\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOption{noTable}{\edef\topTableOfPoints{2}}
+\DeclareOption{topExersice}{\edef\allwaysTopExercise{1}}
+\DeclareOption{bubble}{\edef\gobalBubble{1}}
+\DeclareOption{break}{\edef\globalBreak{1}}
+
+\ProcessOptions
+
+
+\ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
+
+\usepackage{fp}
+\usepackage{amsmath} % Verbesserter Mathesatz
+\usepackage{amsthm} % Normaler Mathesatz
+\usepackage{amsfonts} %capital-letter font
+\usepackage{amsthm,amssymb} % Zeichen-Satz
+\usepackage{bigfoot} % komplexe Fußnotenapparate(Fußnoten in Fußnoten und andere Späße)
+\usepackage{colortbl}
+\usepackage{calc}
+\usepackage{etoolbox, mathtools}
+\usepackage[T1]{fontenc} % normaler erweitere Zeichnesatz
+\usepackage{framed}  % Ramenpaket für zum Einfügen von schönen Ramen
+\usepackage{graphicx}
+\usepackage{hhline}
+\usepackage{ifthen} % Packet für if then else
+\usepackage{listings} %for code-listings (inkl. Tab-Styling)
+\usepackage{lmodern}
+\usepackage{longtable, lscape} % Querformat und GroßTabellen
+\usepackage{marginnote} % Für bessere Randnotizen mit \marginnote statt \marginline
+\usepackage{marvosym} % für stopsign etc...
+\usepackage{microtype} % div. Verbesserungen des Schriftsatzes (Grauwert, opt. Randausgleich, Zeilenumbruch)
+\usepackage{multirow}
+\usepackage[ngerman,english]{babel} % Neue Rechtschreibung
+\usepackage{pifont} %für die Dings zeichen
+\usepackage[sans]{dsfont} %für alternative Mengensymbole
+\usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
+\usepackage{units} % z.B. fuer \nicefrac{}{}
+\usepackage[utf8]{inputenc} % utf8 für den Editor
+\usepackage{wasysym} %u.a. für \lightning
+\usepackage{xcolor}
+\usepackage{tokenizer}
+\usepackage{twoopt}
+\usepackage{substr}
+\usepackage{forloop}
+\usepackage{lastpage}
+\usepackage{stmaryrd} %u.a. für \lightning
+\usepackage{algorithm,algorithmic} % Packete für Algorithmus umgebungen. 
+\usepackage{enumitem}  %\begin{enumerate}[label=\alph*]
+
+\usetikzlibrary{positioning,calc}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}
+\topmargin -2cm
+\textheight 25cm
+\textwidth 16.0 cm
+\oddsidemargin -0.1cm
+
+\newcommand{\PointArray}{,}
+
+\def\endpiece{xxx}
+\def\adPointsChar{+}
+\def\pointsChar{/}
+\def\pointsOfSheet{0.00}
+\def\adPointsOfSheet{0.00}
+\def\allPoints{0}
+\def\name{}
+\def\semester{}
+\def\lecture{}
+\def\lectureshort{}
+\def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
+\def\deadline{}
+\def\colaborations{}
+\def\onlyTotalPoints{0}
+
+\def\TotalPoints#1{ %
+\edef\onlyTotalPoints{#1} %
+} %
+
+\newcounter{exerciseNumber}
+\newcounter{numberTask}
+\newcounter{anzahl}
+\setcounter{anzahl}{0}
+\def\nicePointList{(}
+\def\nullFl{0.00}
+\newcounter{ctPointTable}
+\newcounter{tempPointTable}
+\newcounter{tempPointTableNull}
+\newcounter{moveToPointTable}
+\newcounter{linePointTable}
+
+\def\analysePoints(#1,){ %
+\analyseXPoints#1,\endpiece, %
+\expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\nicePointList{\expandafter\nicePointList)} %
+} %^
+
+\def\analyseXPoints#1,{ %
+\edef\temp{#1} %
+\ifx\temp\endpiece %
+\else %
+\seperateToPoints\temp%
+\stepcounter{anzahl} %
+	\expandafter\analyseXPoints %
+\fi%
+}
+
+\def\ohneadPointsChar#1+{#1}
+
+\def\getNormalPoints/#1+#2Y{ %
+\edef\temp{#2} %
+ \edef\AktuellePunkte{#1}
+ \FPeval\pointsOfSheet{round(pointsOfSheet+#1:2)} %
+ \expandafter\fl\temp Y
+ \ifx\lst \adPointsChar %
+	 \edef\temp{\ohneadPointsChar#2}
+	 \expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\AktuellePunkte{\expandafter\AktuellePunkte+\temp} %
+	 \FPeval\adPointsOfSheet{round(adPointsOfSheet+temp:2)} %
+ \else %
+ \fi %
+}
+
+\def\ohnePointsChar#1/{#1}
+
+\def\getAdPoints+#1/#2Y{ %
+\edef\temp{#2} %
+\expandafter\fl\temp Y %
+\ifx\lst \pointsChar %
+	 \edef\temp{\ohnePointsChar#2} %
+	 \FPeval\pointsOfSheet{round(pointsOfSheet+temp:2)} %
+	 \expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\AktuellePunkte{\expandafter\AktuellePunkte\temp} %
+ \fi %
+ \expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\AktuellePunkte{\expandafter\AktuellePunkte+#1} %
+\FPeval\adPointsOfSheet{round(adPointsOfSheet+#1:2)} %
+}
+
+\def\create#1{%
+\expandafter\createNew{\alph{anzahl}}{#1}
+}
+\def\createNew#1#2{
+\expandafter\edef\csname PunkteItem#1\endcsname{#2} %
+}
+
+\def\AktuellePunkte{}
+\def\seperateToPoints#1{
+\edef\AktuellePunkte{} %
+\edef\temp{#1} %
+\expandafter\fl\temp Y%
+\ifx\fst \pointsChar %
+	\expandafter\getNormalPoints\temp+Y %
+\else %
+	\ifx\fst \adPointsChar %
+		\expandafter\getAdPoints\temp/Y%
+	\else %
+	\fi %
+\fi %
+\expandafter\edef\expandafter\temp{\AktuellePunkte}
+\expandafter\create{\temp}
+\expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\nicePointList{\expandafter\nicePointList\AktuellePunkte,}%
+}
+
+\def\fl#1Y{\flx#1\empty\empty\empty}
+\def\flx#1#2#3\empty{%
+\edef\fst{#1}%
+ \edef\cdar{#2}%
+ \edef\cddr{#3}%
+  \ifx\cddr\empty
+    \let\lst\cdar
+  \else
+     \expandafter\flxx
+   \fi
+  #3}
+\def\flxx#1#2\empty{%
+ \edef\car{#1}%
+  \ifx\car\empty
+  \else
+     \let\lst\car
+     \expandafter\flxx
+   \fi
+  #2\empty}
+
+\def\schoeneAusgabe{
+\ifx\pointsOfSheet\nullFl %
+	\ifx\adPointsOfSheet\nullFl %
+	\else %
+		\OhneA %
+		\expandafter\edef\expandafter\Text{+\TestA} %
+	\fi %
+\else %
+	\ifx\adPointsOfSheet\nullFl %
+		\OhneP %
+		\expandafter\edef\expandafter\Text{\TestP} %
+	\else %
+		\OhneP %
+		\OhneA %
+		\expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\Text{\expandafter\TestP +\TestA} %
+	\fi %
+\fi %
+}
+\def\Text{}
+\def\TestP{}
+\def\OhneP{ %
+\expandafter\OhneNullenKomma\pointsOfSheet Y %
+\expandafter\edef\expandafter\TestP{\Text} %
+}
+\def\TestA{}
+\def\OhneA{ %
+\expandafter\OhneNullenKomma\adPointsOfSheet Y %
+\expandafter\edef\expandafter\TestA{\Text} %
+}
+
+\def\OhneNullenKomma#1.#2Y{
+\edef\temp{#2} %
+\expandafter\fl\temp Y %
+\edef\temp{0} %
+\ifx\lst \temp %
+\ifx\fst\temp %
+\edef\Text{#1} %
+\else %
+\edef\Text{#1.\fst} %
+\fi %
+\else %
+\edef\Text{#1.#2} %
+\fi %
+}
+
+\newcounter{arrayIndex}
+\newcounter{index}
+\def\getItem(#1,){\getXItem #1,\endpiece,}
+\def\Item{}
+\def\function{}
+\def\getXItem#1,{ %
+\let\function\getXItem
+\edef\temp{#1}
+\ifx\temp\endpiece %
+\else %
+	\ifnum\value{arrayIndex}=\value{index} %
+		\edef\Item{#1} %
+		\let\function\trash %
+	\else %
+		\stepcounter{arrayIndex} %
+	\fi  %
+	\expandafter\function %
+\fi%
+}
+
+\def\trash#1,{
+\edef\temp{#1} %
+\ifx\temp\endpiece %
+\else %
+	\expandafter\trash %
+\fi %
+}
+
+\def\getIndex#1{ %
+\setcounter{arrayIndex}{0} %
+\setcounter{index}{#1} %
+\expandafter\getItem\nicePointList %
+}
+
+\newlength{\ausgleich}
+\def\tempText{}
+\def\TextEmpty{}
+\newcommand{\zeichneTabellen}
+{
+\setcounter{moveToPointTable}{0} %
+\setcounter{linePointTable}{0} %
+\setcounter{tempPointTable}{1} %
+\setcounter{tempPointTableNull}{0}
+\FPeval\allPoints{round(pointsOfSheet + adPointsOfSheet:2)} %
+\edef\TextEmpty{0}
+\ifx\allPoints\nullFl %
+	\def\Text{\onlyTotalPoints}
+	\edef\TextEmpty{1}
+\else %
+	\schoeneAusgabe %
+\fi %
+\settowidth{\ausgleich}{\Text}
+\setlength{\ausgleich}{\ausgleich/2 - 0.55cm}
+\begin{center}
+	\ifnum\german=1 %
+		\textbf{Punkte: (maximal \Text \ Punkte)}%
+	\else %
+		\textbf{Points: (maximum \Text \ Points)} %
+	\fi %
+	\\ %
+	\ifnum\TextEmpty=1
+	\begin{tikzpicture}
+		\tikzstyle{every node}=[font=\small] %
+		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] { %
+		\ifnum\german=1 %
+		\textbf{Gesamt} %
+		\else
+		\textbf{Total} %
+		\fi %
+		}; %
+		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
+		\draw($(GesamtBox.south west)$) -- ($(GesamtBox.north east)$); %
+		\settowidth{\ausgleich}{\Text}
+		\setlength{\ausgleich}{\ausgleich/2 - 0.55cm} %
+		\coordinate (c) at ($(GesamtBox.south east)+(-0.60cm,0.5em)$); %
+		\node at (c) {\Text}; %
+	\end{tikzpicture}
+	\else
+	\begin{tikzpicture} %
+	\tikzstyle{every node}=[font=\small] %
+		
+		\forloop{ctPointTable}{0}{\thectPointTable < \theanzahl}
+		{
+			\node(t\thetempPointTable)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] 
+			at (\themoveToPointTable *2.2,-\thelinePointTable*1.8)
+			{
+			\ifnum\german=1 %
+				Aufgabe
+			\else %
+				Exercise
+			\fi %
+			\thetempPointTable %
+			};
+			\node(tBox\thetempPointTable)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of t\thetempPointTable]{};	
+			\draw($(tBox\thetempPointTable.south west)$) -- ($(tBox\thetempPointTable.north east)$); %
+			
+			\expandafter\edef\expandafter\temp{PunkteItem\alph{tempPointTableNull}}
+			\expandafter\settowidth\expandafter{\ausgleich}{\expandafter\csname \temp \endcsname}
+			\setlength{\ausgleich}{\ausgleich/2 - 0.55cm} %
+			\coordinate (c) at ($(tBox\thetempPointTable.south east)+(-0.60cm,0.5em)$); %
+			\expandafter\node at (c) {\expandafter\csname \temp \endcsname}; %
+			
+			\stepcounter{tempPointTable}
+ 			\stepcounter{moveToPointTable}
+ 			\stepcounter{tempPointTableNull}
+	 		\ifthenelse{\themoveToPointTable = 7}{\setcounter{moveToPointTable}{0}\stepcounter{linePointTable}}{}
+		}
+		\addtocounter{tempPointTable}{-1}
+		\ifnum\value{moveToPointTable}=0
+		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, below =0.05cm of tBox\thetempPointTable] { %
+				\ifnum\german=1 %
+				\textbf{Gesamt} %
+				\else
+				\textbf{Total} %
+				\fi %
+				}; %
+		\else
+		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, right =0.02cm of t\thetempPointTable] { %
+				\ifnum\german=1 %
+				\textbf{Gesamt} %
+				\else
+				\textbf{Total} %
+				\fi %
+				}; %
+		\fi
+		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
+		\draw($(GesamtBox.south west)$) -- ($(GesamtBox.north east)$); %
+		\settowidth{\ausgleich}{\Text}
+		\setlength{\ausgleich}{\ausgleich/2 - 0.55cm} %
+		\coordinate (c) at ($(GesamtBox.south east)+(-0.60cm,0.5em)$); %
+		\node at (c) {\Text}; %
+	\end{tikzpicture} %
+	\fi
+\end{center}
+}
+
+\newread\topraux
+\newwrite\topwaux
+
+\def\topfilecheck#1%
+{%
+       \openin\topraux=#1\relax
+       \ifeof\topraux
+            \closein\topraux
+       \else
+            \input{#1}
+       \fi
+ }
+\def\topwrite#1
+{
+       \openout\topwaux=#1\relax
+}
+
+\newcommand{\auxlist}{\jobname.top}
+
+\def\OpenRead{%
+\topfilecheck\auxlist%
+}
+
+\def\OpenWrite{
+\topwrite\auxlist%
+}
+
+\def\currentTextTemplatePoints{}
+
+\def\WriteFiles{%
+\write\topwaux{%
+\noexpand\renewcommand{\noexpand\PointArray}{\PointArray}
+} }
+
+\def\CloseAuxFiles{%
+\closein\topraux%
+\closeout\topwaux%
+}
+
+\newcommand{\Group}[1]
+{
+\edef\colaborations{#1}
+}
+
+\newcommand{\Names}[1]
+{
+\edef\name{#1}
+}
+
+\newcommand{\Term}[1]
+{
+\edef\semester{#1}
+}
+
+\newcommand{\Fachbereich}[1]
+{
+\edef\fachbereich{#1}
+}
+
+\newcommand{\Lecture}[2][\empty]
+{
+	\ifthenelse{\equal{#1}{\empty}}
+	{\edef\lecture{#2}
+	 \edef\lectureshort{#2}}
+	{\edef\lecture{#2}
+	 \edef\lectureshort{#1}}
+}
+
+\newcommand{\group}[2]
+{
+	\lfoot{#1}
+	\cfoot{\thepage\ \ifthenelse{\equal{\german}{1}}{von}{of} \pageref{LastPage}}
+	\rfoot{#2}
+	\rhead{\footnotesize \parindent0em\bf \colaborations}
+}
+
+\newcommand{\Title}[1]
+{
+	\begin{center}
+	{
+		\Large\bf #1
+	}
+	\end{center}
+}
+
+\newcommand{\header}
+{
+	{\footnotesize \parindent0em
+		{\sc Universität Konstanz}                \hfill \lecture\par
+		{\sc \fachbereich} \hfill \semester \par
+		\name \hfill \today\par
+		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
+	}
+}
+
+\newcommand{\Header}
+{
+	\group{\name}{\lectureshort\ –\ \theexerciseNumber}
+	\header
+	\ifthenelse{\equal{\deadline}{\empty}}{}{\begin{center}\ifthenelse{\equal{\german}{1}}{\textit{Abgabe: \deadline}}{\textit{Deadline: \deadline}}\end{center}} %
+	\expandafter\analysePoints\expandafter(\PointArray)
+	\ifnum\topTableOfPoints=1
+	\zeichneTabellen
+	\fi
+}
+
+\newenvironment{ukon-infie}[2][\empty]
+{
+	\OpenRead
+	\ifnum\german=1
+		\selectlanguage{ngerman}
+	\fi
+	\edef\deadline{#1}
+	\setcounter{exerciseNumber}{#2}
+	\Header
+	\setcounter{numberTask}{0}
+	\renewcommand {\PointArray }{} 
+}
+{
+	\ifnum\topTableOfPoints=0
+	\zeichneTabellen
+	\fi
+	\OpenWrite
+	\ifx\PointArray\empty
+	\renewcommand{\PointArray}{,}
+	\fi
+	\WriteFiles
+	\CloseAuxFiles
+}
+
+\def\Arguments(#1){\xArguments#1,xxx,}
+
+\catcode`\<=3 \catcode`\>=3
+
+\def\trimspaces #1{\expandafter\expandafter\expandafter
+                   \Trimspaces\expandafter <#1>< <\\#1}
+
+\def\Trimspaces #1< #2<#3\\{\Trimspace #1#3#2 >\\}
+\def\Trimspace  #1 >#2\\{\TrimSpace #1>\\}
+\def\TrimSpace  #1>#2\\#3{%
+            \expandafter\expandafter\expandafter\expandafter\expandafter
+            \def \expandafter\expandafter\expandafter #3\expandafter
+            {\Remove#1}}
+            \def\Remove#1{}
+
+\catcode`\<12 \catcode`\>=12
+\makeatletter
+%\newcommand{\rechneInternPunkte}{}
+\def\tempZpunkte{\empty}
+\def\temppunkte{\empty}
+\def\IsAdditional{\empty}
+\def\IsBubble{}
+\def\IsBreak{}
+\def\labelText{}
+\def\@analyse#1=#2Y{
+\def\a{#1}
+\trimspaces\a
+\ifthenelse{\equal{\a}{p}}{
+	\add@to@pointlist{/\bekommePunkte#2}
+	\edef\temppunkte{\bekommePunkte#2}
+	\edef\IsAdditional{0}
+}{
+	\ifthenelse{\equal{\a}{z}}{
+		\add@to@pointlist{+\bekommePunkte#2}
+		\edef\tempZpunkte{\bekommePunkte#2}
+		\edef\IsAdditional{0}
+	}
+	{
+	\ifthenelse{\equal{\a}{top}}{\edef\topExercise{1}}{}
+	\ifthenelse{\equal{\a}{bottom}}{\edef\topExercise{0}}{}
+	\ifthenelse{\equal{\a}{additional}}{\edef\IsAdditional{1}}{}
+	\ifthenelse{\equal{\a}{bubble}}{\edef\IsBubble{1}}{}
+	\ifthenelse{\equal{\a}{text}}{\edef\IsBubble{0}}{}
+	\ifthenelse{\equal{\a}{break}}{\edef\IsBreak{1}}{}
+	\ifthenelse{\equal{\a}{nobreak}}{\edef\IsBreak{0}}{}
+	\ifthenelse{\equal{\a}{num}}{\edef\labelText{\noexpand\arabic*)}}{}
+	\ifthenelse{\equal{\a}{rom}}{\edef\labelText{\noexpand\roman*)}}{}
+	\ifthenelse{\equal{\a}{Alph}}{\edef\labelText{\noexpand\Alph*)}}{}
+	\ifthenelse{\equal{\a}{Rom}}{\edef\labelText{\noexpand\Roman*)}}{}
+%	\ifthenelse{\equal{\a}{label}}{\edef\labelText{\bekommePunkte#2}}{}
+	}
+}
+}
+\def\bekommePunkte#1={#1}
+
+\def\xArguments#1,{\def\temp{#1}%
+\ifx\temp\endpiece%
+\else	%
+	\@analyse#1=Y%
+	\expandafter\xArguments%
+\fi
+}
+
+\def\add@to@pointlist#1
+{
+\g@addto@macro{\PointArray}{#1}
+}
+
+\newenvironment{exercise}[2][p=0]
+{
+	\edef\tempZpunkte{\empty} %
+	\edef\temppunkte{\empty} %
+	\edef\topExercise{\allwaysTopExercise} %
+	\edef\IsAdditional{1}
+	\edef\IsBubble{\gobalBubble}
+	\edef\IsBreak{\globalBreak}
+	\edef\labelText{\noexpand\alph*)}
+	\Arguments(#1) %
+	\stepcounter{numberTask} %
+
+	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
+	\ifthenelse{\equal{\german}{1}} %
+	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
+	{\noindent\textbf{Exercise \thenumberTask: #2}} %
+	\ifnum\IsAdditional=0 %
+	\add@to@pointlist, %
+	\fi %
+	\ifnum\topExercise=1 %
+	\hfill \printPoints %
+	\else %
+	\newline\\%
+	\fi %
+}
+{
+\vspace{-1em}
+	\ifnum\IsEnumeration=1 %
+	\end{enumerate} %
+	\edef\IsEnumeration{0} %
+	\fi %
+	\ifnum\topExercise=1 %
+	\else %
+	\printPoints %
+	\ifnum\IsAdditional=0 %
+	\vskip-1cm %
+	\fi %
+	\fi %
+	\ifnum\IsBreak=1 %
+	\noindent\rule{\textwidth}{1pt} %
+	\fi %
+}
+
+\def\PointsBlank{ %
+\ifnum\IsBubble=1
+\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {$\qquad$};
+\else
+[\qquad]
+\fi
+}
+
+\def\printPoints{
+\ifnum\IsAdditional=0 %
+\hfill %
+\ifthenelse{\equal{\german}{1}} %
+{ %
+	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
+	{\points{\PointsBlank von \temppunkte\ Punkten}} %
+	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank von + \tempZpunkte\ Punkten}}{\points{\PointsBlank von \temppunkte +\tempZpunkte\ Punkten}}} %
+} %
+{ %
+	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
+	{\points{\PointsBlank of \temppunkte\ Points}} %
+	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank of + \tempZpunkte\ Points}}{\points{\PointsBlank of \temppunkte + \tempZpunkte\ Points}}} %
+} %
+\\\\ %
+\fi %
+}
+
+\makeatother
+
+\newcommand{\points}[1]
+{
+	\mbox{\ } \hfill {\bf #1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\IsEnumeration{0}
+\newcommand{\question}[3][\empty]
+{
+	\ifnum\IsEnumeration=0
+	\edef\IsEnumeration{1}
+	\vspace{-1em}
+	\begin{enumerate}[itemsep=1ex,leftmargin=1.8em,label=\labelText]
+	\fi
+	
+	\ifthenelse{\equal{#1}{\empty}}
+	{
+
+		\item{\textit{#2}}
+		\\
+		#3
+	}
+	{
+		\item{\textit{#2}}
+		\\
+		#3
+		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \ifthenelse{\equal{\german}{1}}
+				{\textit{von #1 Punkt\ifthenelse{#1>1}{en}{}}}
+				{\textit{of #1 Point\ifthenelse{#1>1}{s}{}}}}
+	}
+}
+
+
+\xdefinecolor{dunkelGruen}{HTML}{007D00}
+\xdefinecolor{dunkelBlau}{HTML}{0000A0}
+\xdefinecolor{dunkelRot}{HTML}{A00000}
+\xdefinecolor{dunkelGelb}{HTML}{FFAA00}
+\xdefinecolor{hellGelb}{HTML}{FFCC00}
+\colorlet{dGreen}{dunkelGruen}
+\colorlet{dBlue}{dunkelBlau}
+\colorlet{dRed}{dunkelRot}
+\colorlet{dYellow}{dunkelGelb}
+\colorlet{lYellow}{hellGelb}
+
+\lstset
+{
+	language=Java, % oder C++, Pascal, {[77]Fortran}, ...
+	numbers=left, % Position der Zeilennummerierung
+	firstnumber=auto, % Erste Zeilennummer
+	basicstyle=\ttfamily, % Textgröße des Standardtexts
+	keywordstyle=\ttfamily\color{dRed}, % Formattierung Schlüsselwörter
+	commentstyle=\ttfamily\color{dGreen}, % Formattierung Kommentar
+	stringstyle=\ttfamily\color{dBlue}, % Formattierung Strings
+	numberstyle=\tiny, % Textgröße der Zeilennummern
+	stepnumber=1, % Angezeigte Zeilennummern
+	numbersep=5pt, % Abstand zw. Zeilennummern und Code
+	aboveskip=15pt, % Abstand oberhalb des Codes
+	belowskip=11pt, % Abstand unterhalb des Codes
+	captionpos=b, % Position der Überschrift
+	xleftmargin=10pt, % Linke Einrückung
+	frame=single, % Rahmentyp
+	breaklines=true, % Umbruch langer Zeilen
+	showstringspaces=false, % Spezielles Zeichen für Leerzeichen
+	tabsize=2,
+	texcl=true
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in Java
+%	%Para 1: File, das eingeladen werden soll
+%	z.B.:	\ladeJava{Uebung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\loadJava}[1]
+{
+	\lstinputlisting[language=Java]{#1.java}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in C++
+%	%Para 1: File, das eingeladen werden soll
+%	z.B.:	\ladeCpp{~/Documents/workspace/MyProgram.cpp}
+%			\ladeCpp{~/Documents/workspace/MyHeader.c}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\loadCpp}[1]
+{
+	\lstinputlisting[language=C++]{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehl zum Einladen eines Files in einer beliebigen Sprache
+%	%Parameter 1: Sprache, in der das File geschrieben ist
+%	%Parameter 2: Datei, die eingelesen werden soll
+%	z.B.:	\ladeCode{Python}{~/Documents/workspace/MyProgram.py
+%	Anregungen, eingebunden werden können, siehe unten
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\loadSource}[2]
+{
+	\lstinputlisting[language=#1]{#2}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehle für Farben
+%		z.B.: \tred{Beispieltext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\red}[1]
+{
+	\textcolor{red}{#1}
+}
+\newcommand{\blue}[1]
+{
+	\textcolor{blue}{#1}
+}
+\newcommand{\green}[1]
+{
+	\textcolor{green}{#1}
+}
+\newcommand{\darkRed}[1]
+{
+	\textcolor{dRed}{#1}
+}
+\newcommand{\darkBlue}[1]
+{
+	\textcolor{dBlue}{#1}
+}
+\newcommand{\darkGreen}[1]
+{
+	\textcolor{dGreen}{#1}
+}
+\newcommand{\darkYellow}[1]
+{
+	\textcolor{dYellow}{#1}
+}
+\newcommand{\yellow}[1]
+{
+	\textcolor{lYellow}{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Befehle zum Erzeugen eines grünen Hakens, roten Xes, bzw eines gelben Blitzes für Text und einen für Mathemodus
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\correct}{\green{\text{\ding{52}}}} %for use in text and math
+%\newcommand{\wrong}{\red{\text{\ding{56}}}} %for use in text
+%\newcommand{\tflash}{$\yellow{\lightning}$} %for use in text
+%\newcommand{\mflash}{\yellow{\lightning}} %for use in math
+\newcommand{\correct}{
+	\ifmmode
+		\green{\text{\ding{52}}}
+	\else
+		\green{\ding{52}}
+	\fi
+}
+\newcommand{\wrong}{
+	\ifmmode
+		\red{\text{\ding{56}}}
+	\else
+		\red{\ding{56}}
+	\fi
+}
+\newcommand{\flash}{
+	\ifmmode
+		\yellow{\lightning}
+	\else
+		\yellow{$\lightning$}
+	\fi
+}
+\newcommand\tflash\flash% compatibility
+\newcommand\mflash\flash% compatibility
+
