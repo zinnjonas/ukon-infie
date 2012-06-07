@@ -117,6 +117,18 @@
 \newcounter{moveToPointTable}
 \newcounter{linePointTable}
 
+\def\NoPointtable{
+\edef\topTableOfPoints{2}
+}
+
+\def\TopPointtable{
+\edef\topTableOfPoints{1}
+}
+
+\def\BottomPointtable{
+\edef\topTableOfPoints{0}
+}
+
 \def\analysePoints(#1,){ %
 \analyseXPoints#1,\endpiece, %
 \expandafter\expandafter\expandafter\edef\expandafter\expandafter\expandafter\nicePointList{\expandafter\nicePointList)} %
