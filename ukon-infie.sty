@@ -632,13 +632,14 @@
 	\fi %
 	\ifnum\topExercise=1 %
 	\else %
+	\vskip+\baselineskip %
+	%\vskip+\baselineskip %
 	\printPoints %
 	\ifnum\IsAdditional=0 %
 	\vskip-1cm %
 	\fi %
 	\fi %
 	\ifnum\IsBreak=1 %
-	\vskip+\baselineskip %
 	\noindent\rule{\textwidth}{1pt} %
 	\fi %
 }
