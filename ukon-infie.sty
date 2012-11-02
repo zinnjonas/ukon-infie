@@ -61,7 +61,7 @@
 \usepackage[sans]{dsfont} %für alternative Mengensymbole
 \usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
 \usepackage{units} % z.B. fuer \nicefrac{}{}
-\usepackage[utf8]{inputenc} % utf8 für den Editor
+\usepackage[utf8x]{inputenc} % utf8 für den Editor
 \usepackage{wasysym} %u.a. für \lightning
 \usepackage{xcolor}
 \usepackage{tokenizer}
@@ -99,6 +99,7 @@
 \def\lecture{}
 \def\lectureshort{}
 \def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
+\def\fachbereichen{Department of computer since \& information since}
 \def\deadline{}
 \def\colaborations{}
 \def\onlyTotalPoints{0}
@@ -489,8 +490,8 @@
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
-		{\sc Universität Konstanz}                \hfill \lecture\par
-		{\sc \fachbereich} \hfill \semester \par
+		\ifthenelse{\equal{\german}{1}}{\sc Universität Konstanz}{\sc University of Constance}                \hfill \lecture\par
+		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
 	}
