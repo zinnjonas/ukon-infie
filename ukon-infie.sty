@@ -487,11 +487,50 @@
 	\end{center}
 }
 
+\catcode`\<=3 \catcode`\>=3
+
+\def\trimspaces #1{\expandafter\expandafter\expandafter
+                   \Trimspaces\expandafter <#1>< <\\#1}
+
+\def\Trimspaces #1< #2<#3\\{\Trimspace #1#3#2 >\\}
+\def\Trimspace  #1 >#2\\{\TrimSpace #1>\\}
+\def\TrimSpace  #1>#2\\#3{%
+            \expandafter\expandafter\expandafter\expandafter\expandafter
+            \def \expandafter\expandafter\expandafter #3\expandafter
+            {\Remove#1}}
+            \def\Remove#1{}
+
+\catcode`\<12 \catcode`\>=12
+\makeatletter
+
+\newcounter{tempMonth}
+\setcounter{tempMonth}{\the\month}
+\newcounter{helpYear}
+\setcounter{helpYear}{\the\year / 100 * 100}
+\newcounter{tempYear}
+\setcounter{tempYear}{\the\year-\thehelpYear}
+
+\def\Semester
+{
+	\ifnum\value{tempMonth}>9%
+		WS%
+	\else%
+		\ifnum\value{tempMonth}<4%
+			WS%
+		\else%
+			SS%
+		\fi%
+	\fi%
+	\ \thetempYear/%
+	\stepcounter{tempYear}%
+\thetempYear%
+}
+
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
 		\ifthenelse{\equal{\german}{1}}{\sc Universität Konstanz}{\sc University of Constance}                \hfill \lecture\par
-		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
+		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \Semester \par
 		\name \hfill \today\par
 		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
 	}
@@ -518,7 +557,7 @@
 	\setcounter{exerciseNumber}{#2}
 	\Header
 	\setcounter{numberTask}{0}
-	\renewcommand {\PointArray }{} 
+	\renewcommand {\PointArray }{}
 }
 {
 	\ifnum\topTableOfPoints=0
@@ -534,21 +573,6 @@
 
 \def\Arguments(#1){\xArguments#1,xxx,}
 
-\catcode`\<=3 \catcode`\>=3
-
-\def\trimspaces #1{\expandafter\expandafter\expandafter
-                   \Trimspaces\expandafter <#1>< <\\#1}
-
-\def\Trimspaces #1< #2<#3\\{\Trimspace #1#3#2 >\\}
-\def\Trimspace  #1 >#2\\{\TrimSpace #1>\\}
-\def\TrimSpace  #1>#2\\#3{%
-            \expandafter\expandafter\expandafter\expandafter\expandafter
-            \def \expandafter\expandafter\expandafter #3\expandafter
-            {\Remove#1}}
-            \def\Remove#1{}
-
-\catcode`\<12 \catcode`\>=12
-\makeatletter
 %\newcommand{\rechneInternPunkte}{}
 \def\tempZpunkte{\empty}
 \def\temppunkte{\empty}
