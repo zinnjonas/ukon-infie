@@ -95,14 +95,37 @@
 \def\adPointsOfSheet{0.00}
 \def\allPoints{0}
 \def\name{}
-\def\semester{}
 \def\lecture{}
 \def\lectureshort{}
 \def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
 \def\fachbereichen{Department of Computer Science \& Information Science}
+\def\university{\ifthenelse{\equal{\german}{1}}{Konstanz}{Constance}}
 \def\deadline{}
 \def\colaborations{}
 \def\onlyTotalPoints{0}
+
+\newcounter{tempMonth}
+\setcounter{tempMonth}{\the\month}
+\newcounter{helpYear}
+\setcounter{helpYear}{\the\year / 100 * 100}
+\newcounter{tempYear}
+\setcounter{tempYear}{\the\year-\thehelpYear}
+
+\def\semester
+{
+	\ifnum\value{tempMonth}>9%
+		WS%
+	\else%
+		\ifnum\value{tempMonth}<4%
+			WS%
+		\else%
+			SS%
+		\fi%
+	\fi%
+	\ \thetempYear/%
+	\stepcounter{tempYear}%
+\thetempYear%
+}
 
 \def\TotalPoints#1{ %
 \edef\onlyTotalPoints{#1} %
@@ -130,6 +153,121 @@
 
 \def\BottomPointtable{
 \edef\topTableOfPoints{0}
+}
+
+\newcounter{VennDiagrammA}
+\newcounter{VennDiagrammB}
+\newcounter{VennDiagrammC}
+\newcounter{VennDiagrammD}
+\newcounter{VennDiagrammE}
+\newcounter{VennDiagrammF}
+\newcounter{VennDiagrammG}
+\newcounter{VennDiagrammH}
+
+\newcounter{againATemp}
+
+\newcounter{colorNumber}
+\setcounter{colorNumber}{1}
+
+\def\colorString(#1,){%
+\colorXString#1,\endpiece,%
+}
+\def\colorXString#1,{%
+\edef\temp{#1}%
+\ifx\temp\endpiece%
+\else%
+	\expandafter\createColor{\temp}%
+	\stepcounter{colorNumber}%
+	\expandafter\colorXString%
+\fi%
+}
+
+\def\createColor#1{%
+\expandafter\createNewColor{\alph{colorNumber}}{#1}%
+}
+
+\def\createNewColor#1#2{%
+\expandafter\edef\csname ColorIndex#1\endcsname{#2} %
+}
+
+\newcommandtwoopt{\Venn}[3][\empty][\empty]
+{
+
+\def\Source{A,B,U}
+\def\Kreisfarbe{red}
+\def\Color{}
+
+\ifthenelse{\equal{#1}{\empty}}{}
+{\colorString(#1,)}
+\ifthenelse{\equal{#2}{\empty}}{}
+{\def\Source{#2}}
+
+\setcounter{VennDiagrammA}{#3/1000}
+\setcounter{VennDiagrammB}{#3/100 - \theVennDiagrammA*10}
+\setcounter{VennDiagrammC}{#3/10 - \theVennDiagrammA*100 - \theVennDiagrammB*10}
+\setcounter{VennDiagrammD}{#3 -\theVennDiagrammA*1000 - \theVennDiagrammB*100 - \theVennDiagrammC*10}
+
+\begin{tikzpicture}
+%predefinition of nodes for clippings
+\node (rectLL) at (0,0) {};
+\node (rectUR) at (5,3.75) {};
+\node (centerA) at (1.75,1.875) {};
+\node (centerB) at (3.25,1.875) {};
+
+%A \cap B
+\ifnum\value{VennDiagrammC}>0
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammC}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+%A^c \cap B^C
+\ifnum\value{VennDiagrammA}>0
+\begin{scope}%[even odd rule]
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammA}\endcsname
+\fill[color=\Color,rounded corners=10] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+%A\setminus B
+\ifnum\value{VennDiagrammB}>0
+\begin{scope}[even odd rule]
+\clip (centerA) circle (1.5) (centerB) circle (1.5);
+\clip (centerA) circle (1.5);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammB}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+%B\setminus A
+\ifnum\value{VennDiagrammD}>0
+\begin{scope}[even odd rule]
+\clip (centerA) circle (1.5) (centerB) circle (1.5);
+\clip (centerB) circle (1.5);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammD}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+%Venn-Diagramm, without fillings
+\node (rectLL) at (rectLL) {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerA) at (centerA) [label=left:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\node (centerB) at (centerB) [label=right:\TokenOne] {};
+\node (rectUR) at (rectUR) [label=below left:\TokenTwo] {};
+
+\draw[thick,rounded corners=10] (rectLL) rectangle (rectUR);
+\draw[thick] (centerA) circle (1.5);
+\draw[thick] (centerB) circle (1.5);
+
+\end{tikzpicture}
 }
 
 \def\analysePoints(#1,){ %
@@ -456,6 +594,11 @@
 \edef\semester{#1}
 }
 
+\newcommand{\University}[1]
+{
+\edef\university{#1}
+}
+
 \newcommand{\Fachbereich}[1]
 {
 \edef\fachbereich{#1}
@@ -487,50 +630,11 @@
 	\end{center}
 }
 
-\catcode`\<=3 \catcode`\>=3
-
-\def\trimspaces #1{\expandafter\expandafter\expandafter
-                   \Trimspaces\expandafter <#1>< <\\#1}
-
-\def\Trimspaces #1< #2<#3\\{\Trimspace #1#3#2 >\\}
-\def\Trimspace  #1 >#2\\{\TrimSpace #1>\\}
-\def\TrimSpace  #1>#2\\#3{%
-            \expandafter\expandafter\expandafter\expandafter\expandafter
-            \def \expandafter\expandafter\expandafter #3\expandafter
-            {\Remove#1}}
-            \def\Remove#1{}
-
-\catcode`\<12 \catcode`\>=12
-\makeatletter
-
-\newcounter{tempMonth}
-\setcounter{tempMonth}{\the\month}
-\newcounter{helpYear}
-\setcounter{helpYear}{\the\year / 100 * 100}
-\newcounter{tempYear}
-\setcounter{tempYear}{\the\year-\thehelpYear}
-
-\def\Semester
-{
-	\ifnum\value{tempMonth}>9%
-		WS%
-	\else%
-		\ifnum\value{tempMonth}<4%
-			WS%
-		\else%
-			SS%
-		\fi%
-	\fi%
-	\ \thetempYear/%
-	\stepcounter{tempYear}%
-\thetempYear%
-}
-
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
-		\ifthenelse{\equal{\german}{1}}{\sc Universität Konstanz}{\sc University of Constance}                \hfill \lecture\par
-		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \Semester \par
+		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
+		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
 	}
@@ -570,6 +674,22 @@
 	\WriteFiles
 	\CloseAuxFiles
 }
+
+\catcode`\<=3 \catcode`\>=3
+
+\def\trimspaces #1{\expandafter\expandafter\expandafter
+                   \Trimspaces\expandafter <#1>< <\\#1}
+
+\def\Trimspaces #1< #2<#3\\{\Trimspace #1#3#2 >\\}
+\def\Trimspace  #1 >#2\\{\TrimSpace #1>\\}
+\def\TrimSpace  #1>#2\\#3{%
+            \expandafter\expandafter\expandafter\expandafter\expandafter
+            \def \expandafter\expandafter\expandafter #3\expandafter
+            {\Remove#1}}
+            \def\Remove#1{}
+
+\catcode`\<12 \catcode`\>=12
+\makeatletter
 
 \def\Arguments(#1){\xArguments#1,xxx,}
 
