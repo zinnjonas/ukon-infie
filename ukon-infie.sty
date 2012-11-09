@@ -164,12 +164,10 @@
 \newcounter{VennDiagrammG}
 \newcounter{VennDiagrammH}
 
-\newcounter{againATemp}
-
 \newcounter{colorNumber}
-\setcounter{colorNumber}{1}
 
 \def\colorString(#1,){%
+\setcounter{colorNumber}{1}%
 \colorXString#1,\endpiece,%
 }
 \def\colorXString#1,{%
@@ -190,14 +188,15 @@
 \expandafter\edef\csname ColorIndex#1\endcsname{#2} %
 }
 
+\def\Color{}
+\def\Source{}
+
 \newcommandtwoopt{\Venn}[3][\empty][\empty]
 {
 
-\def\Source{A,B,U}
-\def\Kreisfarbe{red}
-\def\Color{}
+\edef\Source{A,B,U}
 
-\ifthenelse{\equal{#1}{\empty}}{}
+\ifthenelse{\equal{#1}{\empty}}{\colorString(red,)}
 {\colorString(#1,)}
 \ifthenelse{\equal{#2}{\empty}}{}
 {\def\Source{#2}}
@@ -266,6 +265,140 @@
 \draw[thick,rounded corners=10] (rectLL) rectangle (rectUR);
 \draw[thick] (centerA) circle (1.5);
 \draw[thick] (centerB) circle (1.5);
+
+\end{tikzpicture}
+}
+
+\newcommandtwoopt{\bigVenn}[3][\empty][\empty]
+{
+
+\ifthenelse{\equal{#1}{\empty}}{\colorString(red,)}
+{\colorString(#1,)}
+\ifthenelse{\equal{#2}{\empty}}{\edef\Source{A,B,C,U}}
+{\edef\Source{#2}}
+
+\setcounter{VennDiagrammA}{#3/10000000}
+\setcounter{VennDiagrammB}{#3/1000000 -\theVennDiagrammA*10}
+\setcounter{VennDiagrammC}{#3/100000 -\theVennDiagrammA*100 - \theVennDiagrammB*10}
+\setcounter{VennDiagrammD}{#3/10000 -\theVennDiagrammA*1000 - \theVennDiagrammB*100 - \theVennDiagrammC*10}
+\setcounter{VennDiagrammE}{#3/1000 -\theVennDiagrammA*10000 - \theVennDiagrammB*1000 - \theVennDiagrammC*100 - \theVennDiagrammD*10}
+\setcounter{VennDiagrammF}{#3/100 -\theVennDiagrammA*100000 - \theVennDiagrammB*10000 - \theVennDiagrammC*1000 - \theVennDiagrammD*100 - \theVennDiagrammE*10}
+\setcounter{VennDiagrammG}{#3/10 -\theVennDiagrammA*1000000 - \theVennDiagrammB*100000 - \theVennDiagrammC*10000 - \theVennDiagrammD*1000 - \theVennDiagrammE*100 - \theVennDiagrammF*10}
+\setcounter{VennDiagrammH}{#3   -\theVennDiagrammA*10000000 - \theVennDiagrammB*1000000 - \theVennDiagrammC*100000 - \theVennDiagrammD*10000 - \theVennDiagrammE*1000 - \theVennDiagrammF*100 - \theVennDiagrammG*10}
+
+\begin{tikzpicture}
+%predefinition of nodes for clippings
+\node (rectLL) at (0,0) {};
+\node (rectUR) at (5,5) {};
+
+\node (centerA) at (1.75,1.875) {};
+\node (centerB) at (3.25,1.875) {};
+\node (centerC) at (2.5,3.25){};
+
+%A^c \cap B^C
+\ifnum\value{VennDiagrammA}>0
+\begin{scope}%[even odd rule]
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammA}\endcsname
+\fill[color=\Color,rounded corners=10] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% A\setminus B \setminus C
+\ifnum\value{VennDiagrammB}>0
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammB}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% B \setminus A \setminus C
+\ifnum\value{VennDiagrammH}>0
+\begin{scope}
+\clip (centerB) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammH}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% C \setminus A \setminus B
+\ifnum\value{VennDiagrammF}>0
+\begin{scope}
+\clip (centerC) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammF}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% A \cap B \setminus B
+\ifnum\value{VennDiagrammE}>0
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL);
+\clip (centerC) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammE}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% A \cap C \setminus B
+\ifnum\value{VennDiagrammC}>0
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerC) circle (1.5);
+\clip (centerB) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammC}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% B \cap C \setminus A
+\ifnum\value{VennDiagrammG}>0
+\begin{scope}
+\clip (centerB) circle (1.5);
+\clip (centerC) circle (1.5);
+\clip (centerA) circle (1.5) (rectLL) rectangle (rectUR);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammG}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+% A \cap B \cap C
+\ifnum\value{VennDiagrammD}>0
+\begin{scope}
+\clip (centerA) circle (1.5);
+\clip (centerB) circle (1.5);
+\clip (centerC) circle (1.5);
+\expandafter\expandafter\expandafter\let\expandafter\expandafter\expandafter\Color\expandafter\csname ColorIndex\alph{VennDiagrammD}\endcsname
+\fill[color=\Color] (rectLL) rectangle (rectUR);
+\end{scope}
+\fi
+
+%Venn-Diagramm: outlines
+\node (rectLL) at (rectLL) {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerA) at (centerA) [label=left:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerB) at (centerB) [label=right:\TokenOne] {};
+\GetTokens{TokenOne}{TokenTwo}{\Source}
+\let\Source\TokenTwo
+\node (centerC) at (centerC) [label=above:\TokenOne] {};
+\node (rectUR) at (rectUR) [label=below left:\TokenTwo] {};
+\draw[thick,rounded corners=10] (rectLL) rectangle (rectUR);
+\draw[thick] (centerA) circle (1.5);
+\draw[thick] (centerB) circle (1.5);
+\draw[thick] (centerC) circle (1.5);
 
 \end{tikzpicture}
 }
