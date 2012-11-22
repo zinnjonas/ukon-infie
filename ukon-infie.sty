@@ -858,6 +858,7 @@
 	\ifthenelse{\equal{\a}{rom}}{\edef\labelText{\noexpand\roman*)}}{}
 	\ifthenelse{\equal{\a}{Alph}}{\edef\labelText{\noexpand\Alph*)}}{}
 	\ifthenelse{\equal{\a}{Rom}}{\edef\labelText{\noexpand\Roman*)}}{}
+	\ifthenelse{\equal{\a}{none}}{\edef\labelText{}}{}
 %	\ifthenelse{\equal{\a}{label}}{\edef\labelText{\bekommePunkte#2}}{}
 	}
 }
