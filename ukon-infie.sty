@@ -115,17 +115,21 @@
 \def\semester
 {
 	\ifnum\value{tempMonth}>9%
-		WS%
+		WS\ \thetempYear/%
+	\stepcounter{tempYear}%
+	\thetempYear%%
 	\else%
 		\ifnum\value{tempMonth}<4%
-			WS%
+			\addtocounter{tempYear}{-1}
+			WS\ \thetempYear/%
+	\stepcounter{tempYear}%
+\thetempYear%%
 		\else%
-			SS%
-		\fi%
-	\fi%
-	\ \thetempYear/%
+			SS\ \thetempYear/%
 	\stepcounter{tempYear}%
 \thetempYear%
+		\fi%
+	\fi%
 }
 
 \def\TotalPoints#1{ %
