@@ -73,6 +73,7 @@
 \usepackage{algorithm,algorithmic} % Packete für Algorithmus umgebungen. 
 \usepackage{enumitem}  %\begin{enumerate}[label=\alph*]
 \usepackage{eurosym}
+\usepackage{cancel}
 
 \usetikzlibrary{positioning,calc,fit,automata,arrows}
 
@@ -111,6 +112,9 @@
 \setcounter{helpYear}{\the\year / 100 * 100}
 \newcounter{tempYear}
 \setcounter{tempYear}{\the\year-\thehelpYear}
+
+\def\oder{\vee}
+\def\und{\wedge}
 
 \def\semester
 {
