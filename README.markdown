@@ -15,6 +15,8 @@ are integrated. So as always use at your own risk.
 Feel free to use the Issue feature of Github to request features or give us
 feedback or send bug reports.
 
+Installation instructions and an example can be found on the [documentation pages](http://zinnjonas.github.com/ukon-infie/).
+
 # List of Commands
 
 * \Names
