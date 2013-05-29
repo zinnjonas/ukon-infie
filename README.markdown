@@ -61,10 +61,10 @@ Installation instructions and an example can be found on the [documentation page
 | \correct        | 0             | displays a green check mark (text and math)| \correct|
 | \wrong          | 0             | displays a red cross (text and math)| \wrong|
 | \flash          | 0             | displays a yellow flash (text and math)| \flash|
-| \setAText       | 1             | sets the induction base annotation | \setAText{$i = 0$}|
+| \setBText       | 1             | sets the induction base annotation | \setAText{$i = 0$}|
 | \setSText       | 1             | sets the induction step annotation| \setSText{$i \leq 1$}|
-| \induction      | 2             | write the induction without (IV)| \induction{The basis of the Induction}{The induction step}|
-| \Induction      | 3             | write the induction| \induction{The basis of the Induction}{The (IV)}{The induction step}|
+| \induction      | 2             | write the induction without hypothesis| \induction{The Induction base}{The induction step}|
+| \Induction      | 3             | write the induction| \induction{The Induction base}{The hypothesis}{The induction step}|
 
 #List of Environments
 | Environment name | parameter | description | example|
