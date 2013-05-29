@@ -17,18 +17,16 @@ feedback or send bug reports.
 
 Installation instructions and an example can be found on the [documentation pages](http://zinnjonas.github.com/ukon-infie/).
 
-+------------+-------------+
-|     List of Parameters   |
-+------------+-------------+
-| de         | MySQL       |
-| en         | Spreadsheet |
-| topTable   | On          |
-|bottomTable | On          |
-| noTable    | On          |
-|topExercise | On          |
-| bubble     | On          |
-| break      | On          |
-+------------+-------------+
+| List of Parameters            |
+| ------------- |:-------------:|
+| de            | right-aligned |
+| en      	    | centered      |
+| topTable      | are neat      |
+| bottomTable   |               |
+| noTable 	    |               |
+| topExercise   |               |
+| bubble	    |               |
+| break	        |               |
 
 # List of Commands
 
