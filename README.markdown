@@ -17,45 +17,77 @@ feedback or send bug reports.
 
 Installation instructions and an example can be found on the [documentation pages](http://zinnjonas.github.com/ukon-infie/).
 
-| List of Parameters            |
+| #List of Parameters |
 | ------------- |:-------------:|
-| de            | right-aligned |
-| en      	    | centered      |
-| topTable      | are neat      |
-| bottomTable   |               |
-| noTable 	    |               |
-| topExercise   |               |
-| bubble	    |               |
-| break	        |               |
+| de            | german layout |
+| en      	    | english layout |
+| topTable      | place PointTable on top of first page|
+| bottomTable   | place PointTable on bottom of last page|
+| noTable 	    | don't draw the point table|
+| topExercise   | place the *of Points* on the Exercise line|
+| bubble	    | draw a bubble instead of [ ]|
+| break	        | draw a line after each exercise |
 
-# List of Commands
+|# List of Commands|
+| ------------- |:-------------:|
+| \Names| |
+| \Lecture|
+| \Department| |
+| \Fachbereich| |
+| \Term| |
+| \Group| |
+| \University| |
+| \question| |
+| \Venn| |
+| \bigVenn| |
+| \Title| |
+| \loadJava| |
+| \loadCpp| |
+| \loadSource | |
+| \red | |
+| \blue| |
+| \green | |
+| \darkRed| |
+| \darkBlue| |
+| \darkGreen| |
+| \darkYellow| |
+| \yellow| |
+| \correct| |
+| \wrong| |
+| \flash| |
+| \setAText| |
+| \setSText| |
+| \induction| |
+| \Induction| |
 
-* \Names
-* \Lecture
-* \Term
-* \exercise
-* \exerciseNumbering
-* \additionalExercise
-* \additionalExerciseNumbering
-* \question
-* \Venn
-* \bigVenn
-* \loadSource
-* \loadJava
-* \loadCpp
-* \correct
-* \wrong
 
-## Colors
+| #List of Environments|
+| ------------- |:-------------:|
+| ukon-infie | |
+| exercise | |
 
-* \red
-* \blue
-* \green
-* \yellow
-* \darkRed
-* \darkBlue
-* \darkGreen
-* \darkYellow
+| #List of Exercise parameter |
+| ------------- |:-------------:|
+| top | |
+| bottom | |
+| additional | |
+| bubble | |
+| text | |
+| break | |
+| nobreak | |
+| num | |
+| rom | |
+| Alph | |
+| Rom | |
+| none | |
+
+| #List of Colors |
+| ------------- |
+| dGreen|
+| dBlue|
+| dRed|
+| dYellow |
+|lYellow|
 
 # License
 
