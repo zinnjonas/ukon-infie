@@ -73,6 +73,7 @@ Installation instructions and an example can be found on the [documentation page
 | exercise | 1(1)              | defines a Task       | \begin{exercise}[p=6,z=1]{Taskname} \end{exercise}|
 
 #List of Exercise parameter 
+| parameter | description |
 | ------------- |:-------------:|
 | p | the points for this Task|
 | z | the additional points for this task|
@@ -90,6 +91,7 @@ Installation instructions and an example can be found on the [documentation page
 | none | don't label questions|
 
 #List of Colors
+| name |
 | ------------- |
 | dGreen|
 | dBlue|
