@@ -1146,6 +1146,7 @@
 
 % funktionen
 \def\setAText#1{\edef\beginText{#1}}
+\def\setBText#1{\edef\beginText{#1}}
 \def\setSText#1{\edef\stepText{#1}}
 
 \def\induction#1#2{
@@ -1153,7 +1154,7 @@
 }
 
 \def\Induction#1#2#3{
-	(IB:) \ifx\beginText\empty \else \beginText \fi%
+	\ifthenelse{\equal{\german}{1}}{(IA:)}{(IB:)} \ifx\beginText\empty \else \beginText \fi%
 	\par %
 	\begingroup%
 	\leftskip=1cm%
@@ -1162,7 +1163,7 @@
 	\endgroup %
 	\ifx#2\empty%
 	\else%
-		(IH:)
+		\ifthenelse{\equal{\german}{1}}{(IV:)}{(IH:)}
 		\par %
 		\begingroup%
 		\leftskip=1cm%

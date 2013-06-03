@@ -61,7 +61,8 @@ Installation instructions and an example can be found on the [documentation page
 | \correct        | 0             | displays a green check mark (text and math)| \correct|
 | \wrong          | 0             | displays a red cross (text and math)| \wrong|
 | \flash          | 0             | displays a yellow flash (text and math)| \flash|
-| \setBText       | 1             | sets the induction base annotation | \setAText{$i = 0$}|
+| \setBText       | 1             | sets the induction base annotation | \setBText{$i = 0$}|
+| \setAText       | 1             | same like \setBText ||
 | \setSText       | 1             | sets the induction step annotation| \setSText{$i \leq 1$}|
 | \induction      | 2             | write the induction without hypothesis| \induction{The Induction base}{The induction step}|
 | \Induction      | 3             | write the induction| \induction{The Induction base}{The hypothesis}{The induction step}|
