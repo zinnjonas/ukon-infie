@@ -19,6 +19,7 @@
 \def\topTableOfPoints{1}
 \def\gobalBubble{0}
 \def\globalBreak{0}
+\def\globalWatermark{0}
 
 \DeclareOption{de}{\edef\german{1}}
 \DeclareOption{en}{\edef\german{0}}
@@ -29,6 +30,8 @@
 \DeclareOption{topExersice}{\edef\allwaysTopExercise{1}}
 \DeclareOption{bubble}{\edef\gobalBubble{1}}
 \DeclareOption{break}{\edef\globalBreak{1}}
+\DeclareOption{mark}{\edef\globalWatermark{1}}
+%\DeclareOption{draft}{\edef\globaDraft{draft}}
 
 \ProcessOptions
 
@@ -60,6 +63,7 @@
 \usepackage{pifont} %für die Dings zeichen
 \usepackage[sans]{dsfont} %für alternative Mengensymbole
 \usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
+\usepackage[obeyFinal]{todonotes}
 \usepackage{units} % z.B. fuer \nicefrac{}{}
 \usepackage[utf8]{inputenc} % utf8 für den Editor
 \usepackage{wasysym} %u.a. für \lightning
@@ -70,10 +74,13 @@
 \usepackage{forloop}
 \usepackage{lastpage}
 \usepackage{stmaryrd} %u.a. für \lightning
-\usepackage{algorithm2e} % Packete für Algorithmus umgebungen. 
+\usepackage{algorithm2e} % Packete für Algorithmus umgebungen.
 \usepackage{enumitem}  %\begin{enumerate}[label=\alph*]
 \usepackage{eurosym}
 \usepackage{cancel}
+
+%load package only, if explicitly stated
+\ifthenelse{\equal{\globalWatermark}{1}}{\usepackage{draftwatermark}}{}
 
 \usetikzlibrary{positioning,calc,fit,automata,arrows}
 
@@ -626,10 +633,10 @@
 	\else
 	\begin{tikzpicture} %
 	\tikzstyle{every node}=[font=\small] %
-		
+
 		\forloop{ctPointTable}{0}{\thectPointTable < \theanzahl}
 		{
-			\node(t\thetempPointTable)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] 
+			\node(t\thetempPointTable)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm]
 			at (\themoveToPointTable *2.2,-\thelinePointTable*1.8)
 			{
 			\ifnum\german=1 %
@@ -639,15 +646,15 @@
 			\fi %
 			\thetempPointTable %
 			};
-			\node(tBox\thetempPointTable)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of t\thetempPointTable]{};	
+			\node(tBox\thetempPointTable)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of t\thetempPointTable]{};
 			\draw($(tBox\thetempPointTable.south west)$) -- ($(tBox\thetempPointTable.north east)$); %
-			
+
 			\expandafter\edef\expandafter\temp{PunkteItem\alph{tempPointTableNull}}
 			\expandafter\settowidth\expandafter{\ausgleich}{\expandafter\csname \temp \endcsname}
 			\setlength{\ausgleich}{\ausgleich/2 - 0.55cm} %
 			\coordinate (c) at ($(tBox\thetempPointTable.south east)+(-0.60cm,0.5em)$); %
 			\expandafter\node at (c) {\expandafter\csname \temp \endcsname}; %
-			
+
 			\stepcounter{tempPointTable}
  			\stepcounter{moveToPointTable}
  			\stepcounter{tempPointTableNull}
@@ -980,7 +987,7 @@
 	\vspace{-1em}
 	\begin{enumerate}[itemsep=1ex,leftmargin=1.8em,label=\labelText]
 	\fi
-	
+
 	\ifthenelse{\equal{#1}{\empty}}
 	{
 

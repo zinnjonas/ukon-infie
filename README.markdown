@@ -17,17 +17,18 @@ feedback or send bug reports.
 
 Installation instructions and an example can be found on the [documentation pages](http://zinnjonas.github.com/ukon-infie/).
 
-#List of Parameters 
-| Parameter     | Description                               |
-| ------------- |:-----------------------------------------:|
-| de            | german layout                             |  
-| en      	    | english layout                            |
-| topTable      | place PointTable on top of first page     |
-| bottomTable   | place PointTable on bottom of last page   |
-| noTable 	    | don't draw the point table                |
-| topExercise   | place the *of Points* on the Exercise line|
-| bubble	      | draw a bubble instead of [ ]            |
-| break	        | draw a line after each exercise           |
+#List of Parameters
+| Parameter     | Description                                       |
+| ------------- |:-------------------------------------------------:|
+| de            | german layout                                     |
+| en            | english layout                                    |
+| topTable      | place PointTable on top of first page             |
+| bottomTable   | place PointTable on bottom of last page           |
+| noTable       | don't draw the point table                        |
+| topExercise   | place the *of Points* on the Exercise line        |
+| bubble        | draw a bubble instead of [ ]                      |
+| break         | draw a line after each exercise                   |
+| mark          | draw a DRAFT-watermark if no "final" flag is used |
 
 # List of global Commands
 | Name of command | Parameters    | Description   | Example       |
@@ -66,6 +67,8 @@ Installation instructions and an example can be found on the [documentation page
 | \setSText       | 1             | sets the induction step annotation| \setSText{$i \leq 1$}|
 | \induction      | 2             | write the induction without hypothesis| \induction{The Induction base}{The induction step}|
 | \Induction      | 3             | write the induction| \induction{The Induction base}{The hypothesis}{The induction step}|
+| \todo           | 1(1)          | insert a very visible TODO-note, optional could be "inline", "color=green" (or other colors), "linecolor=green", "noline", "fancyline" | \todo[inline]{Do something} |
+| \missingfigure  | 1(1)          | inserts something to remind you of missing figures, optional could be "figurewidth=" | \missingfigure[figurewidth=6cm]{Insert a picture of a flower.} |
 
 #List of Environments
 | Environment name | parameter | description | example|
@@ -73,7 +76,7 @@ Installation instructions and an example can be found on the [documentation page
 | ukon-infie | 1(1)            | defines the exercise | \begin{ukon-infie}[date]{Number of assignment} \end{ukon-infie}|
 | exercise | 1(1)              | defines a Task       | \begin{exercise}[p=6,z=1]{Taskname} \end{exercise}|
 
-#List of Exercise parameter 
+#List of Exercise parameter
 | parameter | description |
 | ------------- |:-------------:|
 | p | the points for this Task|
