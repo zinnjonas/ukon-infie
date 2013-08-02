@@ -1,7 +1,7 @@
 # General Info
 
 This package is made for students of Information Engineering and Computer
-Science at the University of Constance.
+Science at the University of Konstanz.
 
 It contains useful commands for styling the assignments and generating
 diagrams and graphs (not yet imported).
@@ -39,7 +39,7 @@ Installation instructions and an example can be found on the [documentation page
 | \Fachbereich    |1              | the german equality to \Department| \Fachbereich{Information Science}|
 | \Term           | 1             | the current term | \Term{WS 12/13}|
 | \Group          | 1             | a group id  | \Group{H12} |
-| \University     | 1             | the name of the university | \University{Constance}|
+| \University     | 1             | the name of the university | \University{Konstanz}|
 
 #List of document commands
 | Name of command | Parameters    | Description   | Example       |
