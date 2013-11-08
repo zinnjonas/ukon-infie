@@ -63,7 +63,7 @@
 \usepackage{pifont} %für die Dings zeichen
 \usepackage[sans]{dsfont} %für alternative Mengensymbole
 \usepackage{tikz} % für Diagramme und Bilder (z.B. *.eps)
-\usepackage[obeyFinal]{todonotes}
+\usepackage[obeyDraft]{todonotes}
 \usepackage{units} % z.B. fuer \nicefrac{}{}
 \usepackage[utf8]{inputenc} % utf8 für den Editor
 \usepackage{wasysym} %u.a. für \lightning
@@ -1142,6 +1142,12 @@
 \newcommand\tflash\flash% compatibility
 \newcommand\mflash\flash% compatibility
 
+\newcommand{\follows}{$\Rightarrow$} %used so often...
+\newcommand{\good}{\item[\dGreen{\ding{58}}]} %an item with a green plus as bullet point
+\newcommand{\bad}{\item[\red{\Emailct}]} %better icon for bad items
+\newcommand{\note}[1]{\red{\marginnote{#1}}} %add a red margin note
+\newcommand{\fitem}{\item[\follows]} %items with a follows arrow
+\newcommand{\hm}{\ensuremath{\overset{-\mkern-11mu-\mkern-3.5mu\rhook}{\smash{\odot}\rule{0ex}{.46ex}}\underline{\hspace{0.5em}}\overset{-\mkern-11mu-\mkern-3.5mu\rhook}{\smash{\odot}\rule{0ex}{.46ex}}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Induktions abschnitt
