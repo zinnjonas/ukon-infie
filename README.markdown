@@ -95,13 +95,13 @@ Installation instructions and an example can be found on the [documentation page
 | none | don't label questions|
 
 #List of Colors
-| name |
+| name          |
 | ------------- |
-| dGreen|
-| dBlue|
-| dRed|
-| dYellow |
-|lYellow|
+| dGreen        |
+| dBlue         |
+| dRed          |
+| dYellow       |
+| lYellow       |
 
 # License
 
