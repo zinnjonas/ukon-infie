@@ -915,7 +915,7 @@
 	\ifnum\IsBreak=1 %
 		\ifnum\thenumberTask>1
 		\noindent\rule{\textwidth}{1pt} %
-		\fi
+		\fi%
 	\fi %
 
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
@@ -925,28 +925,34 @@
 	\ifnum\IsAdditional=0 %
 	\add@to@pointlist, %
 	\fi %
+	\ifnum\topTableOfPoints<2%
 	\ifnum\topExercise=1 %
 	\hfill \printPoints %
 	\else %
 	\newline\\%
 	\fi %
+	\else%
+	\newline\\%
+	\fi%
 }
 {
 \vspace{-1em}
 	\ifnum\IsEnumeration=1 %
 	\end{enumerate} %
-	\edef\IsEnumeration{0} %
+		\edef\IsEnumeration{0} %
 	\fi %
+	\ifnum\topTableOfPoints<2%
 	\ifnum\topExercise=1 %
-	\ \newline%
+		\ \newline%
 	\else %
-	\vskip+\baselineskip %
-	%\vskip+\baselineskip %
-	\printPoints %
-	\ifnum\IsAdditional=0 %
-	\vskip-1cm %
+		\vskip+\baselineskip %
+		%\vskip+\baselineskip %
+		\printPoints %
+		\ifnum\IsAdditional=0 %
+			\vskip-1cm %
+		\fi %
 	\fi %
-	\fi %
+	\fi%
 }
 
 \def\PointsBlank{ %
