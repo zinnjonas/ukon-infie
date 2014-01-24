@@ -852,7 +852,7 @@
 \def\temppunkte{\empty}
 \def\IsAdditional{\empty}
 \def\IsBubble{}
-\def\IsBreak{}
+\def\IsBreak{0}
 \def\labelText{}
 \def\@analyse#1=#2Y{
 \def\a{#1}
@@ -901,15 +901,22 @@
 
 \newenvironment{exercise}[2][p=0]
 {
+
 	\edef\tempZpunkte{\empty} %
 	\edef\temppunkte{\empty} %
 	\edef\topExercise{\allwaysTopExercise} %
-	\edef\IsAdditional{1}
-	\edef\IsBubble{\gobalBubble}
-	\edef\IsBreak{\globalBreak}
-	\edef\labelText{\noexpand\alph*)}
+	\edef\IsAdditional{1}%
+	\edef\IsBubble{\gobalBubble}%
+	\edef\IsBreak{\globalBreak}%
+	\edef\labelText{\noexpand\alph*)}%
 	\Arguments(#1) %
 	\stepcounter{numberTask} %
+
+	\ifnum\IsBreak=1 %
+		\ifnum\thenumberTask>1
+		\noindent\rule{\textwidth}{1pt} %
+		\fi
+	\fi %
 
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
 	\ifthenelse{\equal{\german}{1}} %
@@ -939,9 +946,6 @@
 	\ifnum\IsAdditional=0 %
 	\vskip-1cm %
 	\fi %
-	\fi %
-	\ifnum\IsBreak=1 %
-	\noindent\rule{\textwidth}{1pt} %
 	\fi %
 }
 
