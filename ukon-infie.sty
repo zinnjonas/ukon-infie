@@ -27,7 +27,7 @@
 \DeclareOption{bottomTable}{\edef\topTableOfPoints{0}}
 \DeclareOption{topTable}{\edef\topTableOfPoints{1}}
 \DeclareOption{noTable}{\edef\topTableOfPoints{2}}
-\DeclareOption{topExersice}{\edef\allwaysTopExercise{1}}
+\DeclareOption{topExercise}{\edef\allwaysTopExercise{1}}
 \DeclareOption{bubble}{\edef\gobalBubble{1}}
 \DeclareOption{break}{\edef\globalBreak{1}}
 \DeclareOption{mark}{\edef\globalWatermark{1}}
@@ -852,7 +852,7 @@
 \def\temppunkte{\empty}
 \def\IsAdditional{\empty}
 \def\IsBubble{}
-\def\IsBreak{}
+\def\IsBreak{0}
 \def\labelText{}
 \def\@analyse#1=#2Y{
 \def\a{#1}
@@ -901,15 +901,22 @@
 
 \newenvironment{exercise}[2][p=0]
 {
+
 	\edef\tempZpunkte{\empty} %
 	\edef\temppunkte{\empty} %
 	\edef\topExercise{\allwaysTopExercise} %
-	\edef\IsAdditional{1}
-	\edef\IsBubble{\gobalBubble}
-	\edef\IsBreak{\globalBreak}
-	\edef\labelText{\noexpand\alph*)}
+	\edef\IsAdditional{1}%
+	\edef\IsBubble{\gobalBubble}%
+	\edef\IsBreak{\globalBreak}%
+	\edef\labelText{\noexpand\alph*)}%
 	\Arguments(#1) %
 	\stepcounter{numberTask} %
+
+	\ifnum\IsBreak=1 %
+		\ifnum\thenumberTask>1
+		\noindent\rule{\textwidth}{1pt} %
+		\fi%
+	\fi %
 
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
 	\ifthenelse{\equal{\german}{1}} %
@@ -918,30 +925,34 @@
 	\ifnum\IsAdditional=0 %
 	\add@to@pointlist, %
 	\fi %
+	\ifnum\topTableOfPoints<2%
 	\ifnum\topExercise=1 %
 	\hfill \printPoints %
 	\else %
 	\newline\\%
 	\fi %
+	\else%
+	\newline\\%
+	\fi%
 }
 {
 \vspace{-1em}
 	\ifnum\IsEnumeration=1 %
 	\end{enumerate} %
-	\edef\IsEnumeration{0} %
+		\edef\IsEnumeration{0} %
 	\fi %
+	\ifnum\topTableOfPoints<2%
 	\ifnum\topExercise=1 %
+		\ \newline%
 	\else %
-	\vskip+\baselineskip %
-	%\vskip+\baselineskip %
-	\printPoints %
-	\ifnum\IsAdditional=0 %
-	\vskip-1cm %
+		\vskip+\baselineskip %
+		%\vskip+\baselineskip %
+		\printPoints %
+		\ifnum\IsAdditional=0 %
+			\vskip-1cm %
+		\fi %
 	\fi %
-	\fi %
-	\ifnum\IsBreak=1 %
-	\noindent\rule{\textwidth}{1pt} %
-	\fi %
+	\fi%
 }
 
 \def\PointsBlank{ %
@@ -1142,6 +1153,12 @@
 \newcommand\tflash\flash% compatibility
 \newcommand\mflash\flash% compatibility
 
+\newcommand{\follows}{$\Rightarrow$} %used so often...
+\newcommand{\good}{\item[\dGreen{\ding{58}}]} %an item with a green plus as bullet point
+\newcommand{\bad}{\item[\red{\Emailct}]} %better icon for bad items
+\newcommand{\note}[1]{\red{\marginnote{#1}}} %add a red margin note
+\newcommand{\fitem}{\item[\follows]} %items with a follows arrow
+\newcommand{\hm}{\ensuremath{\overset{-\mkern-11mu-\mkern-3.5mu\rhook}{\smash{\odot}\rule{0ex}{.46ex}}\underline{\hspace{0.5em}}\overset{-\mkern-11mu-\mkern-3.5mu\rhook}{\smash{\odot}\rule{0ex}{.46ex}}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Induktions abschnitt
