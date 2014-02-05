@@ -20,6 +20,7 @@
 \def\gobalBubble{0}
 \def\globalBreak{0}
 \def\globalWatermark{0}
+\def\noPointsOfPoints{0}
 
 \DeclareOption{de}{\edef\german{1}}
 \DeclareOption{en}{\edef\german{0}}
@@ -27,6 +28,7 @@
 \DeclareOption{bottomTable}{\edef\topTableOfPoints{0}}
 \DeclareOption{topTable}{\edef\topTableOfPoints{1}}
 \DeclareOption{noTable}{\edef\topTableOfPoints{2}}
+\DeclareOption{noPoints}{\edef\noPointsOfPoints{1}\edef\topTableOfPoints{2}}
 \DeclareOption{topExercise}{\edef\allwaysTopExercise{1}}
 \DeclareOption{bubble}{\edef\gobalBubble{1}}
 \DeclareOption{break}{\edef\globalBreak{1}}
@@ -160,6 +162,11 @@
 \newcounter{linePointTable}
 
 \def\NoPointtable{
+\edef\topTableOfPoints{2}
+}
+
+\def\NoPoints{
+\edef\noPointsOfPoints{1}
 \edef\topTableOfPoints{2}
 }
 
@@ -925,7 +932,7 @@
 	\ifnum\IsAdditional=0 %
 	\add@to@pointlist, %
 	\fi %
-	\ifnum\topTableOfPoints<2%
+	\ifnum\noPointsOfPoints=0%
 	\ifnum\topExercise=1 %
 	\hfill \printPoints %
 	\else %
@@ -941,7 +948,7 @@
 	\end{enumerate} %
 		\edef\IsEnumeration{0} %
 	\fi %
-	\ifnum\topTableOfPoints<2%
+	\ifnum\noPointsOfPoints=0%
 	\ifnum\topExercise=1 %
 		\ \newline%
 	\else %
