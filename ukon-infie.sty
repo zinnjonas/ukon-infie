@@ -74,7 +74,7 @@
 \usepackage{forloop}
 \usepackage{lastpage}
 \usepackage{stmaryrd} %u.a. für \lightning
-\usepackage{algorithm2e} % Packete für Algorithmus umgebungen.
+\usepackage{algorithm2e} % Pakete für Algorithmus umgebungen.
 \usepackage{enumitem}  %\begin{enumerate}[label=\alph*]
 \usepackage{eurosym}
 \usepackage{cancel}
@@ -1087,8 +1087,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	Befehle für Farben
-%		z.B.: \tred{Beispieltext}
+%		z.B.: \red{Beispieltext}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\black}[1]
+{
+    \textcolor{black}{#1}
+}
 \newcommand{\red}[1]
 {
 	\textcolor{red}{#1}
