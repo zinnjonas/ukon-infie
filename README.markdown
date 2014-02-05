@@ -1,7 +1,7 @@
 # General Info
 
 This package is made for students of Information Engineering and Computer
-Science at the University of Constanz.
+Science at the University of Konstanz.
 
 It contains useful commands for styling the assignments and generating
 diagrams and graphs (not yet imported).
