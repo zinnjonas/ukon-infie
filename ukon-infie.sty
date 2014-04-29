@@ -21,6 +21,7 @@
 \def\globalBreak{0}
 \def\globalWatermark{0}
 \def\noPointsOfPoints{0}
+\def\isAssignment{0}
 
 \DeclareOption{de}{\edef\german{1}}
 \DeclareOption{en}{\edef\german{0}}
@@ -33,6 +34,7 @@
 \DeclareOption{bubble}{\edef\gobalBubble{1}}
 \DeclareOption{break}{\edef\globalBreak{1}}
 \DeclareOption{mark}{\edef\globalWatermark{1}}
+\DeclareOption{assignment}{\edef\isAssignment{1}}
 %\DeclareOption{draft}{\edef\globaDraft{draft}}
 
 \ProcessOptions
@@ -163,6 +165,10 @@
 
 \def\NoPointtable{
 \edef\topTableOfPoints{2}
+}
+
+\def\Assignment{
+\edef\isAssignment{1}
 }
 
 \def\NoPoints{
@@ -797,7 +803,11 @@
 		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
 		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
-		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
+		\ifnum\isAssignment=0%
+			\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}%
+		\else%
+			\ifthenelse{\equal{\german}{1}}{\Title{\theexerciseNumber. Aufgabenblatte}}{\Title{\theexerciseNumber. Assignment}}%
+ 		\fi%
 	}
 }
 
@@ -939,6 +949,11 @@
 	\newline\\%
 	\fi %
 	\else%
+	\ifnum\isAssignment=1%
+	\hfill %
+	\vspace{0.2cm}%
+	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ Points};%
+	\fi%
 	\newline\\%
 	\fi%
 }
@@ -995,6 +1010,14 @@
 	\mbox{\ } \hfill {\bf #1}
 }
 
+\newcommand{\questText}[1]{
+\ifnum\isAssignment=1
+\textbf{#1}
+\else
+\textit{#1}
+\fi
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\IsEnumeration{0}
@@ -1009,12 +1032,12 @@
 	\ifthenelse{\equal{#1}{\empty}}
 	{
 
-		\item{\textit{#2}}
+		\expandafter\item{\questText{#2}}
 		\\
 		#3
 	}
 	{
-		\item{\textit{#2}}
+		\expandafter\item{\questText{#2}}
 		\\
 		#3
 		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \ifthenelse{\equal{\german}{1}}
