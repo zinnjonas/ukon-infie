@@ -1,0 +1,75 @@
+\documentclass{scrartcl}
+\usepackage[
+%%%%%%%%%%%%
+en 			% for english support
+%de 		% for german support
+%%%%%%%%%%%%
+% break  	% draws a line after each exercise
+% mark   	% draw a DRAFT-watermark if no final falg is used
+% bubble	% draws the points in a bubble instead of [  ]
+]{ukon-infie}
+
+%%%%%%%%%%%%
+% \TopPointtable	% the default one, places the table on the top of the exercise
+% \BottomPointtable % places the table on the bottom of the exercise
+% \NoPointtable 	% will not show any pointtable
+%%%%%%%%%%%%
+
+% the next commands can be left out they are optionaly
+
+\Names{Name 1, Name 2} 		% names of the people working on that sheet
+\Lecture[Short Name]{Lecture - complet Name} % name of the lecture, and optionaly the short name for it
+\Term{WS 2011/2012} 	   	% places the Term in the header, if not given it will autocalculated
+\Department{testdepartment} % the chair or department of the assignment sheet, information chair is default
+\Group{H1}					% if you have a group id or something else
+
+% \University{ NAME } % the name of the university default Constance
+
+\begin{document}
+	% the main environment with an optional Deadline and the number of the assignment
+    \begin{ukon-infie}[1/April/1960]{42}
+		% additional parameters for an exercise
+		% an task environment on the exercise sheet
+		%%%%%%%%%%%%
+        %p=1, 	% defines the points for the task, should be given !
+        %z=2  	% additional points for the task, can be left out if there are none
+        %%%%%%%%%%%%
+        % top		 % places the points in the top for this task
+        % bottom	 % places the points in the bottom for this task
+        % additional % don't draw nor count this task to the points
+        %%%%%%%%%%%%
+        % bubble	 % draws the points in a bubble instead of [ ]
+        % break 	 % will draw a line at the end of this task
+        % nobreak    % wont't draw a line at the end of this task
+        %%%%%%%%%%%%
+        % num	% sets the label of the question command to numeric
+        % rom   % sets the label of the question command to roman
+        % Alph  % sets the label of the question command to lexicalic
+        % Rom   % sets the label of the question command to capital roman
+        % none  % won't lable the question command
+        %%%%%%%%%%%%
+		\begin{exercise}[p=1,z=1]{Name}
+			Some text maybe part of the task addvice.
+		    \question{Question ask}
+		    {
+		    	answer to that question
+		    }
+		\end{exercise}
+        
+        \begin{exercise}[p=10,bubble]{Venndiagrams}
+        	\question[5]{draw a simple colorfull Venn diagram}
+        	{
+        	\Venn[dGreen,dRed] % colors you want to use in the venn diagram, they will be accesed by 1,2.....
+        	[C,D,K] % if you want to rename the labes of the Sets in the diagram
+        	{0120}
+        	}
+        	\question[5]{draw a colorfull big Venn diagram}
+	       	{
+	       	\bigVenn[dGreen,dRed,dBlue] % colors you want to use in the venn diagram, they will be accesed by 1,2.....
+	       %[C,D,E,F] if you want to rename the labes of the Sets in the diagram
+	       	{01203321}
+	       	}
+        \end{exercise}
+
+    \end{ukon-infie}
+\end{document}
