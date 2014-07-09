@@ -94,6 +94,8 @@ Installation instructions and an example can be found on the [documentation page
 | Alph | label  questions with alphas|
 | Rom | label questions Roman|
 | none | don't label questions|
+| col | create a 2 column multicol around the questions|
+| cols | create a X column multicol around the questions|
 
 #List of Colors
 | name          |

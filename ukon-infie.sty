@@ -21,6 +21,7 @@
 \def\globalBreak{0}
 \def\globalWatermark{0}
 \def\noPointsOfPoints{0}
+\def\isAssignment{0}
 
 \DeclareOption{de}{\edef\german{1}}
 \DeclareOption{en}{\edef\german{0}}
@@ -33,6 +34,7 @@
 \DeclareOption{bubble}{\edef\gobalBubble{1}}
 \DeclareOption{break}{\edef\globalBreak{1}}
 \DeclareOption{mark}{\edef\globalWatermark{1}}
+\DeclareOption{assignment}{\edef\isAssignment{1}}
 %\DeclareOption{draft}{\edef\globaDraft{draft}}
 
 \ProcessOptions
@@ -80,6 +82,7 @@
 \usepackage{enumitem}  %\begin{enumerate}[label=\alph*]
 \usepackage{eurosym}
 \usepackage{cancel}
+\usepackage{multicol}
 
 %load package only, if explicitly stated
 \ifthenelse{\equal{\globalWatermark}{1}}{\usepackage{draftwatermark}}{}
@@ -163,6 +166,10 @@
 
 \def\NoPointtable{
 \edef\topTableOfPoints{2}
+}
+
+\def\Assignment{
+\edef\isAssignment{1}
 }
 
 \def\NoPoints{
@@ -797,7 +804,11 @@
 		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
 		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
-		\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}
+		\ifnum\isAssignment=0%
+			\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}%
+		\else%
+			\ifthenelse{\equal{\german}{1}}{\Title{\theexerciseNumber. Aufgabenblatte}}{\Title{\theexerciseNumber. Assignment}}%
+ 		\fi%
 	}
 }
 
@@ -887,6 +898,8 @@
 	\ifthenelse{\equal{\a}{Alph}}{\edef\labelText{\noexpand\Alph*)}}{}
 	\ifthenelse{\equal{\a}{Rom}}{\edef\labelText{\noexpand\Roman*)}}{}
 	\ifthenelse{\equal{\a}{none}}{\edef\labelText{}}{}
+           \ifthenelse{\equal{\a}{col}}{\edef\IsMultiCol{1}\edef\ColNum{2}}{}
+	\ifthenelse{\equal{\a}{cols}}{\edef\IsMultiCol{1}\edef\ColNum{\bekommePunkte#2}}{}
 %	\ifthenelse{\equal{\a}{label}}{\edef\labelText{\bekommePunkte#2}}{}
 	}
 }
@@ -916,15 +929,16 @@
 	\edef\IsBubble{\gobalBubble}%
 	\edef\IsBreak{\globalBreak}%
 	\edef\labelText{\noexpand\alph*)}%
+	\edef\IsMultiCol{0}
 	\Arguments(#1) %
 	\stepcounter{numberTask} %
-
+%
 	\ifnum\IsBreak=1 %
 		\ifnum\thenumberTask>1
 		\noindent\rule{\textwidth}{1pt} %
 		\fi%
 	\fi %
-
+%
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
 	\ifthenelse{\equal{\german}{1}} %
 	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
@@ -939,6 +953,11 @@
 	\newline\\%
 	\fi %
 	\else%
+	\ifnum\isAssignment=1%
+	\hfill %
+	\vspace{0.2cm}%
+	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ Points};%
+	\fi%
 	\newline\\%
 	\fi%
 }
@@ -946,6 +965,10 @@
 \vspace{-1em}
 	\ifnum\IsEnumeration=1 %
 	\end{enumerate} %
+	\ifnum\IsMultiCol=1%
+		\end{multicols}%
+		\edef\IsMultiCol{0}%
+	\fi%
 		\edef\IsEnumeration{0} %
 	\fi %
 	\ifnum\noPointsOfPoints=0%
@@ -959,6 +982,10 @@
 			\vskip-1cm %
 		\fi %
 	\fi %
+	\fi%
+\ifnum\IsMultiCol=1%
+		\end{multicols}%
+		\edef\IsMultiCol{0}%
 	\fi%
 }
 
@@ -995,26 +1022,39 @@
 	\mbox{\ } \hfill {\bf #1}
 }
 
+\newcommand{\questText}[1]{
+\ifnum\isAssignment=1
+\textbf{#1}
+\else
+\textit{#1}
+\fi
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\IsEnumeration{0}
 \newcommand{\question}[3][\empty]
 {
+
 	\ifnum\IsEnumeration=0
 	\edef\IsEnumeration{1}
 	\vspace{-1em}
+	\ifnum\IsMultiCol=1%
+	\begin{multicols}{\ColNum}%
+	\fi%
+%	\vspace{-1em}
 	\begin{enumerate}[itemsep=1ex,leftmargin=1.8em,label=\labelText]
 	\fi
 
 	\ifthenelse{\equal{#1}{\empty}}
 	{
 
-		\item{\textit{#2}}
+		\expandafter\item{\questText{#2}}
 		\\
 		#3
 	}
 	{
-		\item{\textit{#2}}
+		\expandafter\item{\questText{#2}}
 		\\
 		#3
 		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \ifthenelse{\equal{\german}{1}}
