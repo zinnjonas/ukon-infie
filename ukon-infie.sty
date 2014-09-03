@@ -13,6 +13,8 @@
 
 \NeedsTeXFormat{LaTeX2e} %Proforma;D
 
+\usepackage{xkeyval}
+
 \def\german{0}
 \def\topExercise{0}
 \def\allwaysTopExercise{0}
@@ -23,21 +25,25 @@
 \def\noPointsOfPoints{0}
 \def\isAssignment{0}
 
-\DeclareOption{de}{\edef\german{1}}
-\DeclareOption{en}{\edef\german{0}}
-\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
-\DeclareOption{bottomTable}{\edef\topTableOfPoints{0}}
-\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
-\DeclareOption{noTable}{\edef\topTableOfPoints{2}}
-\DeclareOption{noPoints}{\edef\noPointsOfPoints{1}\edef\topTableOfPoints{2}}
-\DeclareOption{topExercise}{\edef\allwaysTopExercise{1}}
-\DeclareOption{bubble}{\edef\gobalBubble{1}}
-\DeclareOption{break}{\edef\globalBreak{1}}
-\DeclareOption{mark}{\edef\globalWatermark{1}}
-\DeclareOption{assignment}{\edef\isAssignment{1}}
-%\DeclareOption{draft}{\edef\globaDraft{draft}}
+\DeclareOptionX{de}{\edef\german{1}}
+\DeclareOptionX{en}{\edef\german{0}}
+\DeclareOptionX{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOptionX{bottomTable}{\edef\topTableOfPoints{0}}
+\DeclareOptionX{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOptionX{noTable}{\edef\topTableOfPoints{2}}
+\DeclareOptionX{noPoints}{\edef\noPointsOfPoints{1}\edef\topTableOfPoints{2}}
+\DeclareOptionX{topExercise}{\edef\allwaysTopExercise{1}}
+\DeclareOptionX{bubble}{\edef\gobalBubble{1}}
+\DeclareOptionX{break}{\edef\globalBreak{1}}
+\DeclareOptionX{mark}{\edef\globalWatermark{1}}
+\DeclareOptionX{assignment}{\edef\isAssignment{1}}
+%\DeclareOptionX{draft}{\edef\globaDraft{draft}}
 
-\ProcessOptions
+\DeclareOptionX{lang}{ \edef\kkk{#1}%
+\edef\langName{\kkk.txt}%
+}
+
+\ProcessOptionsX
 
 
 \ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
@@ -801,7 +807,9 @@
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
-		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
+		\line{1}%
+		{\sc \local} \university                \hfill \lecture\par
+%		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
 		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifnum\isAssignment=0%
@@ -823,8 +831,13 @@
 	\fi
 }
 
+\def\line#1{%
+	\edef\local{\csname language-#1\endcsname}%
+}
+
 \newenvironment{ukon-infie}[2][\empty]
 {
+	\langfilecheck\langName%
 	\OpenRead
 	\ifnum\german=1
 		\selectlanguage{ngerman}
@@ -862,6 +875,27 @@
 
 \catcode`\<12 \catcode`\>=12
 \makeatletter
+
+\newread\lang
+\newcount\linecnt
+
+\def\langfilecheck#1%
+{%
+	\endlinechar=\m@ne%
+    \openin\lang=#1\relax%
+    \ifeof\lang%
+    	\closein\lang%
+    \else%
+		\loop\unless\ifeof\lang%
+        	\advance\linecnt by \@ne%
+	        \readline\lang t\expandafter o\csname language-\number\linecnt \endcsname%
+	        \edef\temp{\csname language-\number\linecnt \endcsname}%
+	        \ifx\temp\@empty%
+	        	\advance\linecnt by -1%
+	        \fi%
+	   \repeat%
+	\fi%
+}
 
 \def\Arguments(#1){\xArguments#1,xxx,}
 
