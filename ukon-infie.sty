@@ -117,7 +117,8 @@
 \def\name{}
 \def\lecture{}
 \def\lectureshort{}
-\def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
+\def\fachbereich{%Fachbereich 
+Informatik \& Informationswissenschaft}
 \def\fachbereichen{Department of Computer Science \& Information Science}
 \def\university{\ifthenelse{\equal{\german}{1}}{Konstanz}{Constance}}
 \def\deadline{}
@@ -627,21 +628,23 @@
 \settowidth{\ausgleich}{\Text}
 \setlength{\ausgleich}{\ausgleich/2 - 0.55cm}
 \begin{center}
-	\ifnum\german=1 %
-		\textbf{Punkte: (maximal \Text \ Punkte)}%
-	\else %
-		\textbf{Points: (maximum \Text \ Points)} %
-	\fi %
+	%\ifnum\german=1 %
+	%	\textbf{Punkte: (maximal \Text \ Punkte)}%
+	%\else %
+	%	\textbf{Points: (maximum \Text \ Points)} %
+	%\fi %
+		\textbf{\line{8}: (\line{9} \Text \ \line{8})} %	
 	\\ %
 	\ifnum\TextEmpty=1
 	\begin{tikzpicture}
 		\tikzstyle{every node}=[font=\small] %
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] { %
-		\ifnum\german=1 %
-		\textbf{Gesamt} %
-		\else
-		\textbf{Total} %
-		\fi %
+%		\ifnum\german=1%
+%		\textbf{Gesamt}%
+%		\else%
+%		\textbf{Total}%
+%		\fi %
+		\textbf{\line{7}}%
 		}; %
 		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
 		\draw($(GesamtBox.south west)$) -- ($(GesamtBox.north east)$); %
@@ -659,11 +662,12 @@
 			\node(t\thetempPointTable)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm]
 			at (\themoveToPointTable *2.2,-\thelinePointTable*1.8)
 			{
-			\ifnum\german=1 %
-				Aufgabe
-			\else %
-				Exercise
-			\fi %
+			%\ifnum\german=1 %
+			%	Aufgabe
+			%\else %
+			%	Exercise
+			%\fi %
+			\line{10}
 			\thetempPointTable %
 			};
 			\node(tBox\thetempPointTable)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of t\thetempPointTable]{};
@@ -683,19 +687,21 @@
 		\addtocounter{tempPointTable}{-1}
 		\ifnum\value{moveToPointTable}=0
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, below =0.05cm of tBox\thetempPointTable] { %
-				\ifnum\german=1 %
-				\textbf{Gesamt} %
-				\else
-				\textbf{Total} %
-				\fi %
+%				\ifnum\german=1 %
+%				\textbf{Gesamt} %
+%				\else
+%				\textbf{Total} %
+%				\fi %
+				\textbf{\line{7}}
 				}; %
 		\else
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, right =0.02cm of t\thetempPointTable] { %
-				\ifnum\german=1 %
-				\textbf{Gesamt} %
-				\else
-				\textbf{Total} %
-				\fi %
+%				\ifnum\german=1 %
+%				\textbf{Gesamt} %
+%				\else
+%				\textbf{Total} %
+%				\fi %
+				\textbf{line{7}}%
 				}; %
 		\fi
 		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
@@ -807,15 +813,17 @@
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
-		\line{1}%
-		{\sc \local} \university                \hfill \lecture\par
+		{\sc \line{1}} \university                \hfill \lecture\par
 %		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
-		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
+		{\sc \line{2} }{\sc \fachbereich} \hfill \semester \par
+%		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifnum\isAssignment=0%
-			\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}%
+			\Title{\line{3} \theexerciseNumber. \line{4}}
+			%\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}%
 		\else%
-			\ifthenelse{\equal{\german}{1}}{\Title{\theexerciseNumber. Aufgabenblatte}}{\Title{\theexerciseNumber. Assignment}}%
+			\Title{\theexerciseNumber. \line{5}}
+			 %\ifthenelse{\equal{\german}{1}}{\Title{\theexerciseNumber. Aufgabenblatte}}{\Title{\theexerciseNumber. Assignment}}%
  		\fi%
 	}
 }
@@ -824,7 +832,13 @@
 {
 	\group{\name}{\lectureshort\ –\ \theexerciseNumber}
 	\header
-	\ifthenelse{\equal{\deadline}{\empty}}{}{\begin{center}\ifthenelse{\equal{\german}{1}}{\textit{Abgabe: \deadline}}{\textit{Deadline: \deadline}}\end{center}} %
+	\ifthenelse{\equal{\deadline}{\empty}}{}
+	{
+		\begin{center}%
+		%\ifthenelse{\equal{\german}{1}}{\textit{Abgabe: \deadline}}{\textit{Deadline: \deadline}}
+		\textit{\line{6}: \deadline}%
+		\end{center}%
+	}%
 	\expandafter\analysePoints\expandafter(\PointArray)
 	\ifnum\topTableOfPoints=1
 	\zeichneTabellen
@@ -833,6 +847,7 @@
 
 \def\line#1{%
 	\edef\local{\csname language-#1\endcsname}%
+	\local 
 }
 
 \newenvironment{ukon-infie}[2][\empty]
@@ -974,9 +989,10 @@
 	\fi %
 %
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
-	\ifthenelse{\equal{\german}{1}} %
-	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
-	{\noindent\textbf{Exercise \thenumberTask: #2}} %
+%	\ifthenelse{\equal{\german}{1}} %
+%	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
+%	{\noindent\textbf{Exercise \thenumberTask: #2}} %
+	\noindent\textbf{\line{10} \thenumberTask: #2}%
 	\ifnum\IsAdditional=0 %
 	\add@to@pointlist, %
 	\fi %
@@ -990,7 +1006,7 @@
 	\ifnum\isAssignment=1%
 	\hfill %
 	\vspace{0.2cm}%
-	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ Points};%
+	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ \line{8}};%Points
 	\fi%
 	\newline\\%
 	\fi%
@@ -1042,8 +1058,8 @@
 } %
 { %
 	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
-	{\points{\PointsBlank of \temppunkte\ Points}} %
-	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank of + \tempZpunkte\ Points}}{\points{\PointsBlank of \temppunkte + \tempZpunkte\ Points}}} %
+	{\points{\PointsBlank of \temppunkte\ \line{8}}} %Points
+	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank of + \tempZpunkte\ Points}}{\points{\PointsBlank of \temppunkte + \tempZpunkte\ \line{8}}}} %
 } %
 \\\\ %
 \fi %
