@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
         var os = navigator.appVersion;
         if (os.indexOf("Win")!=-1) newline="\r\n";
         else if (os.indexOf("Mac")!=-1) newline="\r";
-        else OSName="Linux";
+        else newline="\n";
             
         
         var uni = $("#university").val();
