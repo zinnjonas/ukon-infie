@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://127.0.0.1:28172/generateTemplate.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+      <script src="./generateTemplate_files/jquery.min.js"></script>
+      
+      <style>          
+          .github {
+              width: 16px;
+              height: 16px;
+              content: url("./images/blacktocat.png");
+          }
+      </style>             
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="./generateTemplate_files/bootstrap.min.js"></script>
+      
+      <script src="./generateTemplate_files/jquery-2.1.3.min.js"></script>
+      <script src="./generateTemplate_files/jquery.savefile.min.js"></script>
+      <script src="./generateTemplate_files/ukon-infie.js"></script>
+
+    <title>UKon-InfIe Generator</title>
+  </head>
+  <body>
+      <div class="container">
+          <header>
+          <p>
+        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/zinnjonas/ukon-infie/zipball/master">Download as .zip</a>
+        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/zinnjonas/ukon-infie/tarball/master">Download as .tar.gz</a>
+        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/zinnjonas/ukon-infie"><span class="glyphicon github"></span> View on GitHub</a>
+      </p>
+     </header>
+          
+           <h2>Data</h2>
+  <form class="form-horizontal">
+        <div class="form-group">
+            <label for="university" class="control-label col-xs-2">University</label>
+            <div class="col-xs-10">
+                <input name="uni" type="text" class="form-control" id="university" placeholder="Konstanz">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="control-label col-xs-2">Names</label>
+            <div class="col-xs-10">
+                <input name="names" type="text" class="form-control" id="names" placeholder="Jonas Zinn">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="button" class="btn btn-default" id="generate">Generate</button>
+                <a type="button" class="btn btn-default" id="download" disabled="">Download</a>
+            </div>
+        </div>
+    </form>
+          <textarea rows="10" cols="10" type="text" class="form-control" id="screen" readonly=""></textarea>
+</div>
+  
+</body></html>
