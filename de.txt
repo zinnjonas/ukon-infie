@@ -1,7 +1,10 @@
-Universität
-Fachbereich
+ngerman
 Lösung des
 Aufgabenblattes
 Aufgabenblatt
 Abgabe
-test
+Gesamt
+Punkten
+maximal
+Aufgabe
+von
