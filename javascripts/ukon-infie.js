@@ -1,4 +1,7 @@
 jQuery(document).ready(function(){
+    var text;
+    var header;
+
     $("#generate").on("click", function(){
         // Getting the newline style of the current OS
         var newline;
@@ -18,6 +21,7 @@ jQuery(document).ready(function(){
         var names = $('#names').val();
         var number = $('#assignment_number').val();
         var deadline = $('#deadline').val();
+        var table = $("#table").val();
 
         if( uni == ""){
             uni = $("#university").attr("placeholder");
@@ -32,9 +36,29 @@ jQuery(document).ready(function(){
             number = "0";
         }
 
-        var text = "\\documentclass[a4paper]{article}"+ newline+ newline;
-
-            text += "\\usepackage[" +lang + "]{ukon-infie}" + newline +newline;
+        text = "\\documentclass[a4paper]{article}"+ newline + newline;
+        text += "\\usepackage[";
+        if( $('#multilang')[0].checked){
+            text  +="lang=";
+        }
+        text += lang;
+        if( $('#linebreak')[0].checked){
+            text += ",break";
+        }
+        if($('#draft')[0].checked){
+            text += ",draft";
+        }
+        if($('#head')[0].checked){
+            text += ",topExercise";
+        }
+        if($('#noPoints')[0].checked){
+            text += ",noPoints";
+        }
+        if($('#bubble')[0].checked){
+            text += ",bubble";
+        }
+        text += "," + table;
+        text += "]{ukon-infie}" + newline +newline;
 
             text += "\\University{" + uni +"}" + newline;
             text += "\\Department{" + department +"}" + newline;
@@ -71,8 +95,24 @@ jQuery(document).ready(function(){
         });
         var download = $('#download');
         download.removeAttr("Disabled");
-        $(download).attr("download", "test.txt");
-        $(download).attr("href","data:application/octet-stream;charset=utf-8;base64," + base);
+        $('#work').removeAttr("Disabled");
+    });
+    jQuery('#download').on("click", function(){
+        $.savefile({
+            'filename': 'custom_content',
+            'extension': 'tex',
+            'content': text
+        })
     });
     jQuery('#deadline').datetimepicker();
+    jQuery('#work').on("click", function(){
+        $.get("https://raw.githubusercontent.com/zinnjonas/ukon-infie/master/ukon-infie.sty", function(data){
+            header = data;
+        });
+        var file = $.fileURL("test.tex", text);
+        var header_url = $.fileURL("header.tex", header);
+        var action = "https://www.overleaf.com/docs?snip_uri="+file+"&snip_name=test.sty";
+        //+"&snip_uri[]="+header_url+"&snip_name[]=test.tex&snip_name[]=header.tex";
+        $('#overleaf').attr("action", action);
+    });
 });

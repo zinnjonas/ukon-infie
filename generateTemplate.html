@@ -20,6 +20,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="./javascripts/bootstrap.min.js"></script>
     <script src="./javascripts/jquery.datetimepicker.js"></script>
+    <script src="./javascripts/jquery.savefile.js"></script>
     <script src="./javascripts/ukon-infie.js"></script>
     <script src="./javascripts/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
@@ -37,7 +38,7 @@
             </p>
         </header>
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" >
             <div class="form-group">
                 <div class="col-xs-offset-2 col-xs-10">
                     <h2 class="">Settings for Template</h2>
@@ -54,12 +55,16 @@
                         </select>
                     </div>
                 </div>
-            </div>
+                <div class="form-group col-xs-3">
+                    <input type="checkbox" id="multilang" val="none"/>
+                    <label for="multilang" class="control-label">multi-lang</label>
+                </div>
+                </div>
             <!-- University-->
             <div class="form-group">
                 <label for="university" class="control-label col-xs-2">Company</label>
                 <div class="col-xs-7">
-                    <input name="uni" type="text" class="form-control" id="university" placeholder="Konstanz" />
+                    <input name="uni" type="text" class="form-control" id="university" placeholder="Universität Konstanz" />
                 </div>
             </div>
             <!-- Department-->
@@ -73,24 +78,33 @@
             <div class="form-group">
                 <label for="course" class="control-label col-xs-2">Course</label>
                 <div class="col-xs-3">
-                        <input name="course" type="text" class="form-control" id="course" placeholder="Expansion">
+                        <input name="course" type="text" class="form-control" id="course" placeholder="Long Title">
                 </div>
                 <div class="col-xs-4">
-                    <input  class="form-control" name="short_course" id="short_course" placeholder="Contraction"/>
+                    <input  class="form-control" name="short_course" id="short_course" placeholder="Short Title"/>
                 </div>
             </div>
             <!-- Term-->
             <div class="form-group">
                 <label for="term" class="control-label col-xs-2">Term</label>
-                <div class="col-xs-7">
+                <div class="col-xs-3">
                     <input name="term" type="text" class="form-control" id="term" placeholder="">
                 </div>
-            </div>
             <!-- Group-->
-            <div class="form-group">
-                <label for="group" class="control-label col-xs-2">Group</label>
-                <div class="col-xs-7">
+                <label for="group" class="control-label col-xs-1">Group</label>
+                <div class="col-xs-3">
                     <input name="group" type="text" class="form-control " id="group" placeholder="">
+                </div>
+            </div>
+            <!-- Number of Assignment, Deadline -->
+            <div class="form-group">
+                <label for="assignment_number" class="control-label col-xs-2">Number</label>
+                <div class="col-xs-3">
+                    <input name="assignment_number" min="0" type="number" class="form-control" id="assignment_number" placeholder="">
+                </div>
+                <label for="deadline" class="control-label col-xs-1">Due</label>
+                <div class="col-xs-3">
+                    <input name="deadline" type="datetime" class="form-control" id="deadline" placeholder="">
                 </div>
             </div>
             <!-- Names-->
@@ -100,29 +114,49 @@
                     <input name="names" type="text" class="form-control" id="names" placeholder="Jonas Zinn">
                 </div>
             </div>
-            <!-- Number of Assignment, Deadline -->
+            <!-- Pointtable -->
             <div class="form-group">
-                <label for="assignment_number" class="control-label col-xs-2">Number</label>
-                <div class="col-xs-3">
-                    <input name="assignment_number" min="0" type="number" class="form-control" id="assignment_number" placeholder="">
-                </div>
-                <label for="deadline" class="control-label col-xs-1">Deadline</label>
-                <div class="col-xs-3">
-                    <input name="deadline" type="datetime" class="form-control" id="deadline" placeholder="">
-                </div>
+                    <label for="lang" class="control-label  col-xs-2">Pointtable</label>
+                <div class="dropdown col-xs-2">
+                        <select  id="table" class="form-control col-xs-2">
+                            <option value="topTable">Top</option>
+                            <option value="bottomTable">Bottom</option>
+                            <option value="noTable">None</option>
+                        </select>
+                    </div>
+            </div>
+            <!-- Finetune settings -->
+            <div class="form-group">
+                <label class="control-label col-xs-2">Linebreaks</label>
+                <input type="checkbox" val="none" class="col-xs-1" id="linebreak"/>
+                <label class="control-label col-xs-2">DRAFT-watermark</label>
+                <input type="checkbox" val="none" id="draft" class="col-xs-1"/>
+                <label class="control-label col-xs-2">Points on top</label>
+                <input type="checkbox" val="none" id="head" class="col-xs-1"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-2">No Points</label>
+                <input type="checkbox" val="none" id="noPoints" class="col-xs-1"/>
+                <label class="control-label col-xs-2">Bubble for Points</label>
+                <input type="checkbox" val="none" id="bubble" class="col-xs-1"/>
             </div>
             <!-- Buttons-->
             <div class="form-group">
                 <div class="col-xs-offset-2 col-xs-2">
                     <button type="button" class="btn btn-default" id="generate">Generate</button>
                 </div>
-                <div class="col-xs-offset-4 col-xs-1">
-                    <a type="button" class="btn btn-default" id="download" disabled="">Download</a>
+                <div class="col-xs-offset-3 col-xs-2">
+                    <div>
+                        <a type="button" class="btn btn-default" id="download" disabled="">Download</a>
+                    </div>
                 </div>
             </div>
         </form>
 
-        <h2 for="screen" class="control-label">Generated Code</h2>
+        <h2 for="snip" class="control-label">Generated Code</h2>
+        <form id="overleaf" action="" method="post">
+            <button class="btn btn-default" id="work" disabled="" type="submit">Work</button>
+            </form>
         <pre class="lineNumber"><code class="tex" id="screen">
 
 
