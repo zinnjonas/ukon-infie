@@ -117,10 +117,8 @@
 \def\name{}
 \def\lecture{}
 \def\lectureshort{}
-\def\fachbereich{%Fachbereich 
-Informatik \& Informationswissenschaft}
-\def\fachbereichen{Department of Computer Science \& Information Science}
-\def\university{{\sc Universität} Konstanz}
+\def\fachbereichen{}
+\def\university{}
 \def\deadline{}
 \def\colaborations{}
 \def\onlyTotalPoints{0}
@@ -749,12 +747,7 @@ Informatik \& Informationswissenschaft}
 \edef\university{#1}
 }
 
-\newcommand{\Fachbereich}[1]
-{
-\edef\fachbereich{#1}
-}
-
-\newcommand{\Department} [1]
+\newcommand{\Department}[1]
 {
 \edef\fachbereichen{#1}
 }
@@ -789,7 +782,7 @@ Informatik \& Informationswissenschaft}
 {
 	{\footnotesize \parindent0em
 		\university                \hfill \lecture\par
-		{\sc \fachbereich} \hfill \semester \par
+		{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifnum\isAssignment=0%
 			\Title{\line{2} \theexerciseNumber. \line{3}}
