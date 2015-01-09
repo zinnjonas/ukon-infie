@@ -111,7 +111,7 @@ jQuery(document).ready(function(){
         });
         var file = $.fileURL("test.tex", text);
         var header_url = $.fileURL("header.tex", header);
-        var action = "https://www.overleaf.com/docs?snip_uri="+file+"&snip_name=test.sty";
+        var action = "https://www.overleaf.com/docs?snip_uri="+file+"&snip_name=test.tex";
         //+"&snip_uri[]="+header_url+"&snip_name[]=test.tex&snip_name[]=header.tex";
         $('#overleaf').attr("action", action);
     });
