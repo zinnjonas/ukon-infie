@@ -13,7 +13,9 @@
 
 \NeedsTeXFormat{LaTeX2e} %Proforma;D
 
-\def\german{0}
+\usepackage{xkeyval}
+
+%\def\german{0}
 \def\topExercise{0}
 \def\allwaysTopExercise{0}
 \def\topTableOfPoints{1}
@@ -23,21 +25,25 @@
 \def\noPointsOfPoints{0}
 \def\isAssignment{0}
 
-\DeclareOption{de}{\edef\german{1}}
-\DeclareOption{en}{\edef\german{0}}
-\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
-\DeclareOption{bottomTable}{\edef\topTableOfPoints{0}}
-\DeclareOption{topTable}{\edef\topTableOfPoints{1}}
-\DeclareOption{noTable}{\edef\topTableOfPoints{2}}
-\DeclareOption{noPoints}{\edef\noPointsOfPoints{1}\edef\topTableOfPoints{2}}
-\DeclareOption{topExercise}{\edef\allwaysTopExercise{1}}
-\DeclareOption{bubble}{\edef\gobalBubble{1}}
-\DeclareOption{break}{\edef\globalBreak{1}}
-\DeclareOption{mark}{\edef\globalWatermark{1}}
-\DeclareOption{assignment}{\edef\isAssignment{1}}
-%\DeclareOption{draft}{\edef\globaDraft{draft}}
+%\DeclareOptionX{de}{\edef\german{1}}
+%\DeclareOptionX{en}{\edef\german{0}}
+\DeclareOptionX{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOptionX{bottomTable}{\edef\topTableOfPoints{0}}
+\DeclareOptionX{topTable}{\edef\topTableOfPoints{1}}
+\DeclareOptionX{noTable}{\edef\topTableOfPoints{2}}
+\DeclareOptionX{noPoints}{\edef\noPointsOfPoints{1}\edef\topTableOfPoints{2}}
+\DeclareOptionX{topExercise}{\edef\allwaysTopExercise{1}}
+\DeclareOptionX{bubble}{\edef\gobalBubble{1}}
+\DeclareOptionX{break}{\edef\globalBreak{1}}
+\DeclareOptionX{mark}{\edef\globalWatermark{1}}
+\DeclareOptionX{assignment}{\edef\isAssignment{1}}
+%\DeclareOptionX{draft}{\edef\globaDraft{draft}}
 
-\ProcessOptions
+\DeclareOptionX{lang}{ \edef\kkk{#1}%
+\edef\langName{\kkk.txt}%
+}
+
+\ProcessOptionsX
 
 
 \ProvidesPackage{ukon-infie}[2011/10/16 2.1 ukon-infie Package]
@@ -111,9 +117,8 @@
 \def\name{}
 \def\lecture{}
 \def\lectureshort{}
-\def\fachbereich{Fachbereich Informatik \& Informationswissenschaft}
-\def\fachbereichen{Department of Computer Science \& Information Science}
-\def\university{\ifthenelse{\equal{\german}{1}}{Konstanz}{Constance}}
+\def\fachbereichen{}
+\def\university{}
 \def\deadline{}
 \def\colaborations{}
 \def\onlyTotalPoints{0}
@@ -621,21 +626,13 @@
 \settowidth{\ausgleich}{\Text}
 \setlength{\ausgleich}{\ausgleich/2 - 0.55cm}
 \begin{center}
-	\ifnum\german=1 %
-		\textbf{Punkte: (maximal \Text \ Punkte)}%
-	\else %
-		\textbf{Points: (maximum \Text \ Points)} %
-	\fi %
+		\textbf{\line{7}: (\line{8} \Text \ \line{7})} %	
 	\\ %
 	\ifnum\TextEmpty=1
 	\begin{tikzpicture}
 		\tikzstyle{every node}=[font=\small] %
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm] { %
-		\ifnum\german=1 %
-		\textbf{Gesamt} %
-		\else
-		\textbf{Total} %
-		\fi %
+		\textbf{\line{6}}%
 		}; %
 		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
 		\draw($(GesamtBox.south west)$) -- ($(GesamtBox.north east)$); %
@@ -653,11 +650,7 @@
 			\node(t\thetempPointTable)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm]
 			at (\themoveToPointTable *2.2,-\thelinePointTable*1.8)
 			{
-			\ifnum\german=1 %
-				Aufgabe
-			\else %
-				Exercise
-			\fi %
+			\line{9}
 			\thetempPointTable %
 			};
 			\node(tBox\thetempPointTable)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of t\thetempPointTable]{};
@@ -677,19 +670,11 @@
 		\addtocounter{tempPointTable}{-1}
 		\ifnum\value{moveToPointTable}=0
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, below =0.05cm of tBox\thetempPointTable] { %
-				\ifnum\german=1 %
-				\textbf{Gesamt} %
-				\else
-				\textbf{Total} %
-				\fi %
+				\textbf{\line{6}}%
 				}; %
 		\else
 		\node(Gesamt)[draw,rectangle,minimum height=0.6 cm, minimum width=2.2 cm, right =0.02cm of t\thetempPointTable] { %
-				\ifnum\german=1 %
-				\textbf{Gesamt} %
-				\else
-				\textbf{Total} %
-				\fi %
+				\textbf{\line{6}}%
 				}; %
 		\fi
 		\node(GesamtBox)[draw,rectangle,minimum height=1.0 cm, minimum width=2.2 cm,below=0.1cm of Gesamt]{}; %
@@ -762,12 +747,7 @@
 \edef\university{#1}
 }
 
-\newcommand{\Fachbereich}[1]
-{
-\edef\fachbereich{#1}
-}
-
-\newcommand{\Department} [1]
+\newcommand{\Department}[1]
 {
 \edef\fachbereichen{#1}
 }
@@ -784,7 +764,7 @@
 \newcommand{\group}[2]
 {
 	\lfoot{#1}
-	\cfoot{\thepage\ \ifthenelse{\equal{\german}{1}}{von}{of} \pageref{LastPage}}
+	\cfoot{\thepage\ / \pageref{LastPage}}
 	\rfoot{#2}
 	\rhead{\footnotesize \parindent0em\bf \colaborations}
 }
@@ -801,13 +781,13 @@
 \newcommand{\header}
 {
 	{\footnotesize \parindent0em
-		\ifthenelse{\equal{\german}{1}}{\sc Universität \university}{\sc University of \university}                \hfill \lecture\par
-		\ifthenelse{\equal{\german}{1}}{\sc \fachbereich}{\sc \fachbereichen} \hfill \semester \par
+		\university                \hfill \lecture\par
+		{\sc \fachbereichen} \hfill \semester \par
 		\name \hfill \today\par
 		\ifnum\isAssignment=0%
-			\ifthenelse{\equal{\german}{1}}{\Title{Lösung des \theexerciseNumber. Aufgabenblattes}}{\Title{Solution of \theexerciseNumber. Assignment}}%
+			\Title{\line{2} \theexerciseNumber. \line{3}}
 		\else%
-			\ifthenelse{\equal{\german}{1}}{\Title{\theexerciseNumber. Aufgabenblatte}}{\Title{\theexerciseNumber. Assignment}}%
+			\Title{\theexerciseNumber. \line{4}}
  		\fi%
 	}
 }
@@ -816,19 +796,31 @@
 {
 	\group{\name}{\lectureshort\ –\ \theexerciseNumber}
 	\header
-	\ifthenelse{\equal{\deadline}{\empty}}{}{\begin{center}\ifthenelse{\equal{\german}{1}}{\textit{Abgabe: \deadline}}{\textit{Deadline: \deadline}}\end{center}} %
+	\ifthenelse{\equal{\deadline}{\empty}}{}
+	{
+		\begin{center}%
+		\textit{\line{5}: \deadline}%
+		\end{center}%
+	}%
 	\expandafter\analysePoints\expandafter(\PointArray)
 	\ifnum\topTableOfPoints=1
 	\zeichneTabellen
 	\fi
 }
-
+\def\local{}
+\def\line#1{%
+	{\csname language-#1\endcsname}%
+	%\local%
+}
+\def\lang{german}
 \newenvironment{ukon-infie}[2][\empty]
 {
+	\langfilecheck\langName%
 	\OpenRead
-	\ifnum\german=1
-		\selectlanguage{ngerman}
-	\fi
+%	\ifnum\german=1
+	\expandafter\edef\expandafter\local{\line{1}}
+	\expandafter\selectlanguage\local%
+%	\fi
 	\edef\deadline{#1}
 	\setcounter{exerciseNumber}{#2}
 	\Header
@@ -862,6 +854,27 @@
 
 \catcode`\<12 \catcode`\>=12
 \makeatletter
+
+\newread\lang
+\newcount\linecnt
+
+\def\langfilecheck#1%
+{%
+	\endlinechar=\m@ne%
+    \openin\lang=#1\relax%
+    \ifeof\lang%
+    	\closein\lang%
+    \else%
+		\loop\unless\ifeof\lang%
+        	\advance\linecnt by \@ne%
+	        \readline\lang t\expandafter o\csname language-\number\linecnt \endcsname%
+	        \edef\temp{\csname language-\number\linecnt \endcsname}%
+	        \ifx\temp\@empty%
+	        	\advance\linecnt by -1%
+	        \fi%
+	   \repeat%
+	\fi%
+}
 
 \def\Arguments(#1){\xArguments#1,xxx,}
 
@@ -940,9 +953,10 @@
 	\fi %
 %
 	\ifthenelse{\equal{#1}{\empty}}{}{\bigskip} %
-	\ifthenelse{\equal{\german}{1}} %
-	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
-	{\noindent\textbf{Exercise \thenumberTask: #2}} %
+%	\ifthenelse{\equal{\german}{1}} %
+%	{\noindent\textbf{Aufgabe \thenumberTask: #2}} %
+%	{\noindent\textbf{Exercise \thenumberTask: #2}} %
+	\noindent\textbf{\line{9} \thenumberTask: #2}%
 	\ifnum\IsAdditional=0 %
 	\add@to@pointlist, %
 	\fi %
@@ -956,7 +970,7 @@
 	\ifnum\isAssignment=1%
 	\hfill %
 	\vspace{0.2cm}%
-	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ Points};%
+	\tikz\node[rectangle,rounded corners,draw,minimum height=1.2em] {\temppunkte\ \line{7}};%Points
 	\fi%
 	\newline\\%
 	\fi%
@@ -1000,17 +1014,17 @@
 \def\printPoints{
 \ifnum\IsAdditional=0 %
 \hfill %
-\ifthenelse{\equal{\german}{1}} %
-{ %
+%\ifthenelse{\equal{\german}{1}} %
+%{ %
+%	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
+%	{\points{\PointsBlank von \temppunkte\ Punkten}} %
+%	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank von + \tempZpunkte\ Punkten}}{\points{\PointsBlank von \temppunkte +\tempZpunkte\ Punkten}}} %
+%} %
+%{ %
 	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
-	{\points{\PointsBlank von \temppunkte\ Punkten}} %
-	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank von + \tempZpunkte\ Punkten}}{\points{\PointsBlank von \temppunkte +\tempZpunkte\ Punkten}}} %
-} %
-{ %
-	\ifthenelse{\equal{\tempZpunkte}{\empty}} %
-	{\points{\PointsBlank of \temppunkte\ Points}} %
-	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank of + \tempZpunkte\ Points}}{\points{\PointsBlank of \temppunkte + \tempZpunkte\ Points}}} %
-} %
+	{\points{\PointsBlank \line{10} \temppunkte\ \line{7}}} %Points
+	{\ifthenelse{\equal{\temppunkte}{\empty}}{\points{\PointsBlank \line{10} + \tempZpunkte\ \line{7}}}{\points{\PointsBlank \line{10} \temppunkte\ + \tempZpunkte\ \line{7}}}} %
+%} %
 \\\\ %
 \fi %
 }
@@ -1057,9 +1071,10 @@
 		\expandafter\item{\questText{#2}}
 		\\
 		#3
-		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \ifthenelse{\equal{\german}{1}}
-				{\textit{von #1 Punkt\ifthenelse{#1>1}{en}{}}}
-				{\textit{of #1 Point\ifthenelse{#1>1}{s}{}}}}
+		\hfill 	\mbox{\ } \hfill \text{ [\qquad] \textit{\line{10} #1 \line{7}}}%
+			%\ifthenelse{\equal{\german}{1}}
+			%	{\textit{von #1 Punkt\ifthenelse{#1>1}{en}{}}}
+			%	{\textit{of #1 Point\ifthenelse{#1>1}{s}{}}}}
 	}
 }
 
