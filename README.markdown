@@ -40,7 +40,6 @@ Installation instructions and an example can be found on the [documentation page
 | \Names          | 1             | the student names for an assignment sheet| \Names{Jonas Zinn}|
 | \Lecture        | 1(1)          | the name of the lecture | \Lecture{name}, \Lecture[short]{long name}|
 | \Department     | 1             | the department of the lecture | \Department{Information Science} |
-| \Fachbereich    |1              | the german equality to \Department| \Fachbereich{Information Science}|
 | \Term           | 1             | the current term | \Term{WS 12/13}|
 | \Group          | 1             | a group id  | \Group{H12} |
 | \University     | 1             | the name of the university | \University{Konstanz}|
