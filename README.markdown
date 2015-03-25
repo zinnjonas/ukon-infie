@@ -1,3 +1,6 @@
+[![Issue Stats](http://issuestats.com/github/zinnjonas/ukon-infie/badge/pr)](http://issuestats.com/github/zinnjonas/ukon-infie)
+[![Issue Stats](http://issuestats.com/github/zinnjonas/ukon-infie/badge/issue)](http://issuestats.com/github/zinnjonas/ukon-infie)
+
 # General Info
 
 This package is made for students of Information Engineering and Computer
