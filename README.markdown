@@ -100,13 +100,13 @@ Installation instructions and an example can be found on the [documentation page
 | cols | create a X column multicol around the questions|
 
 #List of Colors
-| name          |
-| ------------- |
-| dGreen        |
-| dBlue         |
-| dRed          |
-| dYellow       |
-| lYellow       |
+| name          | color |
+| ------------- | ----- |
+| dGreen        | <p background-color: #007D00>      </p>|
+| dBlue         |<p background-color: #007D00>      </p>|
+| dRed          |<p background-color: #007D00>      </p>|
+| dYellow       |<p background-color: #007D00>      </p>|
+| lYellow       |<p background-color: #007D00>      </p>|
 
 # License
 
