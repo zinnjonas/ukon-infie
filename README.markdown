@@ -100,7 +100,7 @@ Installation instructions and an example can be found on the [documentation page
 | cols | create a X column multicol around the questions|
 
 #List of Colors
-<iframe href="table.html"></iframe>
+<iframe href="https://raw.githubusercontent.com/zinnjonas/ukon-infie/master/table.html"></iframe>
 
 # License
 
