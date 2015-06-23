@@ -126,7 +126,7 @@ Installation instructions and an example can be found on the [documentation page
         </tr>
         <tr>
             <td>lYellow</td>
-            <td><p color="#FFCC00">Color</p></td>
+            <td><p style="color:#FFCC00">Color</p></td>
         </tr>
     </tbody>
 </table>
