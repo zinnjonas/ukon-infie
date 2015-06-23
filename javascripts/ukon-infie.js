@@ -36,7 +36,7 @@ jQuery(document).ready(function(){
             number = "0";
         }
 
-        text = "\\documentclass[a4paper]{article}"+ newline + newline;
+        text = "\\documentclass[a4paper]{scrartcl}"+ newline + newline;
         text += "\\usepackage[";
         if( $('#multilang')[0].checked){
             text  +="lang=";
