@@ -118,7 +118,7 @@ Installation instructions and an example can be found on the [documentation page
         </tr>
         <tr>
             <td>dRed</td>
-            <td style="color: #A00000"> Color<td>
+            <td style="color: #A00000"> Color</td>
         </tr>
         <tr>
             <td>dYellow</td>
@@ -126,7 +126,7 @@ Installation instructions and an example can be found on the [documentation page
         </tr>
         <tr>
             <td>lYellow</td>
-            <td style="color: #FFCC00"> Color</td>
+            <td><p color="#FFCC00">Color</p></td>
         </tr>
     </tbody>
 </table>
