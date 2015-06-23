@@ -100,13 +100,36 @@ Installation instructions and an example can be found on the [documentation page
 | cols | create a X column multicol around the questions|
 
 #List of Colors
-| name          | color |
-| ------------- | ----- |
-| dGreen        | <font color="#007D00"> Color</font>|
-| dBlue         |<font color="#0000A0">Color</font>|
-| dRed          |<font color="#A00000">Color</font>|
-| dYellow       |<font color="#FFAA00">Color</font>|
-| lYellow       |<font color="#FFCC00">Color</font>|
+<table>
+    <thead>
+        <tr>
+            <td>name</td>
+            <td>color</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>dGreen</td>
+            <td><font color="#007D00"> Color</font></td>
+        </tr>
+        <tr>
+            <td>dBlue</td>
+            <td><font color="#0000A0"> Color</font></td>
+        </tr>
+        <tr>
+            <td>dRed</td>
+            <td><font color="#A00000"> Color</font></td>
+        </tr>
+        <tr>
+            <td>dYellow</td>
+            <td><font color="#FFAA00"> Color</font></td>
+        </tr>
+        <tr>
+            <td>lYellow</td>
+            <td><font color="#FFCC00"> Color</font></td>
+        </tr>
+    </tbody>
+</table>
 
 # License
 
