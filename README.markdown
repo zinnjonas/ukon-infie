@@ -110,23 +110,23 @@ Installation instructions and an example can be found on the [documentation page
     <tbody>
         <tr>
             <td>dGreen</td>
-            <td><font color="#007D00"> Color</font></td>
+            <td style="color: #007D00"> Color</td>
         </tr>
         <tr>
             <td>dBlue</td>
-            <td><font color="#0000A0"> Color</font></td>
+            <td style="color: #0000A0"> Color</td>
         </tr>
         <tr>
             <td>dRed</td>
-            <td><font color="#A00000"> Color</font></td>
+            <td style="color: #A00000"> Color<td>
         </tr>
         <tr>
             <td>dYellow</td>
-            <td><font color="#FFAA00"> Color</font></td>
+            <td style="color: #FFAA00"> Color</td>
         </tr>
         <tr>
             <td>lYellow</td>
-            <td><font color="#FFCC00"> Color</font></td>
+            <td style="color: #FFCC00"> Color</td>
         </tr>
     </tbody>
 </table>
