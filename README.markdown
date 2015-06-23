@@ -100,36 +100,7 @@ Installation instructions and an example can be found on the [documentation page
 | cols | create a X column multicol around the questions|
 
 #List of Colors
-<table>
-    <thead>
-        <tr>
-            <td>name</td>
-            <td>color</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>dGreen</td>
-            <td style="color: #007D00"> Color</td>
-        </tr>
-        <tr>
-            <td>dBlue</td>
-            <td style="color: #0000A0"> Color</td>
-        </tr>
-        <tr>
-            <td>dRed</td>
-            <td style="color: #A00000"> Color</td>
-        </tr>
-        <tr>
-            <td>dYellow</td>
-            <td style="color: #FFAA00"> Color</td>
-        </tr>
-        <tr>
-            <td>lYellow</td>
-            <td><p style="color:#FFCC00">Color</p></td>
-        </tr>
-    </tbody>
-</table>
+<link rel="import" href="table.html"></link>
 
 # License
 
