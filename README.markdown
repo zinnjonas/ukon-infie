@@ -102,11 +102,11 @@ Installation instructions and an example can be found on the [documentation page
 #List of Colors
 | name          | color |
 | ------------- | ----- |
-| dGreen        | <font style="background-color: ##007D00; color: ##007D00;"> Color</font>|
-| dBlue         |<p background-color: #007D00>Color</p>|
-| dRed          |<p background-color: #007D00>Color</p>|
-| dYellow       |<p background-color: #007D00>Color</p>|
-| lYellow       |<p background-color: #007D00>Color</p>|
+| dGreen        | <font color="#007D00"> Color</font>|
+| dBlue         |<font color="#0000A0">Color</font>|
+| dRed          |<font color="#A00000">Color</font>|
+| dYellow       |<font color="#FFAA00">Color</font>|
+| lYellow       |<font color="#FFCC00">Color</font>|
 
 # License
 
