@@ -100,7 +100,7 @@ Installation instructions and an example can be found on the [documentation page
 | cols | create a X column multicol around the questions|
 
 #List of Colors
-<link rel="import" href="table.html"></link>
+<iframe href="table.html"></iframe>
 
 # License
 
