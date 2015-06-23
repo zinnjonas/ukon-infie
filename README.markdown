@@ -102,7 +102,7 @@ Installation instructions and an example can be found on the [documentation page
 #List of Colors
 | name          | color |
 | ------------- | ----- |
-| dGreen        | <p style="background-color: ##007D00; color: ##007D00;">Color</p>|
+| dGreen        | <font style="background-color: ##007D00; color: ##007D00;"> Color</font>|
 | dBlue         |<p background-color: #007D00>Color</p>|
 | dRed          |<p background-color: #007D00>Color</p>|
 | dYellow       |<p background-color: #007D00>Color</p>|
