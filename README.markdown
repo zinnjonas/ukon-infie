@@ -20,7 +20,7 @@ feedback or send bug reports.
 
 Installation instructions and an example can be found on the [documentation pages](http://zinnjonas.github.com/ukon-infie/).
 
-#List of Parameters
+# List of Parameters
 | Parameter     | Description                                       |
 | ------------- |:-------------------------------------------------:|
 | de            | german layout                                     |
@@ -44,7 +44,7 @@ Installation instructions and an example can be found on the [documentation page
 | \Group          | 1             | a group id  | \Group{H12} |
 | \University     | 1             | the name of the university | \University{Konstanz}|
 
-#List of document commands
+# List of document commands
 | Name of command | Parameters    | Description   | Example       |
 | --------------- |:-------------:|:-------------:|:-------------:|
 | \question       | 2(1)          | places a new question in a exercise environment | \question{question}{answer},\question[points]{question}{answer}|
@@ -73,13 +73,13 @@ Installation instructions and an example can be found on the [documentation page
 | \todo           | 1(1)          | insert a very visible TODO-note, optional could be "inline", "color=green" (or other colors), "linecolor=green", "noline", "fancyline" | \todo[inline]{Do something} |
 | \missingfigure  | 1(1)          | inserts something to remind you of missing figures, optional could be "figurewidth=" | \missingfigure[figurewidth=6cm]{Insert a picture of a flower.} |
 
-#List of Environments
+# List of Environments
 | Environment name | parameter | description | example|
 | ------------- |:------------:|:-------------:|:-------------:|
 | ukon-infie | 1(1)            | defines the exercise | \begin{ukon-infie}[date]{Number of assignment} \end{ukon-infie}|
 | exercise | 1(1)              | defines a Task       | \begin{exercise}[p=6,z=1]{Taskname} \end{exercise}|
 
-#List of Exercise parameter
+# List of Exercise parameter
 | parameter | description |
 | ------------- |:-------------:|
 | p | the points for this Task|
@@ -99,7 +99,7 @@ Installation instructions and an example can be found on the [documentation page
 | col | create a 2 column multicol around the questions|
 | cols | create a X column multicol around the questions|
 
-#List of Colors
+# List of Colors
 <table>
     <thead>
         <tr>
